@@ -45,6 +45,10 @@ h3 {
     max-width: min(960px, 80vw);
   }
 }
+.features-text:first-of-type h2 {
+  margin-top: 15px;
+}
+
 .features-text {
   color: white;
   font-family: Arial, Helvetica, sans-serif;
@@ -53,20 +57,17 @@ h3 {
   width: min(95vw, 640px);
   margin: 0 auto;
 }
-
 .features-text h2 {
   text-align: center;
   font-variant: small-caps;
   font-size: min(max(2.5vw, 40px), 60px);
 }
-
 .features-text h3 {
   text-align: center;
   font-variant: small-caps;
   margin-top: 4px;
   font-size: min(max(1.9vw, 28px), 42px);
 }
-
 .features-text h4 {
   text-align: center;
   font-style: italic;
@@ -75,24 +76,19 @@ h3 {
   margin: 0;
   padding: 0 0 12px 0;
 }
-
 .features-text .imgContainer {
   text-align: center;
 }
-
-.features-text .extra-padding {
-  padding-top: min(max(30px, 6vh), 45px);
-}
-
 .features-text .imgContainer img {
   display: inline-block;
   margin: 0 5px;
 }
-
+.features-text .extra-padding {
+  padding-top: min(max(30px, 6vh), 45px);
+}
 .features-text a, .features-text a:visited, .features-text a:hover {
   color: white;
 }
-
 .features-text ul {
   margin: 0px;
 }
@@ -174,29 +170,71 @@ h3 {
   padding: 12px;
   background-color: #222;
 }
-
 .consent .text-container {
   margin: 0;
   padding: 0 0 6px 0;
 }
-
-.consent .text-container a, .consent .text-container a:visited, .consent .text-container a:active {
+.consent .text-container a {
   color: #ffc;
 }
-
+.consent .text-container a:visited, .consent .text-container a:active {
+  color: #ffc;
+}
 .consent .text-container a:hover {
   color: #ff9;
 }
-
 .consent .button-container {
   text-align: center;
   margin: 0;
   padding: 0;
 }
-
 .consent .button-container button {
   display: inline-block;
   padding: 10px 15px;
   cursor: pointer;
   border-radius: 8px;
+}
+
+.download-link-container {
+  padding: 12px 0px;
+  position: relative;
+}
+.download-link-container a {
+  text-decoration: none;
+}
+.download-link-container span.beta {
+  display: inline-block;
+  color: red;
+  position: absolute;
+  top: 10px;
+  right: 140px;
+  background-color: black;
+  font-size: 24px;
+  font-weight: bold;
+  transform: rotate(40deg);
+  -webkit-transform: rotate(40deg);
+}
+
+.shiny-borders {
+  border-style: solid;
+  /*max-height: 100px;*/
+  max-width: 330px;
+}
+.shiny-borders.google-play {
+  border-width: 2px;
+  border-color: #a6a6a6;
+  border-radius: 12px;
+}
+.shiny-borders.apple-app-store {
+  border-width: 2px;
+  border-color: #b2b4b6;
+  border-radius: 12px;
+}
+.shiny-borders.microsoft-store {
+  border-width: 2px;
+  border-color: #d2d2d2;
+  border-radius: 0px;
+}
+.shiny-borders:hover {
+  box-shadow: 0px 0px 12px #ddf;
 }
