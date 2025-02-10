@@ -1,0 +1,12 @@
+{
+  "short_name": "GnollHack",
+  "name": "GnollHack",
+  "icons": [{
+    "src": "img/favicon-196x196.png",
+    "type": "image/png",
+    "sizes": "196x196"
+  }],
+  "start_url": "/",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}

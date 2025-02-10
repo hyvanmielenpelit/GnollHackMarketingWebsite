@@ -1,0 +1,139 @@
+﻿@inject IConfiguration Configuration
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @if(!string.IsNullOrEmpty(Configuration["GoogleTagManagerID"]))
+    {
+        <!-- Google Tag Manager -->
+        <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','@(Configuration["GoogleTagManagerID"])');</script>
+        <!-- End Google Tag Manager -->
+    }
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>@(!string.IsNullOrEmpty(ViewData["Title"] as string) ? (ViewData["Title"] as string) + " - " : "")GnollHack</title>
+
+    <meta name="description" content="Major Roguelike. Reinvented. GnollHack is a modern reimagination of the classic roguelike game NetHack.">
+
+    <meta property="og:title" content="GnollHack">
+    <meta property="og:description" content="Major Roguelike. Reinvented. GnollHack is a modern reimagination of the classic roguelike game NetHack.">
+    <meta property="og:url" content="https://gnollhack.com">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://gnollhack.com/img/og-image5.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:site" content="@@GnollHack">
+    <meta name="twitter:title" content="GnollHack">
+    <meta name="twitter:description" content="Major Roguelike. Reinvented. GnollHack is a modern reimagination of the classic roguelike game NetHack.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image:src" content="https://gnollhack.com/img/og-image5.jpg">
+
+    <link rel="manifest" href="~/site.webmanifest">
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="~/favicon/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/favicon/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/favicon/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/favicon/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="~/favicon/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="~/favicon/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="~/favicon/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="~/favicon/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="~/favicon/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="~/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="~/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="~/favicon/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="~/favicon/favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="GnollHack" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="~/favicon/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="~/favicon/mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="~/favicon/mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="~/favicon/mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="~/favicon/mstile-310x310.png" />
+
+@*     <link rel="stylesheet" href="~/css/normalize.css">
+    <link rel="stylesheet" href="~/css/main.css">
+ *@
+    <meta name="theme-color" content="#fafafa">
+
+    <script type="importmap"></script>
+
+@*     <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+@*     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/css/site2.min.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/GnollHackMarketingWebsite.styles.css" asp-append-version="true" /> *@
+</head>
+<body>
+    @if (!string.IsNullOrEmpty(Configuration["GoogleTagManagerID"]))
+    {
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe src="@("https://www.googletagmanager.com/ns.html?id=" + Configuration["GoogleTagManagerID"])"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    }
+@*     <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-page="/Index">GnollHackMarketingWebsite</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+ *@
+ 
+ @*    <div class="container">
+        <main role="main" class="pb-3">
+  *@           @RenderBody()
+  @*       </main>
+    </div>
+ *@
+
+    <div id="consentDiv" class="consent">
+        <div class="text-container">
+            By continuing to use this website, you consent to the use of cookies in accordance
+            with our <a target="_blank" href="https://github.com/hyvanmielenpelit/GnollHack/wiki/GnollHack.com-Cookie-Policy">Cookie Policy</a>.
+        </div>
+        <div class="button-container"><button id="consentButton">OK</button></div>
+    </div>
+
+    <footer class="legal-text padding-10"> @*border-top footer text-muted*@
+        <div class="container">
+            <p>Google Play and the Google Play logo are trademarks of Google LLC.</p>
+            <p>&copy; 2022–<span id="curYear"></span> <a href="https://soundmindgames.org/">Sound Mind Games</a> - <a asp-area="" asp-page="/Privacy">Privacy</a></p>
+        </div>
+    </footer>
+
+    <script src="~/js/vendor/modernizr-3.11.2.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
