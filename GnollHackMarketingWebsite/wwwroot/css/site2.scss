@@ -73,10 +73,26 @@ $cinzel_weights: 400, 500, 600, 700, 800, 900;
 
 body {
     @extend .lato-regular;
-
-    background: black;
+ 
+    background-color: black;
     text-align: center;
     color: white;
+}
+
+.image-background {
+    background-image: url(/img/gnoll-illustration-darkened-both-w1920-q60.jpg), url(/img/dungeon4-w1920-q60-shaded.jpg);
+    background-size: contain, contain;
+    background-repeat: no-repeat, no-repeat;
+    background-position-y: top, 51vw;
+}
+
+.text-background {
+    background-color: black;
+    width: min(95vw, 800px);
+    margin: 0 auto;
+    padding: 10px;
+    opacity: 0.90;
+    box-shadow: 0px 0px 10px 10px #000;
 }
 
 h2 {
@@ -134,20 +150,18 @@ h3 {
     }
 }
 
-.features-text:first-of-type h2 {
-    margin-top: 15px;
-}
-
 .features-text {
     font-size: min(max(1.2vw, 17px), 21px);
     text-align: left;
-    width: min(95vw, 720px);
-    margin: 0 auto;
-    
+ 
     h2 {
         text-align: center;
         font-variant: small-caps;
         font-size: min(max(2.8vw, 45px), 64px);
+    }
+
+    &:first-of-type h2 {
+        margin-top: 15px;
     }
 
     h3 {
