@@ -319,8 +319,12 @@ h3 {
   border-radius: 8px;
 }
 
-.download-link-container {
+.download-link-outer-container {
   padding: 12px 0px;
+}
+
+.download-link-container {
+  display: inline-block;
   position: relative;
 }
 .download-link-container a {
@@ -330,8 +334,8 @@ h3 {
   display: inline-block;
   color: red;
   position: absolute;
-  top: 15px;
-  right: 180px;
+  top: 3px;
+  right: -16px;
   background-color: black;
   font-size: 28px;
   line-height: 28px;

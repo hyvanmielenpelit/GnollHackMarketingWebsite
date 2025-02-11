@@ -73,7 +73,6 @@ $cinzel_weights: 400, 500, 600, 700, 800, 900;
 
 body {
     @extend .lato-regular;
- 
     background-color: black;
     text-align: center;
     color: white;
@@ -97,14 +96,12 @@ body {
 
 h2 {
     @extend .cinzel-700;
-
     margin-top: 48px;
     margin-bottom: 9px;
 }
 
 h3 {
     @extend .cinzel-700;
-
     margin-bottom: 9px;
 }
 
@@ -153,7 +150,7 @@ h3 {
 .features-text {
     font-size: min(max(1.2vw, 17px), 21px);
     text-align: left;
- 
+
     h2 {
         text-align: center;
         font-variant: small-caps;
@@ -319,8 +316,12 @@ h3 {
     }
 }
 
-.download-link-container {
+.download-link-outer-container {
     padding: 12px 0px;
+}
+
+.download-link-container {
+    display: inline-block;
     position: relative;
 
     a {
@@ -330,11 +331,11 @@ h3 {
     span.beta {
         @extend .cinzel-700;
 
-        display:inline-block;
+        display: inline-block;
         color: red;
         position: absolute;
-        top: 15px;
-        right: 180px;
+        top: 3px;
+        right: -16px;
         background-color: black;
         font-size: 28px;
         line-height: 28px;
@@ -386,5 +387,5 @@ a.free {
 }
 
 .whatis {
-    font-weight:bold;
+    font-weight: bold;
 }
