@@ -1,20 +1,95 @@
-﻿body {
+﻿@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+$cinzel_weights: 400, 500, 600, 700, 800, 900;
+
+@each $weight in $cinzel_weights {
+    .cinzel-#{$weight} {
+        font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: $weight;
+        font-style: normal;
+    }
+}
+
+.lato-thin {
+    font-family: "Lato", serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.lato-light {
+    font-family: "Lato", serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.lato-regular {
+    font-family: "Lato", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.lato-bold {
+    font-family: "Lato", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.lato-black {
+    font-family: "Lato", serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.lato-thin-italic {
+    font-family: "Lato", serif;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.lato-light-italic {
+    font-family: "Lato", serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.lato-regular-italic {
+    font-family: "Lato", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.lato-bold-italic {
+    font-family: "Lato", serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.lato-black-italic {
+    font-family: "Lato", serif;
+    font-weight: 900;
+    font-style: italic;
+}
+
+body {
+    @extend .lato-regular;
+
     background: black;
     text-align: center;
     color: white;
 }
 
 h2 {
+    @extend .cinzel-700;
+
     margin-top: 48px;
     margin-bottom: 9px;
-    font-family: Cinzel;
-    font-weight:bolder;
 }
 
 h3 {
+    @extend .cinzel-700;
+
     margin-bottom: 9px;
-    font-family: Cinzel;
-    font-weight: bolder;
 }
 
 @media only screen and (orientation: portrait) {
@@ -64,12 +139,11 @@ h3 {
 }
 
 .features-text {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: min(max(1.2vw, 17px), 21px);
     text-align: left;
     width: min(95vw, 720px);
     margin: 0 auto;
-
+    
     h2 {
         text-align: center;
         font-variant: small-caps;
