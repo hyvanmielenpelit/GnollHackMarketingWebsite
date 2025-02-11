@@ -107,11 +107,13 @@ body {
   color: white;
 }
 
-.image-background {
-  background-image: url(/img/gnoll-illustration-darkened-both-w1920-q60.jpg), url(/img/dungeon4-w1920-q60-shaded.jpg);
-  background-size: contain, contain;
-  background-repeat: no-repeat, no-repeat;
-  background-position-y: top, 51vw;
+@media only screen and (orientation: landscape) {
+  .image-background {
+    background-image: url(/img/gnoll-illustration-darkened-both-w1920-q60.jpg), url(/img/dungeon4-w1920-q60-shaded.jpg);
+    background-size: contain, contain;
+    background-repeat: no-repeat, no-repeat;
+    background-position-y: top, 51vw;
+  }
 }
 
 .text-background {
