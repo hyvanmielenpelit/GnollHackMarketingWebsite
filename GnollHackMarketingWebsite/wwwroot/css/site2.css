@@ -20,7 +20,7 @@
   font-style: normal;
 }
 
-.cinzel-700, h3, h2 {
+.cinzel-700, .download-link-container span.beta, h3, h2 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -317,11 +317,11 @@ h3 {
   display: inline-block;
   color: red;
   position: absolute;
-  top: 10px;
-  right: 140px;
+  top: 15px;
+  right: 180px;
   background-color: black;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 28px;
+  line-height: 28px;
   transform: rotate(40deg);
   -webkit-transform: rotate(40deg);
 }
