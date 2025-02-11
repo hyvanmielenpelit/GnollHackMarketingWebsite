@@ -238,3 +238,9 @@ h3 {
 .shiny-borders:hover {
   box-shadow: 0px 0px 12px #ddf;
 }
+
+.free {
+  text-transform: uppercase;
+  color: #ffb;
+  text-shadow: 2px 2px 4px #ff3;
+}
