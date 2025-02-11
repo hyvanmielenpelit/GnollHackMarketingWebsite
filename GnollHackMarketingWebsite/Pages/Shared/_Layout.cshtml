@@ -59,17 +59,11 @@
     <meta name="msapplication-wide310x150logo" content="~/favicon/mstile-310x150.png" />
     <meta name="msapplication-square310x310logo" content="~/favicon/mstile-310x310.png" />
 
-@*     <link rel="stylesheet" href="~/css/normalize.css">
-    <link rel="stylesheet" href="~/css/main.css">
- *@
     <meta name="theme-color" content="#fafafa">
 
     <script type="importmap"></script>
 
-@*     <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true" /> *@
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-@*     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/lib/bootstrap/5.3.3/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site2.min.css" asp-append-version="true" />
     @* <link rel="stylesheet" href="~/GnollHackMarketingWebsite.styles.css" asp-append-version="true" /> *@
 
@@ -130,11 +124,9 @@
         </div>
     </footer>
 
-    <script src="~/js/vendor/modernizr-3.11.2.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/plugins.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery-3.7.1.min.js"></script>
+    <script src="~/lib/bootstrap/5.3.3/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.es5.min.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
