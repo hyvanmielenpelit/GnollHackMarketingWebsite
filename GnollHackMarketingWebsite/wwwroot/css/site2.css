@@ -20,7 +20,7 @@
   font-style: normal;
 }
 
-.cinzel-700, .download-link-container span.beta, h3, h2 {
+.cinzel-700, h3, h2 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -34,7 +34,7 @@
   font-style: normal;
 }
 
-.cinzel-900 {
+.cinzel-900, .download-link-container span.beta {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 900;

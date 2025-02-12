@@ -332,7 +332,8 @@ h3 {
     }
 
     span.beta {
-        @extend .cinzel-700;
+        @extend .cinzel-900;
+
         display: inline-block;
         color: red;
         position: absolute;
