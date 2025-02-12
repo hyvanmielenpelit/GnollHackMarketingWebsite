@@ -5,5 +5,9 @@
 $(function () {
     $("#consentButton").on("click", function () {
         $("#consentDiv").hide();
+        localStorage.setItem("consentOKClicked", true);
     });
+    if (localStorage.getItem("consentOKClicked") === null || localStorage.getItem("consentOKClicked") === false) {
+        $("#consentDiv").show();
+    }
 });
