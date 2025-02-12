@@ -107,6 +107,10 @@ body {
   color: white;
 }
 
+.image-background {
+  display: flex;
+  justify-content: center;
+}
 @media only screen and (orientation: landscape) {
   .image-background {
     background-image: url(/img/gnoll-illustration-darkened-both-w1920-q60.jpg), url(/img/dungeon4-w1920-q60-shaded.jpg);
@@ -117,12 +121,21 @@ body {
 }
 
 .text-background {
-  background-color: black;
   width: min(95vw, 800px);
-  margin: 0 auto;
+  background-color: black;
   padding: 10px;
   opacity: 0.9;
   box-shadow: 0px 0px 10px 10px #000;
+}
+@media only screen and (orientation: landscape) {
+  .text-background {
+    margin: 50px 0 0 0;
+  }
+}
+@media only screen and (orientation: portrait) {
+  .text-background {
+    margin: 20px 0 0 0;
+  }
 }
 
 h2 {
@@ -135,9 +148,6 @@ h3 {
 }
 
 @media only screen and (orientation: portrait) {
-  body {
-    text-align: center;
-  }
   .picture {
     height: min(100vh, 128.8vw); /* Multiplier must be portrait image height/width */
     max-width: 100%;
@@ -177,7 +187,7 @@ h3 {
   font-size: min(max(2.8vw, 45px), 64px);
 }
 .features-text:first-of-type h2 {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 .features-text h3 {
   text-align: center;
