@@ -20,7 +20,7 @@
   font-style: normal;
 }
 
-.cinzel-700, h3, h2 {
+.cinzel-700, h3, h2, h1 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -138,6 +138,12 @@ body {
   }
 }
 
+h1 {
+  font-size: min(max(5vw, 50px), 70px);
+  margin-top: 48px;
+  margin-bottom: 9px;
+}
+
 h2 {
   margin-top: 48px;
   margin-bottom: 9px;
@@ -179,15 +185,11 @@ h3 {
 }
 .features-text {
   font-size: min(max(1.2vw, 17px), 21px);
-  text-align: left;
 }
 .features-text h2 {
   text-align: center;
   font-variant: small-caps;
   font-size: min(max(2.8vw, 45px), 64px);
-}
-.features-text:first-of-type h2 {
-  margin-top: 10px;
 }
 .features-text h3 {
   text-align: center;
@@ -218,8 +220,81 @@ h3 {
 }
 .features-text ul {
   margin: 0px;
+  text-align: left;
 }
 
+@media only screen and (orientation: landscape) {
+  .general-section, .left-section, .right-section {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: top;
+    padding: 15px 5px;
+  }
+  .general-section .videoContainer, .left-section .videoContainer, .right-section .videoContainer {
+    width: min(max(50vw, 320px), 720px);
+  }
+}
+@media only screen and (orientation: portrait) {
+  .general-section, .left-section, .right-section {
+    display: flex;
+    justify-content: center;
+  }
+  .general-section .features-text, .left-section .features-text, .right-section .features-text {
+    max-width: 720px;
+  }
+}
+
+@media only screen and (orientation: landscape) {
+  .right-section {
+    min-height: 56.25vw;
+  }
+  .right-section .features-text {
+    margin-left: 35vw;
+    max-width: 65vw;
+  }
+}
+
+@media only screen and (orientation: landscape) {
+  .left-section {
+    display: flex;
+    justify-content: end;
+  }
+  .left-section .features-text {
+    margin-right: 35vw;
+    max-width: 65vw;
+  }
+}
+
+@media only screen and (orientation: landscape) {
+  .orc-hunter {
+    background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
+    min-height: 56.25vw;
+  }
+  .orc-hunter .features-text {
+    margin-right: 45vw;
+    max-width: 55vw;
+  }
+  .orc-assassin {
+    background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
+    min-height: 56.25vw;
+  }
+  .female-mage {
+    background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
+    min-height: 56.25vw;
+  }
+  .female-mage .features-text {
+    margin-left: 45vw;
+    width: 50vw;
+  }
+  .barbarian {
+    background-image: url(/img/Barbarian-shaded2-w1920-q60.jpg);
+    min-height: 56.25vw;
+  }
+  .barbarian .features-text {
+    margin-right: 40vw;
+    width: min(max(50vw, 300px), 720px);
+  }
+}
 .important-link {
   margin-top: 18px;
   font-size: min(max(1.3vw, 18px), 27px);
@@ -333,6 +408,7 @@ h3 {
 }
 
 .download-link-outer-container {
+  display: inline-block;
   padding: 12px 0px;
 }
 
@@ -358,8 +434,9 @@ h3 {
 
 .shiny-borders {
   border-style: solid;
-  /*max-height: 100px;*/
-  max-width: 330px;
+  max-height: 100px;
+  margin: 0px 5px;
+  /*max-width: 330px;*/
 }
 .shiny-borders.google-play {
   border-width: 2px;
