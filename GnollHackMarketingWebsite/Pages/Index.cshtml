@@ -4,20 +4,8 @@
     ViewData["Title"] = "";
 }
 
-<map name="storemap1">
-    <area shape="rect" coords="71,1811,991,2085" alt="Get it on Google Play" href="https://play.google.com/store/apps/details?id=com.soundmindentertainment.gnollhack">
-    <area shape="rect" coords="1065,1811,1873,2085" alt="Download on the App Store" href="https://apps.apple.com/app/gnollhack/id1626979951">
-    <area shape="rect" coords="1945,1811,2692,2085" alt="Get it from Microsoft" href="https://apps.microsoft.com/store/detail/9P6SBLH8ZR41">
-</map>
-
-<map name="storemap2">
-    <area shape="rect" coords="71,1811,991,2085" alt="Get it on Google Play" href="https://play.google.com/store/apps/details?id=com.soundmindentertainment.gnollhack">
-    <area shape="rect" coords="1065,1811,1873,2085" alt="Download on the App Store" href="https://apps.apple.com/app/gnollhack/id1626979951">
-    <area shape="rect" coords="580,2148,1330,2418" alt="Get it from Microsoft" href="https://apps.microsoft.com/store/detail/9P6SBLH8ZR41">
-</map>
-
-<img id="mainpic1" src="img/img2-full-3840x2160-gr.jpg" alt="GnollHack" class="picture" usemap="#storemap1" />
-<img id="mainpic2" src="img/img2-portrait.jpg" alt="GnollHack" class="picture" style="display:none;" usemap="#storemap2" />
+<img id="mainpic1" src="~/img/GH_WEBSITE_KANSIKUVA_LANDSCAPE_20250210_shaded-q60.jpg" alt="GnollHack" class="picture" />
+<img id="mainpic2" src="~/img/GH_WEBSITE_KANSIKUVA_PORTRAIT_20250212_shaded-w1080-q60.jpg" alt="GnollHack" class="picture" style="display:none;" />
 
 <section class="right-section orc-assassin">
     <div class="features-text">
@@ -51,6 +39,7 @@
             <li>Legendary strategic depth</li>
             <li>Endless replayability</li>
             <li>Cross-platform support</li>
+            <li>Open source</li>
         </ul>
 
     </div>
@@ -98,11 +87,7 @@
             <li>Choose from 13 different character classes (e.g. wizard, barbarian, or rogue) with unique abilities.</li>
             <li>Choose from 5 different races (e.g. human, elf, or gnoll) with unique traits.</li>
         </ul>
-    </div>
-</section>
 
-<section class="left-section barbarian">
-    <div class="features-text">
         <div class="imgContainer extra-padding">
             <img src="img/dungeon-normal_tree.png" style="width:128px;" alt="Tree" />
             <img src="img/dungeon-normal_tree-fig.png" style="width:128px;" alt="Fig Tree" />
@@ -113,6 +98,12 @@
             <li>Solve puzzles, disarm traps, and experiment with items in unexpected ways (e.g. dip a weapon into a potion of poison to coat it with poison).</li>
         </ul>
 
+    </div>
+</section>
+
+<section class="left-section barbarian">
+    <div class="features-text">
+
         <div class="imgContainer extra-padding">
             <img src="img/stormbringer.png" alt="Stormbringer" />
             <img src="img/disintegrate_active.png" alt="Disintegrate" />
@@ -122,84 +113,50 @@
             <li>Hundreds of items, spells, and artifacts with diverse effects.</li>
             <li>Strategic inventory management and item identification are critical for success.</li>
         </ul>
+        <div class="imgContainer" style="padding-top: 0px;">
+            <img src="img/gnoll_body.png" alt="Dead Gnoll" />
+        </div>
+
+        <h3>Challenging Permadeath</h3>
+        <h4>(Classic Mode Only)</h4>
+        <ul>
+            <li>Death is permanent, requiring players to adapt, plan, and learn from mistakes to progress further.</li>
+            <li>High-stakes decision-making encourages careful exploration.</li>
+        </ul>
+
+        <div class="imgContainer extra-padding">
+            <img src="img/fire.png" alt="Fire" style="width:128px;" />
+            <img src="img/dip.png" alt="Dip" style="width:128px;" />
+        </div>
+        <h3>Modern Graphical UI</h3>
+        <ul>
+            <li>Animated graphics, immersive sound effects, original music, and engaging voiceovers bring the dungeon to life, setting GnollHack apart from classic ASCII-based roguelike games.</li>
+            <li>GnollHack's user-friendly, modern user interface makes the game approachable for new players.</li>
+            <li>Includes options to tailor difficulty and gameplay experience to your preferences.</li>
+        </ul>
+
     </div>
 </section>
 
-<div class="image-background image1">
-    <div class="text-background text1">
+<section class="right-section dwarf-monk">
+    <div class="features-text">
+        <h2>Gameplay Information</h2>
+        <div class="imgContainer">
+            <img src="img/library.png" alt="Loot" style="width:128px;" />
+        </div>
+        <p class="important-link"><a href="https://github.com/hyvanmielenpelit/GnollHack/wiki">GnollHack Wiki</a></p>
+        <p class="important-link"><a href="https://nethackwiki.com">NetHack Wiki</a></p>
 
-        <section class="features-text">
+        <h2>Community</h2>
+        <div class="imgContainer">
+            <img src="img/spells.png" alt="Loot" style="width:128px;" />
+        </div>
+        <p class="important-link"><a href="https://discord.gg/cQuExnzUQy">GnollHack Discord</a></p>
+        <p class="important-link"><a href="https://account.gnollhack.com">GnollHack Account</a></p>
+        <p class="important-link"><a href="https://github.com/hyvanmielenpelit/GnollHack">GitHub Repository</a></p>
 
-            <div class="imgContainer" style="padding-top: 0px;">
-                <img src="img/gnoll_body.png" alt="Dead Gnoll" />
-            </div>
-            <h3>Challenging Permadeath</h3>
-            <h4>(Classic Mode Only)</h4>
-            <ul>
-                <li>Death is permanent, requiring players to adapt, plan, and learn from mistakes to progress further.</li>
-                <li>High-stakes decision-making encourages careful exploration.</li>
-            </ul>
-
-            <div class="imgContainer extra-padding">
-                <img src="img/fire.png" alt="Fire" style="width:128px;" />
-                <img src="img/dip.png" alt="Dip" style="width:128px;" />
-            </div>
-            <h3>Modern Graphical UI</h3>
-            <ul>
-                <li>Animated graphics, immersive sound effects, original music, and engaging voiceovers bring the dungeon to life, setting GnollHack apart from classic ASCII-based roguelike games.</li>
-                <li>GnollHack's user-friendly, modern user interface makes the game approachable for new players.</li>
-                <li>Includes options to tailor difficulty and gameplay experience to your preferences.</li>
-            </ul>
-
-            <div class="imgContainer extra-padding">
-                <img src="img/loot.png" alt="Loot" style="width:128px;" />
-                <img src="img/chat.png" alt="Chat" style="width:128px;" />
-            </div>
-            <h3>Open Source</h3>
-            <ul>
-                <li>Developed as a free and open source game.</li>
-                <li>Players have opportunities for giving feedback and collaborating in the development.</li>
-            </ul>
-
-            <div class="imgContainer extra-padding">
-                <img src="img/wish.png" alt="Wish" style="width: 128px;" />
-            </div>
-            <h3>NetHack Remaster</h3>
-            <ul>
-                <li>Built on the legacy of the legendary NetHack, GnollHack is faithful to its spirit and gameplay mechanics while adding new features.</li>
-            </ul>
-
-            <div class="imgContainer extra-padding">
-                <img src="img/android-256.png" alt="Android" style="width: 64px;" />
-                <img src="img/apple-logo-256.png" alt="Apple" style="width: 64px;" />
-                <img src="img/Microsoft_Logo_256px.png" alt="Windows/Microsoft" style="width: 64px;" />
-            </div>
-            <h3>Cross-Platform Support</h3>
-            <ul class="very-tight-list" style="width: min(100vw, 160px);">
-                <li>Android</li>
-                <li>iOS</li>
-                <li>Windows</li>
-            </ul>
-        </section>
-
-        <section class="features-text" style="text-align: center;">
-            <h2>Gameplay Information</h2>
-            <div class="imgContainer">
-                <img src="img/library.png" alt="Loot" style="width:128px;" />
-            </div>
-            <p class="important-link"><a href="https://github.com/hyvanmielenpelit/GnollHack/wiki">GnollHack Wiki</a></p>
-            <p class="important-link"><a href="https://nethackwiki.com">NetHack Wiki</a></p>
-
-            <h2>Community</h2>
-            <div class="imgContainer">
-                <img src="img/spells.png" alt="Loot" style="width:128px;" />
-            </div>
-            <p class="important-link"><a href="https://discord.gg/cQuExnzUQy">GnollHack Discord</a></p>
-            <p class="important-link"><a href="https://account.gnollhack.com">GnollHack Account</a></p>
-            <p class="important-link"><a href="https://github.com/hyvanmielenpelit/GnollHack">GitHub Repository</a></p>
-        </section>
     </div>
-</div>
+</section>
 
 @section Scripts
 {

@@ -182,7 +182,7 @@ h3 {
         text-align: center;
         font-style: italic;
         font-weight: normal;
-        font-size: min(max(1.3vw, 16px), 24px);
+        font-size: min(max(1.3vw, 20px), 26px);
         margin: 0;
         padding: 0 0 12px 0;
     }
@@ -225,6 +225,8 @@ h3 {
     @media only screen and (orientation: portrait) {
         display: flex;
         justify-content: center;
+        padding-left: 20px;
+        padding-right: 20px;
 
         .features-text {
             max-width: 720px;
@@ -294,6 +296,22 @@ h3 {
             width: min(max(50vw, 300px), 720px);
         }
     }
+
+    .dwarf-monk {
+        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
+        min-height: 56.25vw;
+
+        .features-text {
+            margin-left: 40vw;
+            width: 50vw;
+        }
+    }
+}
+
+.full-section {
+    @extend .general-section;
+    display: flex;
+    justify-content: center;
 }
 
 .important-link {
@@ -415,7 +433,14 @@ h3 {
 }
 
 .download-link-outer-container {
-    display: inline-block;
+    @media only screen and (orientation: landscape) {
+        display: inline-block;
+    }
+
+    @media only screen and (orientation: portrait) {
+        display: block;
+    }
+
     padding: 12px 0px;
 }
 
@@ -444,9 +469,15 @@ h3 {
 
 .shiny-borders {
     border-style: solid;
-    max-height: 100px;
     margin: 0px 5px;
-    /*max-width: 330px;*/
+
+    @media only screen and (orientation: landscape) {
+        max-height: 100px;
+    }
+
+    @media only screen and (orientation: portrait) {
+        max-width: 330px;
+    }
 
     &.google-play {
         border-width: 2px;
