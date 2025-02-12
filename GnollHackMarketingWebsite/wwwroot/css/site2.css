@@ -113,10 +113,10 @@ body {
 }
 @media only screen and (orientation: landscape) {
   .image-background {
-    background-image: url(/img/gnoll-illustration-darkened-both-w1920-q60.jpg), url(/img/dungeon4-w1920-q60-shaded.jpg);
-    background-size: contain, contain;
-    background-repeat: no-repeat, no-repeat;
-    background-position-y: top, 51vw;
+    background-image: url(/img/gnoll-illustration-darkened-both-w1920-q60.jpg), url(/img/dungeon4-w1920-q60-shaded.jpg), url(/img/HalfOrcAssassin-w1920-q60.jpg), url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
+    background-size: contain, contain, contain, contain;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-position-y: top, 51vw, 111vw, 171vw;
   }
 }
 
