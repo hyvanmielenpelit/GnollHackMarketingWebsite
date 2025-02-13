@@ -189,6 +189,12 @@ h3 {
   font-variant: small-caps;
   font-size: min(max(2.8vw, 45px), 64px);
 }
+@media only screen and (orientation: landscape) {
+  .features-text h2:first-child {
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+}
 .features-text h3 {
   text-align: center;
   font-variant: small-caps;
@@ -369,7 +375,7 @@ h3 {
   width: min(max(23vw, 200px), 300px);
   position: fixed;
   bottom: 15px;
-  right: 15px;
+  left: 15px;
   border: 1px solid #aaf;
   border-radius: 4px;
   box-shadow: 0px 0px 8px #ddf;
@@ -500,6 +506,10 @@ a.free:visited, a.free:active {
 
 .whatis {
   font-weight: bold;
+}
+
+.readmore {
+  padding: 20px 10px 0px 10px;
 }
 
 @media only screen and (orientation: landscape) {
