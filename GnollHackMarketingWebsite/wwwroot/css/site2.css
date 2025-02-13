@@ -184,6 +184,10 @@ h3 {
     max-width: min(960px, 80vw);
   }
 }
+.features-text {
+  padding: 20px 0px 20px 0px;
+  max-height: 100%;
+}
 .features-text h2 {
   text-align: center;
   font-variant: small-caps;
@@ -219,11 +223,9 @@ h3 {
 .features-text .imgContainer.extra-padding {
   padding-top: 30px;
 }
-@media only screen and (orientation: landscape) {
-  .features-text .imgContainer.extra-padding:first-child {
-    margin-top: 0px;
-    padding-top: 0px;
-  }
+.features-text .imgContainer.extra-padding:first-child {
+  margin-top: 0px;
+  padding-top: 0px;
 }
 .features-text a, .features-text a:visited, .features-text a:hover {
   color: white;
@@ -248,13 +250,13 @@ h3 {
 }
 @media only screen and (orientation: portrait) {
   .general-section, .full-section, .left-section, .right-section {
+    background-size: cover;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-left: 20px;
     padding-right: 20px;
-  }
-  .general-section .features-text, .full-section .features-text, .left-section .features-text, .right-section .features-text {
-    max-width: 720px;
   }
 }
 
@@ -280,17 +282,17 @@ h3 {
 }
 
 @media only screen and (orientation: landscape) {
+  .orc-assassin {
+    background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
+    min-height: 56.25vw;
+  }
   .orc-hunter {
     background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
     min-height: 56.25vw;
   }
   .orc-hunter .features-text {
-    margin-right: 40vw;
-    max-width: 60vw;
-  }
-  .orc-assassin {
-    background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
-    min-height: 56.25vw;
+    margin-right: 50vw;
+    max-width: 50vw;
   }
   .female-mage {
     background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
@@ -317,6 +319,28 @@ h3 {
     width: 50vw;
   }
 }
+@media only screen and (orientation: portrait) {
+  .orc-assassin {
+    background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
+    height: 900px;
+  }
+  .orc-hunter {
+    background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
+    height: 450px;
+  }
+  .female-mage {
+    background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
+    height: 520px;
+  }
+  .barbarian {
+    background-image: url(/img/Barbarian-shaded2-w1920-q60.jpg);
+    height: 520px;
+  }
+  .dwarf-monk {
+    background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
+    height: 900px;
+  }
+}
 .full-section {
   display: flex;
   justify-content: center;
@@ -325,6 +349,7 @@ h3 {
 .important-link {
   margin-top: 18px;
   font-weight: 600;
+  font-size: 28px;
 }
 
 .legal-text {
@@ -442,9 +467,7 @@ h3 {
   display: inline-block;
   color: red;
   position: absolute;
-  background-color: black;
   transform: rotate(40deg);
-  -webkit-transform: rotate(40deg);
   z-index: 100;
 }
 @media only screen and (orientation: landscape) {
@@ -453,6 +476,7 @@ h3 {
     right: -16px;
     font-size: min(max(2vw, 14px), 28px);
     line-height: min(max(2vw, 14px), 28px);
+    background-color: black;
   }
 }
 @media only screen and (orientation: portrait) {
@@ -461,6 +485,7 @@ h3 {
     right: min(max(-2.5vw, -16px), -8px);
     font-size: min(max(6vw, 18px), 28px);
     line-height: min(max(6vw, 18px), 28px);
+    text-shadow: black 3px 3px 6px;
   }
 }
 
