@@ -10,5 +10,9 @@
   {
     "outputFile": "wwwroot/css/fonts.css",
     "inputFile": "wwwroot/css/fonts.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/carousel.css",
+    "inputFile": "wwwroot/css/carousel.scss"
   }
 ]
