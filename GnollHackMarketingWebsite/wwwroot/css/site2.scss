@@ -200,11 +200,19 @@ h3 {
             display: inline-block;
             margin: 0 5px;
         }
+
+        &.extra-padding {
+            padding-top: 30px;
+
+            @media only screen and (orientation: landscape) {
+                &:first-child {
+                    margin-top: 0px;
+                    padding-top: 0px;
+                }
+            }
+        }
     }
 
-    .extra-padding {
-        padding-top: 30px;
-    }
 
     a, a:visited, a:hover {
         color: white;

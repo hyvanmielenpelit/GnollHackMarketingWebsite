@@ -216,8 +216,14 @@ h3 {
   display: inline-block;
   margin: 0 5px;
 }
-.features-text .extra-padding {
+.features-text .imgContainer.extra-padding {
   padding-top: 30px;
+}
+@media only screen and (orientation: landscape) {
+  .features-text .imgContainer.extra-padding:first-child {
+    margin-top: 0px;
+    padding-top: 0px;
+  }
 }
 .features-text a, .features-text a:visited, .features-text a:hover {
   color: white;
