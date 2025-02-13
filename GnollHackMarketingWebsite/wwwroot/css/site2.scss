@@ -310,6 +310,7 @@ h3 {
 @media only screen and (orientation: portrait) {
     .orc-assassin {
         background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
+        background-position-x: -140px;
         height: 900px;
     }
 
@@ -332,7 +333,7 @@ h3 {
 
     .dwarf-monk {
         background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
-        background-position-x: -60px;
+        background-position-x: -270px;
         height: 900px;
     }
 }
