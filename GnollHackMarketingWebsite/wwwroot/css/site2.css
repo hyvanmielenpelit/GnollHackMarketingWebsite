@@ -134,9 +134,6 @@ h3 {
   #mainpic1 {
     display: none !important;
   }
-  .videoContainer {
-    max-width: 600px;
-  }
 }
 @media only screen and (orientation: landscape) {
   .picture {
@@ -148,9 +145,6 @@ h3 {
   }
   #mainpic2 {
     display: none !important;
-  }
-  .videoContainer {
-    max-width: min(960px, 80vw);
   }
 }
 .features-text {
@@ -226,9 +220,6 @@ h3 {
     background-position-y: top;
     display: flex;
     align-items: center;
-  }
-  .general-section .videoContainer, .full-section .videoContainer, .left-section .videoContainer, .right-section .videoContainer {
-    width: min(max(50vw, 320px), 720px);
   }
 }
 @media only screen and (orientation: portrait) {
@@ -309,7 +300,7 @@ h3 {
   .orc-hunter {
     background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
     background-position-x: right;
-    height: 550px;
+    height: calc(60vw + 100px);
   }
   .female-mage {
     background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
@@ -358,13 +349,24 @@ h3 {
 .videoContainer {
   margin: 0 auto;
 }
-
-.videoWrapper {
+.videoContainer .videoWrapper {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
 }
-.videoWrapper iframe {
+.videoContainer .videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.videoContainer .videoWrapperPortrait {
+  position: relative;
+  padding-right: 56.25%;
+  width: 0;
+}
+.videoContainer .videoWrapperPortrait iframe {
   position: absolute;
   top: 0;
   left: 0;

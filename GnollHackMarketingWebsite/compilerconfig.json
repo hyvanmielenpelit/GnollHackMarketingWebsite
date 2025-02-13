@@ -14,5 +14,9 @@
   {
     "outputFile": "wwwroot/css/carousel.css",
     "inputFile": "wwwroot/css/carousel.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/carousel.es5.js",
+    "inputFile": "wwwroot/js/carousel.js"
   }
 ]

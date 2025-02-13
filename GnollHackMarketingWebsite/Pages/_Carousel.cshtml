@@ -7,7 +7,7 @@
         @foreach (var index in Model.Select((_, index) => index))
         {
             <button type="button" data-bs-target="#carouselComponent" data-bs-slide-to="@index"
-            class="@(index == 0 ? "active" : "")" aria-label="Slide @(index + 1)">
+                    class="@(index == 0 ? "active" : "")" aria-label="Slide @(index + 1)">
             </button>
         }
     </div>
@@ -21,31 +21,31 @@
                 {
                     @if (mediaOrientation == "landscape")
                     {
-                        <img src="@mediaUrl" width="640" height="360" class="main-carousel-img"
-                        data-bs-toggle="modal" data-bs-target="#fullscreenModal"
-                        data-src="@mediaUrl" alt="Slide @(index + 1)">
+                        <img src="@mediaUrl" class="main-carousel-img"
+                             data-bs-toggle="modal" data-bs-target="#fullscreenModal"
+                             data-src="@mediaUrl" alt="Slide @(index + 1)">
                     }
                     else if (mediaOrientation == "portrait")
                     {
-                        <img src="@mediaUrl" width="480" height="854" class="main-carousel-img"
-                        data-bs-toggle="modal" data-bs-target="#fullscreenModal"
-                        data-src="@mediaUrl" alt="Slide @(index + 1)">
+                        <img src="@mediaUrl" class="main-carousel-img"
+                             data-bs-toggle="modal" data-bs-target="#fullscreenModal"
+                             data-src="@mediaUrl" alt="Slide @(index + 1)">
                     }
                 }
                 else if (mediaType == "video")
                 {
                     @if (mediaOrientation == "landscape")
                     {
-                        <iframe src="@mediaUrl" width="640" height="360" class="main-carousel-video-landscape" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        <iframe src="@mediaUrl" class="main-carousel-video-landscape" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                         </iframe>
                     }
                     else if (mediaOrientation == "portrait")
                     {
-                        <iframe src="@mediaUrl" width="480" height="854" class="main-carousel-video-portrait" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        <iframe src="@mediaUrl" class="main-carousel-video-portrait" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                         </iframe>
                     }
                 }
@@ -68,7 +68,7 @@
     <div class="modal-dialog modal-fullscreen modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div id="modalCarousel" class="carousel slide modal-carousel-container" data-bs-ride="false">
                     <div class="carousel-inner">
                         @foreach (var (mediaType, mediaUrl, mediaOrientation, index) in Model.Select((item, index) => (item.Item1, item.Item2, item.Item3, index)))
@@ -83,14 +83,14 @@
                                     <div class="modal-carousel-video-wrapper">
                                         @if (mediaOrientation == "landscape")
                                         {
-                                            <iframe src="@mediaUrl" width="640" height="360" class="d-block modal-carousel-video-landscape" frameborder="0"
+                                            <iframe src="@mediaUrl" class="d-block modal-carousel-video-landscape" frameborder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                                             </iframe>
                                         }
                                         else if (mediaOrientation == "portrait")
                                         {
-                                            <iframe src="@mediaUrl" width="480" height="854" class="d-block modal-carousel-video-portrait" frameborder="0"
+                                            <iframe src="@mediaUrl" class="d-block modal-carousel-video-portrait" frameborder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                                             </iframe>

@@ -1,41 +1,62 @@
 /* Main Carousel Styling */
-@media only screen and (orientation: portrait) {
-    .main-carousel-container {
-        min-width: 100%;
-    }
-}
-
-@media only screen and (max-width: 900px) {
-    .main-carousel-container {
-        width: 100vw;
-    }
-}
 
 .main-carousel-container {
-    padding-bottom: 25px;
-    padding-top: 25px;
-    max-width: 840px;
-    max-height: 460px;
-    margin: auto;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 9px;
+
+    @media only screen and (orientation: landscape) {
+        padding: 35px;
+        width: min(max(48vw, 320px), 980px);
+        height: min(max(29vw, 195px), 590px);
+    }
+
+    @media only screen and (orientation: portrait) {
+        padding: 25px;
+        width: 92vw;
+        height: 50vw;
+    }
+
+    .carousel-inner {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
 }
 
-    .main-carousel-img {
-        object-fit: contain;
-        width: 70%;
-    }
+
+.main-carousel-img {
+    object-fit: contain;
+    max-width: 92%;
+    max-height: 92%;
+}
 
 .main-carousel-video-landscape {
     background-color: black;
-    max-width: 90%;
-    max-height: 360px;
+
+    @media only screen and (orientation: landscape) {
+        width: min(calc(35vw + 70px), 800px);
+        height: min(calc(19.6875vw + 39.375px), 450px);
+    }
+
+    @media only screen and (orientation: portrait) {
+        width: 75vw;
+        height: 42.1875vw;
+    }
 }
 
 .main-carousel-video-portrait {
     background-color: black;
-    max-width: 25%;
-    max-height: 360px;
+
+
+    @media only screen and (orientation: landscape) {
+        width: 12.66vw;
+        height: 22.5vw;
+    }
+
+    @media only screen and (orientation: portrait) {
+        width: 23.0625vw;
+        height: 41vw;
+    }
 }
 
 .main-carousel-control-prev {
@@ -52,84 +73,95 @@
     margin-left: 1%;
 }
 
-    .carousel-indicators {
-        margin: auto;
-        width: 70%;
-    }
+.carousel-indicators {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
 
-    /* Modal Styling */
-    .modal-container {
-        background-color: rgba(0, 0, 0, 0.8);
-        height: 100vh;
-        overflow: hidden;
-    }
+/* Modal Styling */
+.modal-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    height: 100vh;
+    overflow: hidden;
+}
 
-    .modal-dialog {
-        margin: auto;
-        background-color: black;
-    }
+.modal-dialog {
+    margin: auto;
+    background-color: black;
+}
 
-    .btn-close {
-        position: absolute;
-        top: 2%;
-        right: 2%;
-        z-index: 99;
-        border-radius: 50%;
-        padding: 10px;
-        background-color: white;
-    }
+.modal-backdrop {
+    z-index: -1;
+}
 
-    .modal-body {
-        padding: 5%;
-        background-color: black;
-    }
+.btn-close {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    z-index: 99;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: white;
+}
 
-    .modal-carousel-container {
-        width: 100%;
-        height: 100%;
-        margin: auto;
-        background-color: black;
-    }
+.modal-body {
+    padding: 5%;
+    background-color: black;
+}
 
-    .modal-carousel-img {
-        height: 80vh;
-        width: 80%;
-        margin: auto;
-        background-color: black;
-    }
+.modal-carousel-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    background-color: black;
+}
 
-    .modal-carousel-video-wrapper {
-        width: 80%;
-        background-color: black;
-        margin: auto;
-    }
+.modal-carousel-img {
+    max-height: 80vh;
+    width: 80%;
+    margin: auto;
+    background-color: black;
+}
 
-    .modal-carousel-video-landscape {
-        height: 720px;
-        width: 1280px;
-        background-color: black;
-        margin: auto;
-        padding-bottom: 1%;
-    }
+.modal-carousel-video-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+    background-color: black;
+}
 
-    .modal-carousel-video-portrait {
-        height: 854px;
-        width: 480px;
-        background-color: black;
-        margin: auto;
-        padding-bottom: 1%;
-    }
+.modal-carousel-video-landscape {
+    height: 45vw;
+    width: 85vw;
+    background-color: black;
+    margin: 0 auto;
+}
 
-    .modal-carousel-control-prev {
-        width: 10%;
-        //background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 0.1));
-    }
+.modal-carousel-video-portrait {
+    height: 80vh;
+    width: 45vh;
+    background-color: black;
+    margin: 0 auto;
+}
 
-    .modal-carousel-control-next {
-        width: 10%;
-        //background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 1));
-    }
+.modal-carousel-control-prev {
+    width: 10%;
+    //background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(255, 255, 255, 0.1));
+}
 
-    .modal-header {
-        height: 60px;
-    }
+.modal-carousel-control-next {
+    width: 10%;
+    //background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 1));
+}
+
+.modal-header {
+    height: 60px;
+}

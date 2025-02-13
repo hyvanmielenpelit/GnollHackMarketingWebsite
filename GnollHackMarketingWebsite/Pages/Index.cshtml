@@ -46,30 +46,11 @@
 
 
 <section class="left-section orc-hunter">
-    <div class="features-text">
-        <h2>Gameplay Video</h2>
-        <p class="info-text">A showcase video of GnollHack for Windows played by Nookrium.</p>
-        <div class="videoContainer">
-            @await Html.PartialAsync("_Carousel", Model.MediaItems)
-            @* <div class="videoWrapper"> *@
-            @*     <iframe src="https://www.youtube.com/embed/2E0JERYB-rI?si=KwGwoPYRubjv8dKe" *@
-            @*             title="YouTube video player" frameborder="0" *@
-            @*             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" *@
-            @*             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen> *@
-            @*     </iframe> *@
-            @* </div> *@
     <div class="backdrop">
         <div class="features-text">
-            <h2>Gameplay Video</h2>
-            <p class="info-text">A showcase video of GnollHack for Windows played by Nookrium.</p>
-            <div class="videoContainer">
-                <div class="videoWrapper">
-                    <iframe src="https://www.youtube.com/embed/2E0JERYB-rI?si=KwGwoPYRubjv8dKe"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                    </iframe>
-                </div>
+            <h2>Videos and Screenshots</h2>
+            <div class="carousel-container">
+            @await Html.PartialAsync("_Carousel", Model.MediaItems)
             </div>
         </div>
     </div>
@@ -138,3 +119,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script src="~/js/carousel.es5.min.js" asp-append-version="true" type="text/javascript"></script>
+}
