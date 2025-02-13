@@ -305,7 +305,7 @@ h3 {
     .orc-hunter {
         background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
         background-position-x: right;
-        height: calc(60vw + 100px);
+        height: calc(60vw + 200px);
     }
 
     .female-mage {
@@ -569,7 +569,8 @@ a.free {
     }
 
     @media only screen and (orientation: portrait) {
-
+        display:flex;
+        justify-content:center;
     }
 }
 

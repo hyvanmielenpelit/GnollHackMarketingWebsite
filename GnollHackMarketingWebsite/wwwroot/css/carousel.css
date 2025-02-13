@@ -13,7 +13,7 @@
 @media only screen and (orientation: portrait) {
   .main-carousel-container {
     padding: 25px;
-    width: 92vw;
+    width: 85vw;
     height: 50vw;
   }
 }
@@ -40,8 +40,8 @@
 }
 @media only screen and (orientation: portrait) {
   .main-carousel-video-landscape {
-    width: 75vw;
-    height: 42.1875vw;
+    width: 70vw;
+    height: 39.375vw;
   }
 }
 
