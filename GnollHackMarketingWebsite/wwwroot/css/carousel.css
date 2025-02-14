@@ -147,14 +147,14 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  width: 80%;
+  width: 70vw;
   height: 80vh;
   background-color: black;
 }
 
 .modal-carousel-video-landscape {
-  height: 42.1875vw;
-  width: 75vw;
+  height: 39.375vw;
+  width: 70vw;
   background-color: black;
   margin: 0 auto;
 }

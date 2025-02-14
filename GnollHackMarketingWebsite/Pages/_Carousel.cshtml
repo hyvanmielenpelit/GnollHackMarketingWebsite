@@ -7,7 +7,7 @@
         @foreach (var index in Model.Select((_, index) => index))
         {
             <button type="button" data-bs-target="#carouselComponent" data-bs-slide-to="@index"
-                    class="@(index == 0 ? "active" : "")" aria-label="Slide @(index + 1)">
+            class="@(index == 0 ? "active" : "")" aria-label="Slide @(index + 1)">
             </button>
         }
     </div>
@@ -22,30 +22,30 @@
                     @if (mediaOrientation == "landscape")
                     {
                         <img src="@mediaUrl" class="main-carousel-img"
-                             data-bs-toggle="modal" data-bs-target="#fullscreenModal"
-                             data-src="@mediaUrl" alt="Slide @(index + 1)">
+                        data-bs-toggle="modal" data-bs-target="#fullscreenModal"
+                        data-src="@mediaUrl" alt="Slide @(index + 1)">
                     }
                     else if (mediaOrientation == "portrait")
                     {
                         <img src="@mediaUrl" class="main-carousel-img"
-                             data-bs-toggle="modal" data-bs-target="#fullscreenModal"
-                             data-src="@mediaUrl" alt="Slide @(index + 1)">
+                        data-bs-toggle="modal" data-bs-target="#fullscreenModal"
+                        data-src="@mediaUrl" alt="Slide @(index + 1)">
                     }
                 }
                 else if (mediaType == "video")
                 {
                     @if (mediaOrientation == "landscape")
                     {
-                        <iframe src="@mediaUrl" class="main-carousel-video-landscape" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        <iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="main-carousel-video-landscape" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                         </iframe>
                     }
                     else if (mediaOrientation == "portrait")
                     {
-                        <iframe src="@mediaUrl" class="main-carousel-video-portrait" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                        <iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="main-carousel-video-portrait" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                         </iframe>
                     }
                 }
@@ -85,17 +85,24 @@
                                     <div class="modal-carousel-video-wrapper">
                                         @if (mediaOrientation == "landscape")
                                         {
-                                            <iframe src="@mediaUrl" class="d-block modal-carousel-video-landscape" frameborder="0"
+                                            <div id="modalPlayer@(index)" class="modalPlayer d-block modal-carousel-video-landscape" 
+                                            data-video-id="@mediaUrl" frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen ></div>
+                                            @* <iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="d-block modal-carousel-video-landscape" frameborder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                            </iframe>
+                                            </iframe> *@
                                         }
                                         else if (mediaOrientation == "portrait")
                                         {
-                                            <iframe src="@mediaUrl" class="d-block modal-carousel-video-portrait" frameborder="0"
+@*                                             <iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="d-block modal-carousel-video-portrait" frameborder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                            </iframe>
+                                            </iframe> *@
+                                            <div id="modalPlayer@(index)" class="modalPlayer d-block modal-carousel-video-portrait"
+                                                 data-video-id="@mediaUrl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>
                                         }
                                     </div>
                                 }

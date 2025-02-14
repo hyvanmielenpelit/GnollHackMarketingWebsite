@@ -15,13 +15,15 @@ namespace GnollHackMarketingWebsite.Pages
 
         public void OnGet()
         {
+            //
+
             MediaItems =
             [
-                ("video", "https://www.youtube.com/embed/2E0JERYB-rI", "landscape"), // Use embed URL for YouTube
+                ("video", "2E0JERYB-rI", "landscape"), // Use embed URL for YouTube
                 ("image", "/img/slide1.png", "landscape"),
                 ("image", "/img/slide2.png", "landscape"),
                 ("image", "/img/slide3.png", "landscape"),
-                ("video", "https://www.youtube.com/embed/kTEjgzAQ2YQ", "portrait") // Use portrait for YouTube Shorts
+                ("video", "kTEjgzAQ2YQ", "portrait") // Use portrait for YouTube Shorts
             ];
         }
     }
