@@ -15,6 +15,7 @@
     var modal = document.getElementById('fullscreenModal');
     modal.addEventListener('show.bs.modal', () => {
         $("section.orc-hunter").height("100vh");
+
     });
     modal.addEventListener('hide.bs.modal', () => {
         $("section.orc-hunter").height("");

@@ -108,23 +108,35 @@
 }
 
 .modal-body {
-    padding: 5%;
+    padding: min(5%, 5px);
     background-color: black;
+    display: flex;
+    align-items: center;
 }
 
 .modal-carousel-container {
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 95%;
     margin: auto;
     background-color: black;
 }
 
 .modal-carousel-img {
-    max-height: 80vh;
-    width: 80%;
+    height: 45vw;
+    width: 80vw;
     margin: auto;
+    background-color: black;
+}
+
+.modal-carousel-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 80%;
+    height: 80vh;
     background-color: black;
 }
 
@@ -134,13 +146,13 @@
     justify-content: center;
     margin: 0 auto;
     width: 80%;
-    height: 100%;
+    height: 80vh;
     background-color: black;
 }
 
 .modal-carousel-video-landscape {
-    height: 45vw;
-    width: 85vw;
+    height: 42.1875vw;
+    width: 75vw;
     background-color: black;
     margin: 0 auto;
 }

@@ -76,7 +76,9 @@
                             <div class="carousel-item @(index == 0 ? "active" : "")">
                                 @if (mediaType == "image")
                                 {
-                                    <img src="@mediaUrl" class="d-block modal-carousel-img" alt="Slide @(index + 1)">
+                                    <div class="modal-carousel-image-wrapper">
+                                        <img src="@mediaUrl" class="d-block modal-carousel-img" alt="Slide @(index + 1)">
+                                    </div>
                                 }
                                 else if (mediaType == "video")
                                 {
