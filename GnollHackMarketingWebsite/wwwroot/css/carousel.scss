@@ -123,13 +123,6 @@
     background-color: black;
 }
 
-.modal-carousel-img {
-    height: 45vw;
-    width: 80vw;
-    margin: auto;
-    background-color: black;
-}
-
 .modal-carousel-image-wrapper {
     display: flex;
     align-items: center;
@@ -137,6 +130,13 @@
     margin: 0 auto;
     width: 80%;
     height: 80vh;
+    background-color: black;
+}
+
+.modal-carousel-img {
+    height: min(45vw, 80vh);
+    width: min(80vw, 142.22vh);
+    margin: auto;
     background-color: black;
 }
 
@@ -151,8 +151,8 @@
 }
 
 .modal-carousel-video-landscape {
-    height: 39.375vw;
-    width: 70vw;
+    height: min(39.375vw, 80vh);
+    width: min(70vw, 142.22vh);
     background-color: black;
     margin: 0 auto;
 }
