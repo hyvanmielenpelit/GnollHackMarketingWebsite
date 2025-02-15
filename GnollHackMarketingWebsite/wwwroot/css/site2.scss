@@ -87,7 +87,7 @@ h1 {
     }
 
     @media only screen and (orientation: portrait) {
-        font-size: 64px;
+        font-size: 58px;
     }
 
     margin-top: 48px;
@@ -102,7 +102,7 @@ h2 {
     }
 
     @media only screen and (orientation: portrait) {
-        font-size: 54px;
+        font-size: 50px;
     }
 
     margin-top: 32px;
@@ -357,11 +357,11 @@ h5 {
         background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
 
         @media only screen and (max-width: 360px) {
-            height: 630px;
+            height: 680px;
         }
 
         @media only screen and (min-width: 361px) and (max-width: 460px) {
-            height: calc(918px - 80vw);
+            height: calc(1148px - 130vw);
         }
 
         @media only screen and (min-width: 461px) {
@@ -372,7 +372,7 @@ h5 {
     .barbarian {
         background-image: url(/img/Barbarian-shaded2-w1920-q60.jpg);
         background-position-x: right;
-        height: 560px;
+        height: 580px;
     }
 
     .dwarf-monk {
