@@ -105,75 +105,62 @@ body {
   background-color: black;
   text-align: center;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
+}
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
+  body {
+    font-size: 20px;
+  }
 }
 
 h1 {
+  font-size: 58px;
   margin-top: 48px;
   margin-bottom: 0px;
 }
-@media only screen and (orientation: landscape) {
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
   h1 {
     font-size: 72px;
   }
 }
-@media only screen and (orientation: portrait) {
-  h1 {
-    font-size: 58px;
-  }
-}
 
 h2 {
+  font-size: 48px;
   margin-top: 32px;
   margin-bottom: 9px;
 }
-@media only screen and (orientation: landscape) {
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
   h2 {
     font-size: 64px;
   }
 }
-@media only screen and (orientation: portrait) {
-  h2 {
-    font-size: 50px;
-  }
-}
 
 h3 {
+  font-size: 34px;
   margin-bottom: 9px;
 }
-@media only screen and (orientation: landscape) {
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
   h3 {
     font-size: 42px;
   }
 }
-@media only screen and (orientation: portrait) {
-  h3 {
-    font-size: 36px;
-  }
-}
 
 h4 {
+  font-size: 24px;
   margin-bottom: 9px;
 }
-@media only screen and (orientation: landscape) {
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
   h4 {
     font-size: 26px;
   }
 }
-@media only screen and (orientation: portrait) {
-  h4 {
-    font-size: 24px;
-  }
-}
 
-@media only screen and (orientation: landscape) {
+h5 {
+  font-size: 21px;
+}
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
   h5 {
     font-size: 23px;
-  }
-}
-@media only screen and (orientation: portrait) {
-  h5 {
-    font-size: 21px;
   }
 }
 
@@ -266,9 +253,8 @@ h4 {
 
 @media only screen and (orientation: landscape) {
   .general-section, .full-section, .left-section, .right-section {
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position-y: top;
     display: flex;
     align-items: center;
   }
@@ -394,7 +380,12 @@ h4 {
 .legal-text {
   color: #888888;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: min(max(1.3vw, 14px), 21px);
+  font-size: 14px;
+}
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
+  .legal-text {
+    font-size: 21px;
+  }
 }
 
 .legal-text a, .legal-text a:visited, .legal-text a:hover {
@@ -409,45 +400,9 @@ h4 {
   padding: 0px 10px;
 }
 
-.videoContainer {
-  margin: 0 auto;
-}
-.videoContainer .videoWrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-}
-.videoContainer .videoWrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.videoContainer .videoWrapperPortrait {
-  position: relative;
-  padding-right: 56.25%;
-  width: 0;
-}
-.videoContainer .videoWrapperPortrait iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.info-text {
-  font-style: italic;
-  font-size: min(max(0.9vw, 12px), 18px);
-  margin: 8px;
-  text-align: center;
-}
-
 .list-container {
   display: flex;
   justify-content: center;
-  font-size: 20px;
 }
 
 .consent {
@@ -464,17 +419,21 @@ h4 {
   text-align: left;
   padding: 12px;
   background-color: #222;
+  font-size: 12px;
+}
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
+  .consent {
+    font-size: 14px;
+  }
 }
 @media only screen and (orientation: landscape) {
   .consent {
-    font-size: 15px;
-    width: 300px;
+    width: min(max(25vw, 220px), 310px);
   }
 }
 @media only screen and (orientation: portrait) {
   .consent {
-    font-size: 14px;
-    width: 250px;
+    width: min(max(50vw, 220px), 310px);
   }
 }
 .consent .text-container {
@@ -609,9 +568,14 @@ a.free:hover {
 .important-link {
   margin-top: 18px;
   font-weight: 600;
-  font-size: 28px;
+  font-size: 22px;
   color: #ffb;
   text-shadow: 2px 2px 4px #ff3;
+}
+@media only screen and (orientation: landscape) and (min-width: 1500px) {
+  .important-link {
+    font-size: 28px;
+  }
 }
 .important-link a {
   color: #ffb;
