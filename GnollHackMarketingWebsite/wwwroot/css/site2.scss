@@ -123,12 +123,11 @@ h5 {
     @include font-sizes(21px, 23px);
 }
 
-@media only screen and (orientation: portrait) {
-    .picture {
-        height: min(100vh,calc(100vw*1.288)); /* Multiplier must be portrait image height/width */
-        max-width: 100%;
-    }
+.picture {
+    width: 100%;
+}
 
+@media only screen and (orientation: portrait) {
     #mainpic2 {
         display: inline-block !important;
     }
@@ -139,11 +138,6 @@ h5 {
 }
 
 @media only screen and (orientation: landscape) {
-    .picture {
-        height: min(100vh,calc(100vw*9/16));
-        max-width: 100%;
-    }
-
     #mainpic1 {
         display: inline-block !important;
     }

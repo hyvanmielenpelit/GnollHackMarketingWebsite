@@ -164,11 +164,11 @@ h5 {
   }
 }
 
+.picture {
+  width: 100%;
+}
+
 @media only screen and (orientation: portrait) {
-  .picture {
-    height: min(100vh, 128.8vw); /* Multiplier must be portrait image height/width */
-    max-width: 100%;
-  }
   #mainpic2 {
     display: inline-block !important;
   }
@@ -177,10 +177,6 @@ h5 {
   }
 }
 @media only screen and (orientation: landscape) {
-  .picture {
-    height: min(100vh, 56.25vw);
-    max-width: 100%;
-  }
   #mainpic1 {
     display: inline-block !important;
   }
