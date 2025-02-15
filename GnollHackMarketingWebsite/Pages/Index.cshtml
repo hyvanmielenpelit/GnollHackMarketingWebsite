@@ -3,9 +3,11 @@
 @{
     ViewData["Title"] = "";
 }
-
-<img id="mainpic1" src="~/img/GH_WEBSITE_KANSIKUVA_LANDSCAPE_20250210_shaded-q60.jpg" alt="GnollHack" class="picture" />
-<img id="mainpic2" src="~/img/GH_WEBSITE_KANSIKUVA_PORTRAIT_20250212_shaded-w1080-q60.jpg" alt="GnollHack" class="picture" style="display:none;" />
+ <picture class="picture">
+    <source srcset="~/img/gnollhack-image-landscape-w2560-q60.jpg" media="(orientation: landscape)" />
+    <source srcset="~/img/gnollhack-image-portrait-w1080-q60.jpg" media="(orientation: portrait)" />
+    <img src="~/img/gnollhack-image-landscape-w2560-q60.jpg" alt="GnollHack" class="picture" />
+</picture>
 
 <section class="right-section orc-assassin">
     <div class="backdrop">

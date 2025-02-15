@@ -168,22 +168,6 @@ h5 {
   width: 100%;
 }
 
-@media only screen and (orientation: portrait) {
-  #mainpic2 {
-    display: inline-block !important;
-  }
-  #mainpic1 {
-    display: none !important;
-  }
-}
-@media only screen and (orientation: landscape) {
-  #mainpic1 {
-    display: inline-block !important;
-  }
-  #mainpic2 {
-    display: none !important;
-  }
-}
 .features-text {
   padding: 20px 0px 20px 0px;
   max-height: 100%;
