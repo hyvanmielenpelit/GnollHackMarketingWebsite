@@ -50,7 +50,7 @@
         <div class="features-text">
             <h2>Videos and Screenshots</h2>
             <div class="carousel-container">
-            @await Html.PartialAsync("_Carousel", Model.MediaItems)
+                @await Html.PartialAsync("_Carousel", Model.MediaItems)
             </div>
         </div>
     </div>
@@ -72,7 +72,16 @@
                 <img src="~/img/gnoll_barbarian_male.png" alt="Gnoll Barbarian" />
             </div>
             <h3>Rich Class and Race System</h3>
-            <h5>13 classes (e.g. wizard, barbarian, or rogue) and 5 races (e.g. human, elf, or gnoll).</h5>
+            <div class="block-centered-text-left-align">
+                <div>
+                    <h5>
+                        <span class="free">13 classes:</span> E.g. wizard, barbarian, and rogue.
+                    </h5>
+                    <h5>
+                        <span class="free">5 races:</span> E.g. human, elf, and gnoll.
+                    </h5>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -120,11 +129,11 @@
     </div>
 </section>
 
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="~/css/carousel.min.css" asp-append-version="true" />
 }
 
-@section Scripts{
+@section Scripts {
     <script src="https://www.youtube.com/iframe_api" type="text/javascript"></script>
     <script src="~/js/carousel.es5.min.js" asp-append-version="true" type="text/javascript"></script>
 }
