@@ -40,22 +40,12 @@
                             data-video-id="@mediaUrl" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerpolicy="strict-origin-when-cross-origin" allowfullscreen ></div>
-
-                        @* <iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="main-carousel-video-landscape" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                        </iframe> *@
                     }
                     else if (mediaOrientation == "portrait")
                     {
                         <div id="thumbnailPlayer@(index)" class="thumbnailPlayer main-carousel-video-portrait"
                             data-video-id="@mediaUrl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>
-                            
-                            @*<iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="main-carousel-video-portrait" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                    </iframe> *@
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>                            
                     }
                 }
                 </div>
