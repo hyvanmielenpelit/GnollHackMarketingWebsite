@@ -468,23 +468,22 @@ h5 {
   position: absolute;
   transform: rotate(40deg);
   z-index: 100;
+  background-color: black;
 }
 @media only screen and (orientation: landscape) {
   .download-link-container span.beta {
     top: 3px;
-    right: -16px;
-    font-size: min(max(2vw, 14px), 28px);
-    line-height: min(max(2vw, 14px), 28px);
-    background-color: black;
+    right: calc(-1 * min(max(0.6vw, 3px), 15px));
+    font-size: min(max(1.8vw, 14px), 28px);
+    line-height: min(max(1.8vw, 14px), 28px);
   }
 }
 @media only screen and (orientation: portrait) {
   .download-link-container span.beta {
     top: 3px;
-    right: min(max(-2.5vw, -16px), -8px);
-    font-size: min(max(6vw, 18px), 28px);
-    line-height: min(max(6vw, 18px), 28px);
-    text-shadow: black 3px 3px 6px;
+    right: min(max(-2.5vw, -16px), -10px);
+    font-size: min(max(6vw, 24px), 28px);
+    line-height: min(max(6vw, 24px), 28px);
   }
 }
 
