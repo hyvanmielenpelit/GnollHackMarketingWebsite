@@ -463,33 +463,30 @@ h5 {
     }
 
     .coming-soon {
-        display: inline-block;
+        @extend .cinzel-700;
+        color: red;
+        position: absolute;
+        transform: rotate(40deg);
+        z-index: 100;
+        line-height: 1em;
+        padding: 2px;
+        text-align: center;
+
+        @media only screen and (orientation: landscape) {
+            top: 3px;
+            right: calc(3px + -1 * min(max(0.2vw, 0px), 20px));
+            font-size: min(max(1.1vw, 8px), 20px);
+        }
+
+        @media only screen and (orientation: portrait) {
+            top: 3px;
+            right: calc(0px + -1 * min(max(2.5vw, 0px), 10px));
+            font-size: min(max(5vw, 10px), 18px);
+        }
 
         .coming-soon-inner {
-            @extend .cinzel-700;
-            color: red;
-            position: absolute;
-            transform: rotate(40deg);
-            z-index: 100;
-            line-height: 1em;
-            text-align: center;
-
-            @media only screen and (orientation: landscape) {
-                top: 3px;
-                right: calc(3px + -1 * min(max(0.2vw, 0px), 20px));
-                font-size: min(max(0.9vw, 8px), 16px);
-            }
-
-            @media only screen and (orientation: portrait) {
-                top: 3px;
-                right: calc(0px + -1 * min(max(2.5vw, 0px), 10px));
-                font-size: min(max(5vw, 10px), 18px);
-            }
-
-            .coming-soon-inner2 {
-                background-color: black;
-                display: inline-block;
-            }
+            background-color: black;
+            display: inline-block;
         }
     }
 }
@@ -526,7 +523,7 @@ h5 {
 
         &.steam {
             border-width: 2px;
-            border-color: #a6a6a6;
+            border-color: #a8a8a8;
             border-radius: 12px;
         }
 
