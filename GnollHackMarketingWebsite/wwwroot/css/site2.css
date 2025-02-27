@@ -492,7 +492,6 @@ h5 {
   transform: rotate(40deg);
   z-index: 100;
   line-height: 1em;
-  padding: 2px;
   text-align: center;
 }
 @media only screen and (orientation: landscape) {
@@ -510,8 +509,9 @@ h5 {
   }
 }
 .download-link-container .coming-soon .coming-soon-inner {
-  background-color: black;
   display: inline-block;
+  background-color: black;
+  padding: 1px;
 }
 
 .shiny-borders {
