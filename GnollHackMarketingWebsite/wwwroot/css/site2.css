@@ -20,7 +20,7 @@
   font-style: normal;
 }
 
-.cinzel-700, h3, h2, h1 {
+.cinzel-700, .download-link-container .coming-soon .coming-soon-inner, h3, h2, h1 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -486,6 +486,35 @@ h5 {
     line-height: min(max(6vw, 24px), 28px);
   }
 }
+.download-link-container .coming-soon {
+  display: inline-block;
+}
+.download-link-container .coming-soon .coming-soon-inner {
+  color: red;
+  position: absolute;
+  transform: rotate(40deg);
+  z-index: 100;
+  line-height: 1em;
+  text-align: center;
+}
+@media only screen and (orientation: landscape) {
+  .download-link-container .coming-soon .coming-soon-inner {
+    top: 3px;
+    right: calc(3px + -1 * min(max(0.2vw, 0px), 20px));
+    font-size: min(max(0.9vw, 8px), 16px);
+  }
+}
+@media only screen and (orientation: portrait) {
+  .download-link-container .coming-soon .coming-soon-inner {
+    top: 3px;
+    right: calc(0px + -1 * min(max(2.5vw, 0px), 10px));
+    font-size: min(max(5vw, 10px), 18px);
+  }
+}
+.download-link-container .coming-soon .coming-soon-inner .coming-soon-inner2 {
+  background-color: black;
+  display: inline-block;
+}
 
 .shiny-borders {
   border-style: solid;
@@ -515,6 +544,11 @@ h5 {
   border-width: 2px;
   border-color: #d2d2d2;
   border-radius: 0px;
+}
+.shiny-borders.steam {
+  border-width: 2px;
+  border-color: #a6a6a6;
+  border-radius: 12px;
 }
 .shiny-borders:hover {
   box-shadow: 0px 0px 12px #ddf;

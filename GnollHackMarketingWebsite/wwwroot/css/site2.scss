@@ -461,77 +461,87 @@ h5 {
             line-height: min(max(6vw, 24px), 28px);
         }
     }
-}
 
-.shiny-borders {
-    border-style: solid;
-    margin: 0px 5px;
+    .coming-soon {
+        display: inline-block;
 
-    @media only screen and (orientation: landscape) {
-        height: min(max(6vw, 50px), 100px);
-    }
+        .coming-soon-inner {
+            @extend .cinzel-700;
+            color: red;
+            position: absolute;
+            transform: rotate(40deg);
+            z-index: 100;
+            line-height: 1em;
+            text-align: center;
 
-    @media only screen and (orientation: portrait) {
-        max-width: min(80vw, 290px);
-    }
+            @media only screen and (orientation: landscape) {
+                top: 3px;
+                right: calc(3px + -1 * min(max(0.2vw, 0px), 20px));
+                font-size: min(max(0.9vw, 8px), 16px);
+            }
 
-    &.google-play {
-        border-width: 2px;
-        border-color: #a6a6a6;
-        border-radius: 12px;
-    }
+            @media only screen and (orientation: portrait) {
+                top: 3px;
+                right: calc(0px + -1 * min(max(2.5vw, 0px), 10px));
+                font-size: min(max(5vw, 10px), 18px);
+            }
 
-    &.apple-app-store {
-        border-width: 2px;
-        border-color: #b2b4b6;
-        border-radius: 12px;
-    }
-
-    &.microsoft-store {
-        border-width: 2px;
-        border-color: #d2d2d2;
-        border-radius: 0px;
-    }
-
-    &:hover {
-        box-shadow: 0px 0px 12px #ddf;
+            .coming-soon-inner2 {
+                background-color: black;
+                display: inline-block;
+            }
+        }
     }
 }
 
-.free {
-    text-transform: uppercase;
-    color: #ffb;
-    text-shadow: 2px 2px 4px #ff3;
-}
+    .shiny-borders {
+        border-style: solid;
+        margin: 0px 5px;
 
-a.free {
-    color: #ffb;
+        @media only screen and (orientation: landscape) {
+            height: min(max(6vw, 50px), 100px);
+        }
 
-    &:visited, &:active {
+        @media only screen and (orientation: portrait) {
+            max-width: min(80vw, 290px);
+        }
+
+        &.google-play {
+            border-width: 2px;
+            border-color: #a6a6a6;
+            border-radius: 12px;
+        }
+
+        &.apple-app-store {
+            border-width: 2px;
+            border-color: #b2b4b6;
+            border-radius: 12px;
+        }
+
+        &.microsoft-store {
+            border-width: 2px;
+            border-color: #d2d2d2;
+            border-radius: 0px;
+        }
+
+        &.steam {
+            border-width: 2px;
+            border-color: #a6a6a6;
+            border-radius: 12px;
+        }
+
+        &:hover {
+            box-shadow: 0px 0px 12px #ddf;
+        }
+    }
+
+    .free {
+        text-transform: uppercase;
         color: #ffb;
+        text-shadow: 2px 2px 4px #ff3;
     }
 
-    &:hover {
-        color: lighten(#ffb, 5%);
-    }
-}
-
-.whatis {
-    font-weight: bold;
-}
-
-.readmore {
-    padding: 20px 10px 0px 10px;
-}
-
-.important-link {
-    margin-top: 18px;
-    font-weight: 600;
-    @include font-sizes(22px, 28px);
-    color: #ffb;
-    text-shadow: 2px 2px 4px #ff3;
-
-    a {
+    a.free {
         color: #ffb;
 
         &:visited, &:active {
@@ -542,30 +552,57 @@ a.free {
             color: lighten(#ffb, 5%);
         }
     }
-}
 
-.portrait-only {
-    @media only screen and (orientation: landscape) {
-        display: none;
+    .whatis {
+        font-weight: bold;
     }
 
-    @media only screen and (orientation: portrait) {
-        display: inline-block;
-    }
-}
-
-.carousel-container {
-    @media only screen and (orientation: landscape) {
+    .readmore {
+        padding: 20px 10px 0px 10px;
     }
 
-    @media only screen and (orientation: portrait) {
+    .important-link {
+        margin-top: 18px;
+        font-weight: 600;
+        @include font-sizes(22px, 28px);
+        color: #ffb;
+        text-shadow: 2px 2px 4px #ff3;
+
+        a {
+            color: #ffb;
+
+            &:visited, &:active {
+                color: #ffb;
+            }
+
+            &:hover {
+                color: lighten(#ffb, 5%);
+            }
+        }
+    }
+
+    .portrait-only {
+        @media only screen and (orientation: landscape) {
+            display: none;
+        }
+
+        @media only screen and (orientation: portrait) {
+            display: inline-block;
+        }
+    }
+
+    .carousel-container {
+        @media only screen and (orientation: landscape) {
+        }
+
+        @media only screen and (orientation: portrait) {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .block-centered-text-left-align {
         display: flex;
         justify-content: center;
+        text-align: left;
     }
-}
-
-.block-centered-text-left-align {
-    display: flex;
-    justify-content: center;
-    text-align: left;
-}
