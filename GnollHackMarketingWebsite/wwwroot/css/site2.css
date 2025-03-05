@@ -20,7 +20,7 @@
   font-style: normal;
 }
 
-.cinzel-700, .download-link-container .coming-soon, h3, h2, h1 {
+.cinzel-700, .download-link-container .playtest, .download-link-container .coming-soon, .download-link-container span.beta, h3, h2, h1 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -34,7 +34,7 @@
   font-style: normal;
 }
 
-.cinzel-900, .download-link-container span.beta {
+.cinzel-900 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 900;
@@ -538,7 +538,7 @@ h5 {
 @media (orientation: landscape) and (min-width: 751px) {
   .download-link-container span.beta {
     top: 3px;
-    right: calc(-1 * min(max(min(2560px, 100vw) * 0.6 / 100, 3px), 15px));
+    right: calc(0px - min(max(min(2560px, 100vw) * 0.6 / 100, 3px), 15px));
     font-size: min(max(min(2560px, 100vw) * 1.8 / 100, 14px), 28px);
     line-height: 1em;
   }
@@ -562,18 +562,45 @@ h5 {
 @media (orientation: landscape) and (min-width: 751px) {
   .download-link-container .coming-soon {
     top: 3px;
-    right: calc(3px + -1 * min(max(min(2560px, 100vw) * 0.2 / 100, 0px), 20px));
+    right: calc(3px - min(max(min(2560px, 100vw) * 0.2 / 100, 0px), 20px));
     font-size: min(max(min(2560px, 100vw) * 1.1 / 100, 8px), 20px);
   }
 }
 @media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .download-link-container .coming-soon {
     top: 3px;
-    right: calc(0px + -1 * min(max(min(2560px, 100vw) * 2.5 / 100, 0px), 10px));
+    right: calc(0px - min(max(min(2560px, 100vw) * 2.5 / 100, 0px), 10px));
     font-size: min(max(min(2560px, 100vw) * 5 / 100, 10px), 18px);
   }
 }
 .download-link-container .coming-soon .coming-soon-inner {
+  display: inline-block;
+  background-color: black;
+  padding: 1px;
+}
+.download-link-container .playtest {
+  color: red;
+  position: absolute;
+  transform: rotate(40deg);
+  z-index: 100;
+  line-height: 1em;
+  text-align: center;
+}
+@media (orientation: landscape) and (min-width: 751px) {
+  .download-link-container .playtest {
+    top: -6px;
+    right: calc(3px - min(max(min(2560px, 100vw) * 1.5 / 100, 0px), 30px));
+    font-size: min(max(min(2560px, 100vw) * 1.3 / 100, 9px), 24px);
+  }
+}
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+  .download-link-container .playtest {
+    top: -6px;
+    right: calc(-3px - min(max(min(2560px, 100vw) * 4.5 / 100, 0px), 20px));
+    font-size: min(max(min(2560px, 100vw) * 5 / 100, 10px), 20px);
+  }
+}
+.download-link-container .playtest .playtest-inner {
   display: inline-block;
   background-color: black;
   padding: 1px;
