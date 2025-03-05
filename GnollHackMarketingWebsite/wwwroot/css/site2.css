@@ -107,10 +107,24 @@ body {
   color: white;
   font-size: 16px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   body {
     font-size: 20px;
   }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  body {
+    font-size: 32px;
+  }
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  max-width: 2560px;
 }
 
 h1 {
@@ -118,9 +132,14 @@ h1 {
   margin-top: 48px;
   margin-bottom: 0px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   h1 {
     font-size: 72px;
+  }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  h1 {
+    font-size: 115.2px;
   }
 }
 
@@ -129,9 +148,14 @@ h2 {
   margin-top: 32px;
   margin-bottom: 9px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   h2 {
     font-size: 64px;
+  }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  h2 {
+    font-size: 102.4px;
   }
 }
 
@@ -139,9 +163,14 @@ h3 {
   font-size: 34px;
   margin-bottom: 9px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   h3 {
     font-size: 42px;
+  }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  h3 {
+    font-size: 67.2px;
   }
 }
 
@@ -149,25 +178,51 @@ h4 {
   font-size: 24px;
   margin-bottom: 9px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   h4 {
     font-size: 26px;
+  }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  h4 {
+    font-size: 41.6px;
   }
 }
 
 h5 {
   font-size: 21px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   h5 {
     font-size: 23px;
   }
 }
+@media (orientation: landscape) and (min-width: 2600px) {
+  h5 {
+    font-size: 36.8px;
+  }
+}
 
-.picture {
+.landscape-picture, .portrait-picture {
   width: 100%;
 }
 
+@media (orientation: landscape) and (min-width: 751px) {
+  .landscape-picture {
+    display: block !important;
+  }
+  .portrait-picture {
+    display: none !important;
+  }
+}
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+  .landscape-picture {
+    display: none !important;
+  }
+  .portrait-picture {
+    display: block !important;
+  }
+}
 .features-text {
   padding: 20px 0px 20px 0px;
   max-height: 100%;
@@ -176,7 +231,7 @@ h5 {
   text-align: center;
   font-variant: small-caps;
 }
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .features-text h2:first-child {
     margin-top: 0px;
     padding-top: 0px;
@@ -216,12 +271,12 @@ h5 {
   text-align: left;
 }
 
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .backdrop {
     padding: 25px 5px;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .backdrop {
     backdrop-filter: brightness(40%) blur(3px);
     height: 100%;
@@ -231,7 +286,7 @@ h5 {
   }
 }
 
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .general-section, .full-section, .left-section, .right-section {
     background-size: cover;
     background-repeat: no-repeat;
@@ -239,7 +294,7 @@ h5 {
     align-items: center;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .general-section, .full-section, .left-section, .right-section {
     background-size: cover;
     background-repeat: no-repeat;
@@ -249,103 +304,103 @@ h5 {
   }
 }
 
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .right-section {
-    min-height: 56.25vw;
+    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
   .right-section .features-text {
-    margin-left: 35vw;
-    max-width: 65vw;
+    margin-left: calc(min(2560px, 100vw) * 35 / 100);
+    max-width: calc(min(2560px, 100vw) * 65 / 100);
   }
 }
 
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .left-section {
     display: flex;
     justify-content: end;
   }
   .left-section .features-text {
-    margin-right: 35vw;
-    max-width: 65vw;
+    margin-right: calc(min(2560px, 100vw) * 35 / 100);
+    max-width: calc(min(2560px, 100vw) * 65 / 100);
   }
 }
 
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .orc-assassin {
     background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
-    min-height: 56.25vw;
+    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
   .orc-hunter {
     background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
-    min-height: 56.25vw;
+    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
   .orc-hunter .features-text {
-    margin-right: 40vw;
-    max-width: 50vw;
+    margin-right: calc(min(2560px, 100vw) * 40 / 100);
+    max-width: calc(min(2560px, 100vw) * 50 / 100);
   }
   .female-mage {
     background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
-    min-height: 56.25vw;
+    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
   .female-mage .features-text {
-    margin-left: 45vw;
-    width: 50vw;
+    margin-left: calc(min(2560px, 100vw) * 45 / 100);
+    width: calc(min(2560px, 100vw) * 50 / 100);
   }
   .barbarian {
     background-image: url(/img/Barbarian-shaded2-w1920-q60.jpg);
-    min-height: 56.25vw;
+    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
   .barbarian .features-text {
-    margin-right: 40vw;
-    width: min(max(50vw, 300px), 720px);
+    margin-right: calc(min(2560px, 100vw) * 40 / 100);
+    width: calc(min(2560px, 100vw) * 50 / 100);
   }
   .dwarf-monk {
     background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
-    min-height: 56.25vw;
+    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
   .dwarf-monk .features-text {
-    margin-left: 40vw;
-    width: 50vw;
+    margin-left: calc(min(2560px, 100vw) * 40 / 100);
+    width: calc(min(2560px, 100vw) * 50 / 100);
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .orc-assassin {
     background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
     background-position-x: -140px;
-    height: 950px;
+    height: 1050px;
   }
   .orc-hunter {
     background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
     background-position-x: right;
-    height: calc(60vw + 200px);
+    height: calc(min(2560px, 100vw) * 60 / 100 + 200px);
   }
   .female-mage {
     background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
   }
 }
-@media only screen and (orientation: portrait) and (max-width: 360px) {
+@media only screen and (orientation: portrait) and (max-width: 360px), only screen and (orientation: landscape) and (max-width: 750px) and (max-width: 360px) {
   .female-mage {
     height: 680px;
   }
 }
-@media only screen and (orientation: portrait) and (min-width: 361px) and (max-width: 460px) {
+@media only screen and (orientation: portrait) and (min-width: 361px) and (max-width: 460px), only screen and (orientation: landscape) and (max-width: 750px) and (min-width: 361px) and (max-width: 460px) {
   .female-mage {
-    height: calc(1148px - 130vw);
+    height: calc(1148px - min(2560px, 100vw) * 130 / 100);
   }
 }
-@media only screen and (orientation: portrait) and (min-width: 461px) {
+@media only screen and (orientation: portrait) and (min-width: 461px), only screen and (orientation: landscape) and (max-width: 750px) and (min-width: 461px) {
   .female-mage {
     height: 550px;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .barbarian {
     background-image: url(/img/Barbarian-shaded2-w1920-q60.jpg);
     background-position-x: right;
     height: 580px;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .dwarf-monk {
     background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
     background-position-x: -270px;
@@ -362,9 +417,14 @@ h5 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   .legal-text {
     font-size: 21px;
+  }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  .legal-text {
+    font-size: 33.6px;
   }
 }
 
@@ -401,19 +461,24 @@ h5 {
   background-color: #222;
   font-size: 12px;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   .consent {
     font-size: 14px;
   }
 }
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 2600px) {
   .consent {
-    width: min(max(25vw, 220px), 310px);
+    font-size: 22.4px;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: landscape) and (min-width: 751px) {
   .consent {
-    width: min(max(50vw, 220px), 310px);
+    width: min(max(min(2560px, 100vw) * 25 / 100, 220px), 310px);
+  }
+}
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+  .consent {
+    width: min(max(min(2560px, 100vw) * 50 / 100, 220px), 310px);
   }
 }
 .consent .text-container {
@@ -444,12 +509,12 @@ h5 {
 .download-link-outer-container {
   padding: 12px 0px;
 }
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .download-link-outer-container {
     display: inline-block;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .download-link-outer-container {
     display: block;
   }
@@ -470,20 +535,20 @@ h5 {
   z-index: 100;
   background-color: black;
 }
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .download-link-container span.beta {
     top: 3px;
-    right: calc(-1 * min(max(0.6vw, 3px), 15px));
-    font-size: min(max(1.8vw, 14px), 28px);
-    line-height: min(max(1.8vw, 14px), 28px);
+    right: calc(-1 * min(max(min(2560px, 100vw) * 0.6 / 100, 3px), 15px));
+    font-size: min(max(min(2560px, 100vw) * 1.8 / 100, 14px), 28px);
+    line-height: 1em;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .download-link-container span.beta {
     top: 3px;
-    right: min(max(-2.5vw, -16px), -10px);
-    font-size: min(max(6vw, 24px), 28px);
-    line-height: min(max(6vw, 24px), 28px);
+    right: min(max(min(2560px, 100vw) * -2.5 / 100, -16px), -10px);
+    font-size: min(max(min(2560px, 100vw) * 6 / 100, 24px), 28px);
+    line-height: 1em;
   }
 }
 .download-link-container .coming-soon {
@@ -494,18 +559,18 @@ h5 {
   line-height: 1em;
   text-align: center;
 }
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .download-link-container .coming-soon {
     top: 3px;
-    right: calc(3px + -1 * min(max(0.2vw, 0px), 20px));
-    font-size: min(max(1.1vw, 8px), 20px);
+    right: calc(3px + -1 * min(max(min(2560px, 100vw) * 0.2 / 100, 0px), 20px));
+    font-size: min(max(min(2560px, 100vw) * 1.1 / 100, 8px), 20px);
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .download-link-container .coming-soon {
     top: 3px;
-    right: calc(0px + -1 * min(max(2.5vw, 0px), 10px));
-    font-size: min(max(5vw, 10px), 18px);
+    right: calc(0px + -1 * min(max(min(2560px, 100vw) * 2.5 / 100, 0px), 10px));
+    font-size: min(max(min(2560px, 100vw) * 5 / 100, 10px), 18px);
   }
 }
 .download-link-container .coming-soon .coming-soon-inner {
@@ -518,14 +583,14 @@ h5 {
   border-style: solid;
   margin: 0px 5px;
 }
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .shiny-borders {
-    height: min(max(6vw, 50px), 100px);
+    height: min(max(min(2560px, 100vw) * 6 / 100, 50px), 100px);
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .shiny-borders {
-    max-width: min(80vw, 290px);
+    max-width: min(min(2560px, 100vw) * 80 / 100, 290px);
   }
 }
 .shiny-borders.google-play {
@@ -583,9 +648,14 @@ a.free:hover {
   color: #ffb;
   text-shadow: 2px 2px 4px #ff3;
 }
-@media only screen and (orientation: landscape) and (min-width: 1500px) {
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   .important-link {
     font-size: 28px;
+  }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  .important-link {
+    font-size: 44.8px;
   }
 }
 .important-link a {
@@ -598,18 +668,21 @@ a.free:hover {
   color: #ffffd5;
 }
 
-@media only screen and (orientation: landscape) {
+@media (orientation: landscape) and (min-width: 751px) {
   .portrait-only {
     display: none;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .portrait-only {
     display: inline-block;
   }
 }
 
-@media only screen and (orientation: portrait) {
+.carousel-container {
+  display: inline-block;
+}
+@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .carousel-container {
     display: flex;
     justify-content: center;

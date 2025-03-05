@@ -4,11 +4,10 @@
     ViewData["Title"] = "";
 }
 
- <picture class="picture">
-    <source srcset="~/img/gnollhack-image-landscape-w2560-q60.jpg" media="(orientation: landscape)" />
-    <source srcset="~/img/gnollhack-image-portrait-w1080-q60.jpg" media="(orientation: portrait)" />
-    <img src="~/img/gnollhack-image-landscape-w2560-q60.jpg" alt="GnollHack" class="picture" />
-</picture>
+<section class="main-section">
+    <img src="~/img/gnollhack-image-landscape-w2560-q60.jpg" alt="GnollHack" class="landscape-picture" />
+    <img src="~/img/gnollhack-image-portrait-w1080-q60.jpg" alt="GnollHack" class="portrait-picture" style="display:none;" />
+</section>
 
 <section class="right-section orc-assassin">
     <div class="backdrop">
@@ -23,6 +22,11 @@
             <div class="download-link-outer-container">
                 <div class="download-link-container">
                     <a href="https://apps.apple.com/app/gnollhack/id1626979951?utm_source=gnollhack"><img src="~/img/app-store-badge-h200-noborders.png" alt="Download on the App Store" class="shiny-borders apple-app-store" /></a>
+                </div>
+            </div>
+            <div class="download-link-outer-container">
+                <div class="download-link-container">
+                    <a href="https://apps.microsoft.com/store/detail/9P6SBLH8ZR41?utm_source=gnollhack"><img src="~/img/microsoft-store-h200-noborders.png" alt="Get it from Microsoft" class="shiny-borders microsoft-store" /><span class="beta">BETA</span></a>
                 </div>
             </div>
             <div class="download-link-outer-container">
