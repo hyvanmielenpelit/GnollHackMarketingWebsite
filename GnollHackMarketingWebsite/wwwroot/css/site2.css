@@ -175,17 +175,17 @@ h3 {
 }
 
 h4 {
-  font-size: 24px;
+  font-size: 20px;
   margin-bottom: 9px;
 }
 @media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
   h4 {
-    font-size: 26px;
+    font-size: 22px;
   }
 }
 @media (orientation: landscape) and (min-width: 2600px) {
   h4 {
-    font-size: 41.6px;
+    font-size: 35.2px;
   }
 }
 
@@ -307,6 +307,7 @@ h5 {
 @media (orientation: landscape) and (min-width: 751px) {
   .right-section {
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
+    background-position: left;
   }
   .right-section .features-text {
     margin-left: calc(min(2560px, 100vw) * 35 / 100);
@@ -318,6 +319,7 @@ h5 {
   .left-section {
     display: flex;
     justify-content: end;
+    background-position: right;
   }
   .left-section .features-text {
     margin-right: calc(min(2560px, 100vw) * 35 / 100);
@@ -351,13 +353,31 @@ h5 {
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
   .barbarian .features-text {
-    margin-right: calc(min(2560px, 100vw) * 40 / 100);
+    margin-right: calc(min(2560px, 100vw) * 46 / 100);
     width: calc(min(2560px, 100vw) * 50 / 100);
   }
   .dwarf-monk {
     background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
+  .dwarf-monk .features-text {
+    margin-left: calc(min(2560px, 100vw) * 56 / 100);
+    width: calc(min(2560px, 100vw) * 40 / 100);
+  }
+}
+@media (orientation: landscape) and (min-width: 751px) {
+  .dwarf-monk {
+    background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
+    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
+  }
+}
+@media (orientation: landscape) and (min-width: 751px) and (max-width: 1499px) {
+  .dwarf-monk .features-text {
+    margin-left: calc(min(2560px, 100vw) * 56 / 100);
+    width: calc(min(2560px, 100vw) * 40 / 100);
+  }
+}
+@media (orientation: landscape) and (min-width: 1500px) {
   .dwarf-monk .features-text {
     margin-left: calc(min(2560px, 100vw) * 40 / 100);
     width: calc(min(2560px, 100vw) * 50 / 100);
@@ -399,8 +419,6 @@ h5 {
     background-position-x: right;
     height: 580px;
   }
-}
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
   .dwarf-monk {
     background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
     background-position-x: -270px;
@@ -657,7 +675,7 @@ a.free:visited, a.free:active {
   color: #ffb;
 }
 a.free:hover {
-  color: #ffffd5;
+  color: rgb(255, 255, 212.5);
 }
 
 .whatis {
@@ -692,7 +710,7 @@ a.free:hover {
   color: #ffb;
 }
 .important-link a:hover {
-  color: #ffffd5;
+  color: rgb(255, 255, 212.5);
 }
 
 @media (orientation: landscape) and (min-width: 751px) {

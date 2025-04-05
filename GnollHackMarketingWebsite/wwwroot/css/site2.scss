@@ -73,6 +73,7 @@ $cinzel_weights: 400, 500, 600, 700, 800, 900;
 
 $min-landscape-mode-width: 751px;
 $max-width-default-to-portrait: 750px;
+$normal-font-max-width: 1499px;
 $larger-font-min-width: 1500px;
 $larger-font-max-width: 2599px;
 $max-font-min-width: 2600px;
@@ -93,7 +94,6 @@ $max-view-width: 2560px;
 @function view-width($view-width-units) {
     @return calc(min($max-view-width, 100vw) * $view-width-units / 100);
 }
-
 
 body {
     @extend .lato-regular;
@@ -133,7 +133,7 @@ h3 {
 }
 
 h4 {
-    @include font-sizes(24px, 26px);
+    @include font-sizes(20px, 22px);
     margin-bottom: 9px;
 }
 
@@ -261,6 +261,7 @@ h5 {
 
     @media (orientation: landscape) and (min-width: $min-landscape-mode-width) {
         min-height: view-width(56.25);
+        background-position: left;
 
         .features-text {
             margin-left: view-width(35);
@@ -275,6 +276,7 @@ h5 {
     @media (orientation: landscape) and (min-width: $min-landscape-mode-width) {
         display: flex;
         justify-content: end;
+        background-position: right;
 
         .features-text {
             margin-right: view-width(35);
@@ -314,7 +316,7 @@ h5 {
         min-height: view-width(56.25);
 
         .features-text {
-            margin-right: view-width(40);
+            margin-right: view-width(46);
             width: view-width(50);
         }
     }
@@ -324,11 +326,37 @@ h5 {
         min-height: view-width(56.25);
 
         .features-text {
+            margin-left: view-width(56);
+            width: view-width(40);
+        }
+    }
+}
+
+@media (orientation: landscape) and (min-width: $min-landscape-mode-width) {
+    .dwarf-monk {
+        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
+        min-height: view-width(56.25);
+    }
+}
+
+@media (orientation: landscape) and (min-width: $min-landscape-mode-width) and (max-width: $normal-font-max-width) {
+    .dwarf-monk {
+        .features-text {
+            margin-left: view-width(56);
+            width: view-width(40);
+        }
+    }
+}
+
+@media (orientation: landscape) and (min-width: $larger-font-min-width) {
+    .dwarf-monk {
+        .features-text {
             margin-left: view-width(40);
             width: view-width(50);
         }
     }
 }
+
 
 @media (orientation: portrait), (orientation: landscape) and (max-width: $max-width-default-to-portrait) {
     .orc-assassin {
