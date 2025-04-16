@@ -19,11 +19,15 @@ namespace GnollHackMarketingWebsite.Pages
 
             MediaItems =
             [
-                ("video", "2E0JERYB-rI", "landscape"), // Use embed URL for YouTube
+                ("video", "5Ep88IYkLhs", "landscape"),
                 ("image", "/img/slide1.png", "landscape"),
                 ("image", "/img/slide2.png", "landscape"),
-                ("image", "/img/slide3.png", "landscape"),
-                ("video", "kTEjgzAQ2YQ", "portrait") // Use portrait for YouTube Shorts
+                ("image", "/img/steam_screenshot1.jpg", "landscape"),
+                ("image", "/img/steam_screenshot2.jpg", "landscape"),
+                ("image", "/img/steam_screenshot3.jpg", "landscape"),
+                ("image", "/img/steam_screenshot4.jpg", "landscape"),
+                ("image", "/img/steam_screenshot5.jpg", "landscape"),
+                ("video", "2E0JERYB-rI", "landscape"),
             ];
         }
     }
