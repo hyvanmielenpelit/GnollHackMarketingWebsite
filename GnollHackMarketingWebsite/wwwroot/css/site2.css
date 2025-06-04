@@ -1,4 +1,4 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
 .cinzel-400 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
@@ -20,7 +20,7 @@
   font-style: normal;
 }
 
-.cinzel-700, .download-link-tooltip, .download-link-container .playtest, .download-link-container .coming-soon, .download-link-container span.beta, h3, h2, h1 {
+.cinzel-700, .download-link-container .playtest, .download-link-container .coming-soon, .download-link-container span.beta, h3, h2, h1 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -36,6 +36,62 @@
 
 .cinzel-900 {
   font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.mona-sans-200 {
+  font-family: "Mona Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.mona-sans-300 {
+  font-family: "Mona Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.mona-sans-400 {
+  font-family: "Mona Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.mona-sans-500, .download-link-tooltip {
+  font-family: "Mona Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.mona-sans-600 {
+  font-family: "Mona Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.mona-sans-700 {
+  font-family: "Mona Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.mona-sans-800 {
+  font-family: "Mona Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.mona-sans-900 {
+  font-family: "Mona Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
@@ -626,9 +682,9 @@ h5 {
 
 .download-link-tooltip {
   font-size: 18px;
-  --bs-tooltip-padding-x: 10px;
+  --bs-tooltip-padding-x: 15px;
   --bs-tooltip-padding-y: 5px;
-  --bs-tooltip-max-width: min(500px, 90vw);
+  --bs-tooltip-max-width: min(500px, 85vw);
   border: 2px solid #a6a6a6;
   border-radius: 5px;
   box-shadow: 0px 0px 6px #ddf;

@@ -1,12 +1,23 @@
 ﻿@use 'sass:color';
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap');
 
 $cinzel_weights: 400, 500, 600, 700, 800, 900;
 
 @each $weight in $cinzel_weights {
     .cinzel-#{$weight} {
         font-family: "Cinzel", serif;
+        font-optical-sizing: auto;
+        font-weight: $weight;
+        font-style: normal;
+    }
+}
+
+$mona_sans_weights: 200, 300, 400, 500, 600, 700, 800, 900;
+
+@each $weight in $mona_sans_weights {
+    .mona-sans-#{$weight} {
+        font-family: "Mona Sans", sans-serif;
         font-optical-sizing: auto;
         font-weight: $weight;
         font-style: normal;
@@ -72,6 +83,8 @@ $cinzel_weights: 400, 500, 600, 700, 800, 900;
     font-weight: 900;
     font-style: italic;
 }
+
+
 
 $min-landscape-mode-width: 751px;
 $max-width-default-to-portrait: 750px;
@@ -589,11 +602,11 @@ h5 {
 }
 
 .download-link-tooltip {
-    @extend .cinzel-700;
+    @extend .mona-sans-500;
     @include font-sizes(18px, 24px);
-    --bs-tooltip-padding-x: 10px;
+    --bs-tooltip-padding-x: 15px;
     --bs-tooltip-padding-y: 5px;
-    --bs-tooltip-max-width: min(500px, 90vw);
+    --bs-tooltip-max-width: min(500px, 85vw);
     border: 2px solid #a6a6a6;
     border-radius: 5px;
     box-shadow: 0px 0px 6px #ddf;
