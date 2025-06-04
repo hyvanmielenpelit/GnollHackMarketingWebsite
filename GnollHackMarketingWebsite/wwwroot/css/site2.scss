@@ -1,4 +1,6 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+﻿@use 'sass:color';
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 $cinzel_weights: 400, 500, 600, 700, 800, 900;
 
@@ -586,6 +588,17 @@ h5 {
     }
 }
 
+.download-link-tooltip {
+    @extend .cinzel-700;
+    @include font-sizes(18px, 24px);
+    --bs-tooltip-padding-x: 10px;
+    --bs-tooltip-padding-y: 5px;
+    --bs-tooltip-max-width: min(500px, 90vw);
+    border: 2px solid #a6a6a6;
+    border-radius: 5px;
+    box-shadow: 0px 0px 6px #ddf;
+}
+
 .shiny-borders {
     border-style: solid;
     margin: 0px 5px;
@@ -619,6 +632,12 @@ h5 {
     &.steam {
         border-width: 2px;
         border-color: #a8a8a8;
+        border-radius: 12px;
+    }
+
+    &.github-releases {
+        border-width: 2px;
+        border-color: #a6a6a6;
         border-radius: 12px;
     }
 

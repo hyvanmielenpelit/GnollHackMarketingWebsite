@@ -20,7 +20,7 @@
   font-style: normal;
 }
 
-.cinzel-700, .download-link-container .playtest, .download-link-container .coming-soon, .download-link-container span.beta, h3, h2, h1 {
+.cinzel-700, .download-link-tooltip, .download-link-container .playtest, .download-link-container .coming-soon, .download-link-container span.beta, h3, h2, h1 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -624,6 +624,26 @@ h5 {
   padding: 1px;
 }
 
+.download-link-tooltip {
+  font-size: 18px;
+  --bs-tooltip-padding-x: 10px;
+  --bs-tooltip-padding-y: 5px;
+  --bs-tooltip-max-width: min(500px, 90vw);
+  border: 2px solid #a6a6a6;
+  border-radius: 5px;
+  box-shadow: 0px 0px 6px #ddf;
+}
+@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+  .download-link-tooltip {
+    font-size: 24px;
+  }
+}
+@media (orientation: landscape) and (min-width: 2600px) {
+  .download-link-tooltip {
+    font-size: 38.4px;
+  }
+}
+
 .shiny-borders {
   border-style: solid;
   margin: 0px 5px;
@@ -656,6 +676,11 @@ h5 {
 .shiny-borders.steam {
   border-width: 2px;
   border-color: #a8a8a8;
+  border-radius: 12px;
+}
+.shiny-borders.github-releases {
+  border-width: 2px;
+  border-color: #a6a6a6;
   border-radius: 12px;
 }
 .shiny-borders:hover {
