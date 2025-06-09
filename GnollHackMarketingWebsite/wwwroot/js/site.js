@@ -15,4 +15,20 @@ $(function () {
     if (localStorage.getItem("consentOKClicked") === null || localStorage.getItem("consentOKClicked") === false) {
         $("#consentDiv").show();
     }
+    $("body").on("click", function (event) {
+        var currentTooltipElement = $(event.target).closest('div[data-bs-toggle="tooltip"]');
+        var clickHasTooltip = currentTooltipElement.length > 0;
+        if (clickHasTooltip) {
+            //console.log("Clicked tooltip button: ", currentTooltipElement[0]);
+        }
+        else {
+            //console.log("No button associated with click.");
+        }
+        tooltipList.forEach(tooltip => {
+            if (!clickHasTooltip || currentTooltipElement[0] !== tooltip._element) {
+                tooltip.hide();
+                //console.log("Hiding tooltip for element:", tooltip._element);
+            }
+        });
+    });
 });
