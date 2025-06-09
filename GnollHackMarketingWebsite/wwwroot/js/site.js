@@ -2,7 +2,10 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl,
+    {
+        fallbackPlacements: ['bottom']
+    }));
 
 $(function () {
     $("#consentButton").on("click", function () {
