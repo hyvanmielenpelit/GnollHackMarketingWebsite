@@ -302,12 +302,12 @@ h5 {
 
 @media (orientation: landscape) and (min-width: $min-landscape-mode-width) {
     .orc-assassin {
-        background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
+        background-image: url(/img/HalfOrcAssassin-w1920.webp);
         min-height: view-width(56.25);
     }
 
     .orc-hunter {
-        background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
+        background-image: url(/img/OrcHunter-shaded-flipped-w1920.webp);
         min-height: view-width(56.25);
 
         .features-text {
@@ -317,7 +317,7 @@ h5 {
     }
 
     .female-mage {
-        background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
+        background-image: url(/img/WomanMage-shaded2-w1920.webp);
         min-height: view-width(56.25);
 
         .features-text {
@@ -327,7 +327,7 @@ h5 {
     }
 
     .barbarian {
-        background-image: url(/img/Barbarian-shaded2-w1920-q60.jpg);
+        background-image: url(/img/Barbarian-shaded2-w1920.webp);
         min-height: view-width(56.25);
 
         .features-text {
@@ -337,7 +337,7 @@ h5 {
     }
 
     .dwarf-monk {
-        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
+        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);
         min-height: view-width(56.25);
 
         .features-text {
@@ -349,7 +349,7 @@ h5 {
 
 @media (orientation: landscape) and (min-width: $min-landscape-mode-width) {
     .dwarf-monk {
-        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
+        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);
         min-height: view-width(56.25);
     }
 }
@@ -375,19 +375,19 @@ h5 {
 
 @media (orientation: portrait), (orientation: landscape) and (max-width: $max-width-default-to-portrait) {
     .orc-assassin {
-        background-image: url(/img/HalfOrcAssassin-w1920-q60.jpg);
+        background-image: url(/img/HalfOrcAssassin-w1920.webp);
         background-position-x: -140px;
         height: 1040px;
     }
 
     .orc-hunter {
-        background-image: url(/img/OrcHunter-shaded-flipped-w1920-q60.jpg);
+        background-image: url(/img/OrcHunter-shaded-flipped-w1920.webp);
         background-position-x: right;
         height: calc(view-width(60) + 200px);
     }
 
     .female-mage {
-        background-image: url(/img/WomanMage-shaded2-w1920-q60.jpg);
+        background-image: url(/img/WomanMage-shaded2-w1920.webp);
 
         @media only screen and (max-width: 360px) {
             height: 680px;
@@ -403,13 +403,13 @@ h5 {
     }
 
     .barbarian {
-        background-image: url(/img/Barbarian-shaded2-w1920-q60.jpg);
+        background-image: url(/img/Barbarian-shaded2-w1920.webp);
         background-position-x: right;
         height: 580px;
     }
 
     .dwarf-monk {
-        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920-q60.jpg);
+        background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);
         background-position-x: -270px;
         height: 900px;
     }

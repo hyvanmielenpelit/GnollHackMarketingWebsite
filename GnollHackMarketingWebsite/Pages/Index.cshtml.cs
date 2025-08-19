@@ -20,13 +20,13 @@ namespace GnollHackMarketingWebsite.Pages
             MediaItems =
             [
                 ("video", "5Ep88IYkLhs", "landscape"),
-                ("image", "/img/slide1.png", "landscape"),
-                ("image", "/img/slide2.png", "landscape"),
-                ("image", "/img/steam_screenshot1.jpg", "landscape"),
-                ("image", "/img/steam_screenshot2.jpg", "landscape"),
-                ("image", "/img/steam_screenshot3.jpg", "landscape"),
-                ("image", "/img/steam_screenshot4.jpg", "landscape"),
-                ("image", "/img/steam_screenshot5.jpg", "landscape"),
+                ("image", "/img/slide1.webp", "landscape"),
+                ("image", "/img/slide2.webp", "landscape"),
+                ("image", "/img/steam_screenshot1.webp", "landscape"),
+                ("image", "/img/steam_screenshot2.webp", "landscape"),
+                ("image", "/img/steam_screenshot3.webp", "landscape"),
+                ("image", "/img/steam_screenshot4.webp", "landscape"),
+                ("image", "/img/steam_screenshot5.webp", "landscape"),
                 ("video", "2E0JERYB-rI", "landscape"),
             ];
         }
