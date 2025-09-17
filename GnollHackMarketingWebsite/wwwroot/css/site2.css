@@ -388,6 +388,15 @@ h5 {
     background-image: url(/img/HalfOrcAssassin-w1920.webp);
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
+  .orc-assassin .description-center {
+    display: flex;
+    justify-content: center;
+  }
+  .orc-assassin .description-center .description {
+    max-width: calc(min(2560px, 100vw) * 40 / 100);
+    text-align: left;
+    font-weight: bold;
+  }
   .orc-hunter {
     background-image: url(/img/OrcHunter-shaded-flipped-w1920.webp);
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
@@ -445,6 +454,14 @@ h5 {
     background-position-x: -140px;
     height: 1040px;
   }
+  .orc-assassin .description-center {
+    display: flex;
+    justify-content: center;
+  }
+  .orc-assassin .description-center .description {
+    text-align: left;
+    font-weight: bold;
+  }
   .orc-hunter {
     background-image: url(/img/OrcHunter-shaded-flipped-w1920.webp);
     background-position-x: right;
@@ -473,7 +490,7 @@ h5 {
   .barbarian {
     background-image: url(/img/Barbarian-shaded2-w1920.webp);
     background-position-x: right;
-    height: 580px;
+    height: 620px;
   }
   .dwarf-monk {
     background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);

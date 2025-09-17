@@ -304,6 +304,17 @@ h5 {
     .orc-assassin {
         background-image: url(/img/HalfOrcAssassin-w1920.webp);
         min-height: view-width(56.25);
+
+        .description-center {
+            display: flex;
+            justify-content: center;
+
+            .description {
+                max-width: view-width(40);
+                text-align: left;
+                font-weight: bold;
+            }
+        }
     }
 
     .orc-hunter {
@@ -378,6 +389,16 @@ h5 {
         background-image: url(/img/HalfOrcAssassin-w1920.webp);
         background-position-x: -140px;
         height: 1040px;
+
+        .description-center {
+            display: flex;
+            justify-content: center;
+
+            .description {
+                text-align: left;
+                font-weight: bold;
+            }
+        }
     }
 
     .orc-hunter {
@@ -405,7 +426,7 @@ h5 {
     .barbarian {
         background-image: url(/img/Barbarian-shaded2-w1920.webp);
         background-position-x: right;
-        height: 580px;
+        height: 620px;
     }
 
     .dwarf-monk {
