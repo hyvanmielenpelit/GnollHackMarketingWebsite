@@ -115,7 +115,7 @@ body {
     background-color: black;
     text-align: center;
     color: white;
-    @include font-sizes(16px, 20px);
+    @include font-sizes(19px, 21px);
 }
 
 .main-container {
@@ -148,12 +148,8 @@ h3 {
 }
 
 h4 {
-    @include font-sizes(20px, 22px);
+    @include font-sizes(19px, 21px);
     margin-bottom: 9px;
-}
-
-h5 {
-    @include font-sizes(21px, 23px);
 }
 
 .landscape-picture, .portrait-picture {
@@ -305,6 +301,10 @@ h5 {
         background-image: url(/img/HalfOrcAssassin-w1920.webp);
         min-height: view-width(56.25);
 
+        @media (max-width: 1024px) {
+            background-position-x: -140px;
+        }
+
         .description-center {
             display: flex;
             justify-content: center;
@@ -331,6 +331,10 @@ h5 {
         background-image: url(/img/WomanMage-shaded2-w1920.webp);
         min-height: view-width(56.25);
 
+        @media (max-width: 1024px) {
+            background-position-x: -50px;
+        }
+
         .features-text {
             margin-left: view-width(45);
             width: view-width(50);
@@ -340,6 +344,10 @@ h5 {
     .barbarian {
         background-image: url(/img/Barbarian-shaded2-w1920.webp);
         min-height: view-width(56.25);
+
+        @media (max-width: 1024px) {
+            background-position: right -90px top 0px;
+        }
 
         .features-text {
             margin-right: view-width(46);
@@ -383,12 +391,11 @@ h5 {
     }
 }
 
-
 @media (orientation: portrait), (orientation: landscape) and (max-width: $max-width-default-to-portrait) {
     .orc-assassin {
         background-image: url(/img/HalfOrcAssassin-w1920.webp);
         background-position-x: -140px;
-        height: 1040px;
+        height: 1100px;
 
         .description-center {
             display: flex;
@@ -409,24 +416,13 @@ h5 {
 
     .female-mage {
         background-image: url(/img/WomanMage-shaded2-w1920.webp);
-
-        @media only screen and (max-width: 360px) {
-            height: 680px;
-        }
-
-        @media only screen and (min-width: 361px) and (max-width: 460px) {
-            height: calc(1148px - view-width(130));
-        }
-
-        @media only screen and (min-width: 461px) {
-            height: 550px;
-        }
+        height: 690px;
     }
 
     .barbarian {
         background-image: url(/img/Barbarian-shaded2-w1920.webp);
         background-position-x: right;
-        height: 650px;
+        height: 700px;
     }
 
     .dwarf-monk {
