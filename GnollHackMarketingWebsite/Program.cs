@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,7 +23,29 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
 app.MapRazorPages()
    .WithStaticAssets();
+
+app.Use((context, next) =>
+{
+    context.Response.OnStarting(() =>
+    {
+        if (context.Request.Path.StartsWithSegments("/css") ||
+            context.Request.Path.StartsWithSegments("/js") ||
+            context.Request.Path.StartsWithSegments("/img") ||
+            context.Request.Path.StartsWithSegments("/lib"))
+        {
+            if (context.Response.Headers["Cache-Control"].Count > 0)
+            {
+                context.Response.Headers.Remove("Cache-Control");
+            }
+            context.Response.Headers["Cache-Control"] = "public,max-age=31536000,immutable";
+        }
+        return Task.CompletedTask;
+    });
+
+    return next(context);
+});
 
 app.Run();
