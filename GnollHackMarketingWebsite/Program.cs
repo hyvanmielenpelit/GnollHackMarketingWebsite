@@ -42,6 +42,14 @@ app.Use((context, next) =>
             }
             context.Response.Headers["Cache-Control"] = "public,max-age=31536000,immutable";
         }
+        else if (context.Request.Path == "/")
+        {
+            if (context.Response.Headers["Cache-Control"].Count > 0)
+            {
+                context.Response.Headers.Remove("Cache-Control");
+            }
+            context.Response.Headers["Cache-Control"] = "no-cache";
+        }
         return Task.CompletedTask;
     });
 
