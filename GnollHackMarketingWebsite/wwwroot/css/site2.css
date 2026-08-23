@@ -290,6 +290,8 @@ h4 {
 .features-text .imgContainer img {
   display: inline-block;
   margin: 0 5px;
+  max-width: 100%;
+  height: auto;
 }
 .features-text .imgContainer.extra-padding {
   padding-top: 30px;

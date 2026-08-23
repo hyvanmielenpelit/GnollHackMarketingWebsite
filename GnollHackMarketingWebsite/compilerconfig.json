@@ -1,10 +1,24 @@
 [
   {
     "outputFile": "wwwroot/css/site2.css",
-    "inputFile": "wwwroot/css/site2.scss"
+    "inputFile": "wwwroot/css/site2.scss",
+    "minify": {
+      "enabled": true,
+      "gzip": false
+    },
+    "options": {
+      "sourceMap": false
+    }
   },
   {
     "outputFile": "wwwroot/css/carousel.css",
-    "inputFile": "wwwroot/css/carousel.scss"
+    "inputFile": "wwwroot/css/carousel.scss",
+    "minify": {
+      "enabled": true,
+      "gzip": false
+    },
+    "options": {
+      "sourceMap": false
+    }
   }
 ]

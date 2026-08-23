@@ -193,6 +193,8 @@ h4 {
         img {
             display: inline-block;
             margin: 0 5px;
+            max-width: 100%;
+            height: auto;
         }
 
         &.extra-padding {

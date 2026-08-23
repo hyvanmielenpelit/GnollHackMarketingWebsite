@@ -18,11 +18,37 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 - Preserve Schema.org `VideoGame` structured data in `_Layout.cshtml`.
 - Maintain `robots.txt` and `sitemap.xml` in `wwwroot/`.
 
-## 4. Publishing & FTP Footprint Optimization
-- Publish Profile: `GnollHackMarketingWebsite/Properties/PublishProfiles/FolderProfile.pubxml` (targets `net10.0`, `win-x64`, `SelfContained=false`).
-- NEVER include `.map` source maps, `.scss` source files, `compilerconfig.json`, or temporary scripts in publish outputs.
+## 4. SCSS Compiling Strategy, Publishing & FTP Footprint
+- **Developer Workflow**: Visual Studio's "Web Compiler 2022+" compiles `.scss` to `.css` and `.min.css` on save (configured via `compilerconfig.json` with source maps and gzip disabled).
+- **AI Agent Workflow**: Agents must manually compile SCSS using Dart Sass via CLI to match Web Compiler output:
+  - `npx sass GnollHackMarketingWebsite/wwwroot/css/<file>.scss GnollHackMarketingWebsite/wwwroot/css/<file>.css --no-source-map`
+  - `npx sass GnollHackMarketingWebsite/wwwroot/css/<file>.scss GnollHackMarketingWebsite/wwwroot/css/<file>.min.css --style=compressed --no-source-map`
+- **Publish Profile**: `FolderProfile.pubxml` (targets `net10.0`, `win-x64`, `SelfContained=false`).
+- **FTP Rules**: The `.csproj` excludes `.scss`, `.map`, and `compilerconfig.*` from publish outputs. NEVER upload these files to the FTP server.
 
-## 5. App Store Badges & Responsive Breakpoints
-- Badge image assets are borderless (`*-noborders.webp`); all borders, corner radii, and hover glows are styled via SCSS (`.shiny-borders`).
-- Badges must preserve aspect ratios: desktop (`>= 768px`) enforces uniform height with natural widths; mobile (`< 768px`) enforces uniform width with natural heights.
-- Always use standard Bootstrap 5 width breakpoints (`$breakpoint-md: 768px`, `@media (min-width: 768px)` / `@media (max-width: 767.98px)`) instead of `orientation: landscape/portrait` queries.
+## 5. Image Assets, Badges & Responsive Aspect-Ratio Preservation
+- **Aspect Ratio Rule**: Whenever an image is stretched out of its original aspect ratio, modify SCSS (and/or HTML dimensions) to make its aspect ratio correct. Measure the intrinsic width and height of the image when needed. **Never modify image files themselves** to resolve aspect ratio issues.
+- **App Store Badges**:
+  - Badge image assets in `wwwroot/img/` are borderless (`*-noborders.webp`); all borders, corner radii, and hover glows are styled via SCSS (`.shiny-borders`).
+  - Badges must preserve aspect ratios: desktop (`>= 768px`) enforces uniform height with natural widths; mobile (`< 768px`) enforces uniform width with natural heights.
+  - Standard Bootstrap 5 breakpoints (`$breakpoint-md: 768px`) must be used instead of `orientation` queries.
+
+| Badge Asset | Dimensions | Aspect Ratio | SCSS Class | Border Styling |
+| :--- | :--- | :--- | :--- | :--- |
+| `google-play-badge-noborders.webp` | 556 &times; 160 px | **3.475** | `.google-play` | `2px solid #a6a6a6`, `border-radius: 12px` |
+| `app-store-badge-h200-noborders.webp` | 617 &times; 200 px | **3.085** | `.apple-app-store` | `2px solid #b2b4b6`, `border-radius: 12px` |
+| `steambadge-noborders.webp` | 556 &times; 160 px | **3.475** | `.steam` | `2px solid #a8a8a8`, `border-radius: 12px` |
+| `GitHubDownloadBadge-NoBorders-h200.webp` | 622 &times; 200 px | **3.110** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` |
+
+- **Feature & Gameplay Icons**:
+  - Maintain intrinsic aspect ratios in HTML (`width` & `height`) and CSS (`max-width: 100%; height: auto;`).
+
+| Icon Asset | Dimensions | Aspect Ratio | Display Density | Target Display Size |
+| :--- | :--- | :--- | :--- | :--- |
+| `human_wizard_female.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px |
+| `human_rogue_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px |
+| `gnoll_barbarian_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px |
+| `stormbringer.webp` | 64 &times; 48 px | **4:3** (1.333) | 1x density | 64 &times; 48 px |
+| `library.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px |
+| `spells.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px |
+

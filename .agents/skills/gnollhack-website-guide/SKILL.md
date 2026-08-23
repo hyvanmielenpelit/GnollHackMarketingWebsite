@@ -54,40 +54,71 @@ The marketing website sits behind **Azure Front Door (AFD)** as a CDN / Edge rev
 
 ---
 
-## 4. Build, SCSS Compilation & Publishing
+## 4. SCSS Compiling Strategy, Publishing & FTP Footprint
 
-- **Build**:
-  ```powershell
-  dotnet build GnollHackMarketingWebsite.slnx
-  ```
-- **SCSS Compilation**:
-  SCSS files in `wwwroot/css/` are compiled to `.css` and `.min.css` using `compilerconfig.json`.
-- **Publishing (`win-x64` / Minimal FTP Size)**:
-  - Profile: `GnollHackMarketingWebsite/Properties/PublishProfiles/FolderProfile.pubxml`
-  - Target: Framework-dependent `win-x64` (`<TargetFramework>net10.0</TargetFramework>`, `<RuntimeIdentifier>win-x64</RuntimeIdentifier>`, `<SelfContained>false</SelfContained>`).
-  - Publish command:
-    ```powershell
-    dotnet publish GnollHackMarketingWebsite\GnollHackMarketingWebsite.csproj /p:PublishProfile=FolderProfile
-    ```
-  - **FTP Footprint Rule**: `.map` source maps, `.scss` source files, `compilerconfig.json`, and legacy ES5 transpilations are excluded from publish output to maintain minimal FTP upload transfer sizes.
+The project enforces a strict SCSS compilation strategy across three distinct workflows to maintain a minimal FTP footprint:
+
+1. **When a Developer Edits SCSS by Hand**:
+   - The **Web Compiler 2022+** Visual Studio extension automatically compiles `.scss` files on save.
+   - Using `compilerconfig.json`, it generates both `.css` and `.min.css` directly in `wwwroot/css/`. Source maps (`.map`) and gzip files are explicitly disabled to keep the workspace clean.
+2. **When an AI Agent Edits SCSS**:
+   - Because Visual Studio extensions do not run in agent environments, AI agents MUST manually compile modified SCSS using Dart Sass via the CLI.
+   - Run the following commands to generate both standard and minified CSS without source maps:
+     ```powershell
+     # For site2.scss
+     npx sass GnollHackMarketingWebsite/wwwroot/css/site2.scss GnollHackMarketingWebsite/wwwroot/css/site2.css --no-source-map
+     npx sass GnollHackMarketingWebsite/wwwroot/css/site2.scss GnollHackMarketingWebsite/wwwroot/css/site2.min.css --style=compressed --no-source-map
+
+     # For carousel.scss
+     npx sass GnollHackMarketingWebsite/wwwroot/css/carousel.scss GnollHackMarketingWebsite/wwwroot/css/carousel.css --no-source-map
+     npx sass GnollHackMarketingWebsite/wwwroot/css/carousel.scss GnollHackMarketingWebsite/wwwroot/css/carousel.min.css --style=compressed --no-source-map
+     ```
+3. **When the Project is Built or Published**:
+   - The pre-compiled `.min.css` files are served by ASP.NET Core as static web assets.
+   - Build command:
+     ```powershell
+     dotnet build GnollHackMarketingWebsite.slnx
+     ```
+   - Publish command:
+     ```powershell
+     dotnet publish GnollHackMarketingWebsite\GnollHackMarketingWebsite.csproj /p:PublishProfile=FolderProfile
+     ```
+   - Target: Framework-dependent `win-x64` (`<TargetFramework>net10.0</TargetFramework>`, `<RuntimeIdentifier>win-x64</RuntimeIdentifier>`, `<SelfContained>false</SelfContained>`).
+   - The `.csproj` explicitly excludes all `.scss`, `.map`, `compilerconfig.json`, and `.defaults` files from publish output (`CopyToPublishDirectory="Never"`).
+   - NEVER include `.map` source maps, `.scss` source files, `compilerconfig.json`, `compilerconfig.*`, or temporary scripts in publish outputs.
 
 ---
 
-## 5. App Store Badges, SCSS Borders & Responsive Breakpoints
+## 5. Image Assets, Badges & Responsive Aspect-Ratio Preservation
 
-- **Borderless Assets**: Badge images in `wwwroot/img/` are borderless (`*-noborders.webp`).
-- **SCSS-Rendered Borders**: All badge borders and radii are styled via SCSS (`.shiny-borders`):
-  - Google Play (`.google-play`): `border: 2px solid #a6a6a6; border-radius: 12px;`
-  - Apple App Store (`.apple-app-store`): `border: 2px solid #b2b4b6; border-radius: 12px;`
-  - Steam (`.steam`): `border: 2px solid #a8a8a8; border-radius: 12px;`
-  - GitHub (`.github-releases`): `border: 2px solid #a6a6a6; border-radius: 12px;`
-  - Hover Effect: `&:hover { box-shadow: 0px 0px 12px #ddf; }`
-- **Asset Dimensions & Density**:
-  - Google Play: 556 &times; 160 px (aspect ratio 3.475)
-  - Apple App Store: 617 &times; 200 px (aspect ratio 3.085)
-  - Steam: 556 &times; 160 px (aspect ratio 3.475)
-  - GitHub Releases: 622 &times; 200 px (aspect ratio 3.110)
-- **Responsive Aspect-Ratio Rules**:
-  - **Desktop (`>= 768px` / `md+`)**: Badges share identical height (`height: min(max(view-width(6), 50px), 80px)`), with `width: auto; object-fit: contain` so widths naturally scale to maintain exact aspect ratios without distortion.
-  - **Mobile (`< 768px` / `< md`)**: Badges share identical width (`width: min(view-width(80), 280px)`), with `height: auto; object-fit: contain` so heights adjust proportionally.
-- **Breakpoints**: Always use standard Bootstrap 5 width breakpoints (`$breakpoint-md: 768px`, `@media (min-width: 768px)` and `@media (max-width: 767.98px)`) rather than brittle `@media (orientation: landscape/portrait)` queries.
+### Mandatory Rule for Image Sizing & Aspect Ratios
+- **Always Resolve via SCSS / HTML**: Whenever an image is stretched out of its original aspect ratio, you need to modify SCSS (and/or HTML dimensions) to make its aspect ratio correct. For this, measure the intrinsic width and height of the image (e.g. by inspecting image headers).
+- **Never Modify Image Files**: Never edit, crop, re-encode, or alter the image files themselves to resolve aspect ratio issues.
+
+### A. App Store Badges (Borderless Assets + SCSS Borders)
+Badge image assets in `wwwroot/img/` are borderless (`*-noborders.webp`); all borders, corner radii, and hover glows are styled exclusively via SCSS (`.shiny-borders`).
+
+| Badge Asset | Source Dimensions | Aspect Ratio (W/H) | SCSS Class | Border Styling | Desktop (`>= 768px`) | Mobile (`< 768px`) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `google-play-badge-noborders.webp` | 556 &times; 160 px | **3.475** | `.google-play` | `2px solid #a6a6a6`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
+| `app-store-badge-h200-noborders.webp` | 617 &times; 200 px | **3.085** | `.apple-app-store` | `2px solid #b2b4b6`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
+| `steambadge-noborders.webp` | 556 &times; 160 px | **3.475** | `.steam` | `2px solid #a8a8a8`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
+| `GitHubDownloadBadge-NoBorders-h200.webp` | 622 &times; 200 px | **3.110** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
+
+- **Badge Hover Effect**: `&:hover { box-shadow: 0px 0px 12px #ddf; }`
+- **Desktop (`>= 768px`)**: Badges share identical height (`height: min(max(view-width(6), 50px), 80px)`), with `width: auto; object-fit: contain` so widths naturally scale to maintain exact aspect ratios.
+- **Mobile (`< 768px`)**: Badges share identical width (`width: min(view-width(80), 280px)`), with `height: auto; object-fit: contain` so heights adjust proportionally.
+- **Breakpoints**: Always use standard Bootstrap 5 width breakpoints (`$breakpoint-md: 768px`, `@media (min-width: 768px)` and `@media (max-width: 767.98px)`) rather than brittle `orientation` media queries.
+
+### B. Feature & Gameplay Icons (1x Density & Scaled Sprites)
+
+| Icon Asset | Source Dimensions | Aspect Ratio (W:H) | Display Density | Target Display Size | Usage Location |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `human_wizard_female.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px | Features (Challenge Your Wits) |
+| `human_rogue_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px | Features (Modernized for Today's Players) |
+| `gnoll_barbarian_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px | Features (Endless Replayability) |
+| `stormbringer.webp` | 64 &times; 48 px | **4:3** (1.333) | 1x density | 64 &times; 48 px | Features (Free and Accessible) |
+| `library.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px | Gameplay Information (mobile portrait) |
+| `spells.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px | Community (mobile portrait) |
+
+- **Container Rule**: `.features-text .imgContainer img` uses `max-width: 100%; height: auto;` alongside explicit HTML `width` and `height` attributes to prevent distortion and allow smooth responsive downscaling.
