@@ -1,0 +1,53 @@
+@model List<(string, string, string)>
+
+@* Fullscreen Modal *@
+<div class="modal fade modal-container" id="fullscreenModal" tabindex="-1" role="dialog" aria-modal="true" aria-label="Fullscreen Media Gallery" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div id="modalCarousel" class="carousel slide modal-carousel-container" data-bs-ride="false">
+                    <div class="carousel-inner">
+                        @foreach (var (mediaType, mediaUrl, mediaOrientation, index) in Model.Select((item, index) => (item.Item1, item.Item2, item.Item3, index)))
+                        {
+                            <div class="carousel-item @(index == 0 ? "active" : "")">
+                            @if (mediaType == "image")
+                            {
+                                <div class="modal-carousel-image-wrapper">
+                                    <img src="@mediaUrl" class="d-block modal-carousel-img" alt="GnollHack Screenshot @(index + 1)" loading="lazy">
+                                </div>
+                            }
+                            else if (mediaType == "video")
+                            {
+                                <div class="modal-carousel-video-wrapper">
+                                    <div id="modalPlayerContainer@(index)"
+                                         class="video-poster-container modalPlayerContainer @(mediaOrientation == "landscape" ? "modal-carousel-video-landscape" : "modal-carousel-video-portrait")"
+                                         data-video-id="@mediaUrl" data-index="@index">
+                                        <div id="modalPlayer@(index)" class="modal-player-slot"></div>
+                                        <img class="video-poster-img"
+                                             src="https://img.youtube.com/vi/@mediaUrl/maxresdefault.jpg"
+                                             alt="GnollHack Video Poster @(index + 1)"
+                                             loading="lazy" width="1280" height="720">
+                                        <button type="button" class="video-play-btn" aria-label="Play Video">
+                                             <svg viewBox="0 0 68 48" class="video-play-icon" width="68" height="48" aria-hidden="true">
+                                                 <path class="video-play-bg" d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#f00"/>
+                                                 <path d="M45 24 27 14v20" fill="#fff"/>
+                                             </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev modal-carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev" aria-label="Previous Slide">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next modal-carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next" aria-label="Next Slide">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

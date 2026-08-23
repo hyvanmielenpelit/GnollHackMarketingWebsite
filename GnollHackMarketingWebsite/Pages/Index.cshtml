@@ -160,6 +160,8 @@
     </div>
 </section>
 
+@await Html.PartialAsync("_FullscreenModal", Model.MediaItems)
+
 @section Styles {
     <link rel="stylesheet" href="~/css/carousel.min.css" asp-append-version="true" />
 }

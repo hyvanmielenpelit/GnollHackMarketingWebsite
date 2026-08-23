@@ -143,8 +143,8 @@ public class CssSpecificationTests
         // Modal media elevation shadows
         Assert.Contains("box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);", carouselCss);
 
-        // Modal wrappers are transparent
-        Assert.Contains(".modal-dialog {\n  margin: auto;\n  background: transparent;\n}", carouselCss);
+        // Modal dialog has 100dvh and transparent background
+        Assert.Contains(".modal-dialog {\n  margin: 0;\n  width: 100vw;\n  max-width: 100vw;\n  height: 100%;\n  height: 100dvh;\n  background: transparent;\n}", carouselCss);
     }
 
     [Fact]
@@ -153,8 +153,9 @@ public class CssSpecificationTests
         var cssDir = GetWwwRootPath();
         var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
 
-        // Containment
+        // Containment & dynamic viewport
         Assert.Contains("contain: layout paint;", carouselCss);
+        Assert.Contains("100dvh", carouselCss);
 
         // Horizontally centered controls and vertically centered indicators
         Assert.Contains(".main-carousel-control-prev", carouselCss);

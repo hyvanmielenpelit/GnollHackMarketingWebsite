@@ -86,6 +86,11 @@ function playVideoInModal(container) {
 }
 
 $(function () {
+    var modalElement = document.getElementById('fullscreenModal');
+    if (modalElement && modalElement.parentNode !== document.body) {
+        document.body.appendChild(modalElement);
+    }
+
     var thumbnailCarouselElement = document.getElementById('carouselComponent');
     var modalCarouselElement = document.getElementById('modalCarousel');
     if (!thumbnailCarouselElement || !modalCarouselElement) return;

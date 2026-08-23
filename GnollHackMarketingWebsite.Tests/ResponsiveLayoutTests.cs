@@ -147,4 +147,48 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
 
         await context.CloseAsync();
     }
+
+    [Fact]
+    public async Task FullscreenModal_OnMobileViewport_OpensAtRootAndCoversFullViewport()
+    {
+        Assert.NotNull(_browser);
+        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+        {
+            ViewportSize = new ViewportSize { Width = 360, Height = 800 }
+        });
+
+        var page = await context.NewPageAsync();
+        await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+
+        // Click first carousel item to open modal
+        var firstItem = page.Locator("#carouselComponent .carousel-item.active img, #carouselComponent .carousel-item.active .video-poster-container").First;
+        await firstItem.ClickAsync();
+
+        // Wait for modal to become visible
+        var modal = page.Locator("#fullscreenModal");
+        await Assertions.Expect(modal).ToBeVisibleAsync();
+
+        // Verify modal bounding box covers full 360x800 viewport
+        var modalBox = await modal.BoundingBoxAsync();
+        Assert.NotNull(modalBox);
+        Assert.Equal(0, modalBox.X);
+        Assert.Equal(0, modalBox.Y);
+        Assert.Equal(360, modalBox.Width);
+        Assert.Equal(800, modalBox.Height);
+
+        // Verify modal is direct child of body (not trapped inside a section with backdrop-filter)
+        var isDirectBodyChild = await page.EvaluateAsync<bool>(@"() => {
+            const modal = document.getElementById('fullscreenModal');
+            return modal && modal.parentNode === document.body;
+        }");
+        Assert.True(isDirectBodyChild, "fullscreenModal must be a direct child of document.body");
+
+        // Verify close button closes modal
+        var closeBtn = page.Locator("#fullscreenModal .btn-close");
+        await closeBtn.ClickAsync();
+        await Assertions.Expect(modal).ToBeHiddenAsync();
+
+        await context.CloseAsync();
+    }
 }
+
