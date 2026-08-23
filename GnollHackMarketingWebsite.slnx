@@ -8,4 +8,5 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="GnollHackMarketingWebsite/GnollHackMarketingWebsite.csproj" />
+  <Project Path="GnollHackMarketingWebsite.Tests/GnollHackMarketingWebsite.Tests.csproj" />
 </Solution>

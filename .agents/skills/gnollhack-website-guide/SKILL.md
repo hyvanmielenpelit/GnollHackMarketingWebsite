@@ -122,3 +122,44 @@ Badge image assets in `wwwroot/img/` are borderless (`*-noborders.webp`); all bo
 | `spells.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px | Community (mobile portrait) |
 
 - **Container Rule**: `.features-text .imgContainer img` uses `max-width: 100%; height: auto;` alongside explicit HTML `width` and `height` attributes to prevent distortion and allow smooth responsive downscaling.
+
+---
+
+## 6. Dynamic Section Heights, Vertical Centering & Responsive Typography
+
+To ensure complete stability across all viewport sizes (from 320px mobile to ultra-wide displays):
+
+1. **Dynamic Section Heights**:
+   - Never use fixed `height: ...px` on content-containing sections. Content wraps differently across device widths and will overflow or collide with adjacent sections if constrained.
+   - Use dynamic height (`height: auto; min-height: auto;` or proportional `min-height`) with flexbox layouts.
+2. **Vertical Centering**:
+   - Use `display: flex; flex-direction: column; justify-content: center; align-items: center;` in `.general-section` and `.backdrop`.
+   - Apply dynamic vertical padding to `.backdrop` (`padding: clamp(30px, 6vh, 50px) 20px;`) so content is always vertically centered with adequate breathing room at top and bottom.
+### Typography Proportions & Viewport Scale Reference
+
+| Element | Mobile (< 400px)<br>*(e.g., 360px)* | Mobile / Phablet<br>*(400px – 530px)* | Tablet & Standard Desktop<br>*(530px – 1499px)* | Large Screens / QHD<br>*(1500px – 2599px)* | Ultra-Wide / 4K<br>*(≥ 2600px)* | Target Ratio vs. Body |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`body`** | **`19px`** | **`19px`** | **`19px`** | **`21px`** | **`24px`** | **1.00&times;** |
+| **`h1`** | **`44px`** *(clamp min)* | `44px` &rarr; `58px` *(fluid)* | **`58px`** | **`64px`** | **`73px`** | **~3.05&times;** |
+| **`h2`** | **`38px`** *(clamp min)* | `38px` &rarr; `48px` *(fluid)* | **`48px`** | **`53px`** | **`61px`** | **~2.53&times;** |
+| **`h3`** | **`27px`** *(clamp min)* | `27px` &rarr; `34px` *(fluid)* | **`34px`** | **`38px`** | **`43px`** | **~1.79&times;** |
+| **`h4`** | **`18px`** *(clamp min)* | `18px` &rarr; `19px` *(fluid)* | **`19px`** | **`21px`** | **`24px`** | **1.00&times;** |
+
+---
+
+## 7. Automated CSS Specification & Responsive UI Testing
+
+The solution includes a dedicated automated test suite in `GnollHackMarketingWebsite.Tests/` using the 3-Layer UI Testing Pyramid:
+
+- **Layer 1: Static CSS Rule & AST Tests (`CssSpecificationTests.cs`)**:
+  - Validates that compiled `site2.css` and `carousel.css` adhere to the typography scale, mobile dynamic height rules, and overflow guards.
+  - Validates that minified assets exist and forbidden files (`.map`, `.gz`) are not created.
+- **Layer 2: Real-Browser Computed Style & Overflow Tests (`ResponsiveLayoutTests.cs`)**:
+  - Uses Playwright + `WebApplicationFactory` to spin up headless Chromium.
+  - Validates `scrollWidth <= innerWidth` across canonical viewports (`320px`, `360px`, `390px`, `430px`, `768px`, `1920px`, `3840px`).
+  - Validates `getComputedStyle()` font-sizes at run time.
+
+**Running Tests**:
+```powershell
+dotnet test GnollHackMarketingWebsite.slnx
+```

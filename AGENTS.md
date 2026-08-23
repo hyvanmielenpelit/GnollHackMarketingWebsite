@@ -52,3 +52,21 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 | `library.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px |
 | `spells.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px |
 
+## 6. Dynamic Section Heights, Centering & Fluid Typography
+- **No Fixed Heights**: Never use fixed `height: ...px` on content-driven sections. Always use dynamic heights (`height: auto; min-height: auto;` or proportional `min-height`) with flexbox vertical centering.
+- **Vertical Padding**: Mobile `.backdrop` must use vertical padding (`padding: clamp(30px, 6vh, 50px) 20px;`) with flex-column centering so background images stretch dynamically to fit content.
+- **Fluid Typography**: Use `clamp()` for headings on mobile to prevent overflow on narrow screens (>= 320px).
+- **Overflow Protection**: Keep `overflow-x: clip;` on `body` to prevent horizontal jitter.
+
+| Element | Mobile (< 400px) | Mobile / Phablet | Tablet & Desktop | Large Screens / QHD | Ultra-Wide / 4K |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `body` | `19px` | `19px` | `19px` | `21px` | `24px` |
+| `h1` | `44px` *(clamp)* | `44px` &rarr; `58px` | `58px` | `64px` | `73px` |
+| `h2` | `38px` *(clamp)* | `38px` &rarr; `48px` | `48px` | `53px` | `61px` |
+| `h3` | `27px` *(clamp)* | `27px` &rarr; `34px` | `34px` | `38px` | `43px` |
+| `h4` | `18px` *(clamp)* | `18px` &rarr; `19px` | `19px` | `21px` | `24px` |
+
+## 7. Automated CSS Specification & Responsive Testing
+- **Test Suite**: `GnollHackMarketingWebsite.Tests/` contains xUnit AST specifications (`CssSpecificationTests.cs`) and Playwright E2E responsive tests (`ResponsiveLayoutTests.cs`).
+- **Run Tests**: `dotnet test GnollHackMarketingWebsite.slnx`.
+

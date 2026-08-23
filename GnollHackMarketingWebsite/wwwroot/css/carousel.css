@@ -78,10 +78,17 @@
 
 .carousel-indicators {
   display: flex;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
   width: 100%;
   margin: 0;
+  padding: 0 10px;
+}
+.carousel-indicators [data-bs-target] {
+  width: clamp(10px, 3vw, 30px);
+  height: 3px;
+  margin: 0 2px;
+  flex: 0 1 auto;
 }
 
 /* Modal Styling */

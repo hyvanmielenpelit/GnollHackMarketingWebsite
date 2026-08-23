@@ -93,7 +93,7 @@ $larger-font-max-width: 2599px;
 $max-font-min-width: 2600px;
 $max-view-width: 2560px;
 
-@mixin font-sizes($small-font-size, $large-font-size) {
+@mixin font-sizes($small-font-size, $large-font-size, $max-font-size: null) {
     font-size: $small-font-size;
 
     @media (min-width: $larger-font-min-width) and (max-width: $larger-font-max-width) {
@@ -101,7 +101,11 @@ $max-view-width: 2560px;
     }
 
     @media (min-width: $max-font-min-width) {
-        font-size: calc($large-font-size * 1.6);
+        @if $max-font-size != null {
+            font-size: $max-font-size;
+        } @else {
+            font-size: $large-font-size * 1.143;
+        }
     }
 }
 
@@ -114,7 +118,8 @@ body {
     background-color: black;
     text-align: center;
     color: white;
-    @include font-sizes(19px, 21px);
+    overflow-x: clip;
+    @include font-sizes(19px, 21px, 24px);
 }
 
 .main-container {
@@ -128,26 +133,26 @@ main {
 
 h1 {
     @extend .cinzel-700;
-    @include font-sizes(58px, 72px);
+    @include font-sizes(clamp(44px, 11vw, 58px), 64px, 73px);
     margin-top: 48px;
     margin-bottom: 0px;
 }
 
 h2 {
     @extend .cinzel-700;
-    @include font-sizes(48px, 64px);
+    @include font-sizes(clamp(38px, 9.5vw, 48px), 53px, 61px);
     margin-top: 32px;
     margin-bottom: 9px;
 }
 
 h3 {
     @extend .cinzel-700;
-    @include font-sizes(34px, 42px);
+    @include font-sizes(clamp(27px, 7vw, 34px), 38px, 43px);
     margin-bottom: 9px;
 }
 
 h4 {
-    @include font-sizes(19px, 21px);
+    @include font-sizes(clamp(18px, 4.5vw, 19px), 21px, 24px);
     margin-bottom: 9px;
 }
 
@@ -224,10 +229,12 @@ h4 {
 
     @media (max-width: #{$breakpoint-md - 0.02px}) {
         backdrop-filter: brightness(40%) blur(3px);
-        height: 100%;
         width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: clamp(30px, 6vh, 50px) 20px;
     }
 }
 
@@ -369,7 +376,6 @@ h4 {
     .orc-assassin {
         background-image: url(/img/HalfOrcAssassin-w1920.webp);
         background-position-x: -140px;
-        height: 1170px;
 
         .description-center {
             display: flex;
@@ -385,24 +391,20 @@ h4 {
     .orc-hunter {
         background-image: url(/img/OrcHunter-shaded-flipped-w1920.webp);
         background-position-x: right;
-        height: calc(view-width(60) + 200px);
     }
 
     .female-mage {
         background-image: url(/img/WomanMage-shaded2-w1920.webp);
-        height: 690px;
     }
 
     .barbarian {
         background-image: url(/img/Barbarian-shaded2-w1920.webp);
         background-position-x: right;
-        height: 700px;
     }
 
     .dwarf-monk {
         background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);
         background-position-x: -270px;
-        height: 900px;
     }
 }
 
@@ -415,7 +417,7 @@ h4 {
 .legal-text {
     color: #888888;
     font-family: Arial, Helvetica, sans-serif;
-    @include font-sizes(14px, 21px);
+    @include font-sizes(14px, 16px, 18px);
 }
 
 .legal-text a, .legal-text a:visited, .legal-text a:hover {
@@ -450,7 +452,7 @@ h4 {
     padding: 12px;
     background-color: #222;
 
-    @include font-sizes(12px, 14px);
+    @include font-sizes(12px, 14px, 16px);
 
     @media (min-width: $breakpoint-md) {
         width: min(max(view-width(25), 220px), 310px);
@@ -594,7 +596,7 @@ h4 {
 
 .download-link-tooltip {
     @extend .mona-sans-500;
-    @include font-sizes(18px, 24px);
+    @include font-sizes(18px, 20px, 23px);
     --bs-tooltip-padding-x: 15px;
     --bs-tooltip-padding-y: 5px;
     --bs-tooltip-max-width: min(500px, 85vw);
@@ -686,7 +688,7 @@ a.free {
 .important-link {
     margin-top: 18px;
     font-weight: 600;
-    @include font-sizes(22px, 28px);
+    @include font-sizes(22px, 24px, 28px);
     color: #ffb;
     text-shadow: 2px 2px 4px #ff3;
 

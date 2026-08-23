@@ -1,0 +1,115 @@
+using System.Text.RegularExpressions;
+using Xunit;
+
+namespace GnollHackMarketingWebsite.Tests;
+
+public class CssSpecificationTests
+{
+    private static string GetWwwRootPath()
+    {
+        var currentDir = Directory.GetCurrentDirectory();
+        // Traverse up to find the solution or website folder
+        var dir = new DirectoryInfo(currentDir);
+        while (dir != null)
+        {
+            var target = Path.Combine(dir.FullName, "GnollHackMarketingWebsite", "wwwroot", "css");
+            if (Directory.Exists(target))
+            {
+                return target;
+            }
+            dir = dir.Parent;
+        }
+
+        throw new DirectoryNotFoundException("Could not locate wwwroot/css directory.");
+    }
+
+    [Fact]
+    public void Typography_MatchesSpecificationAcrossBreakpoints()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = File.ReadAllText(Path.Combine(cssDir, "site2.css"));
+
+        // Base font sizes
+        Assert.Contains("font-size: clamp(44px, 11vw, 58px);", site2Css);
+        Assert.Contains("font-size: clamp(38px, 9.5vw, 48px);", site2Css);
+        Assert.Contains("font-size: clamp(27px, 7vw, 34px);", site2Css);
+        Assert.Contains("font-size: clamp(18px, 4.5vw, 19px);", site2Css);
+
+        // Large Screens / QHD (1500px - 2599px)
+        Assert.Contains("@media (min-width: 1500px) and (max-width: 2599px)", site2Css);
+        Assert.Contains("h1 {\n    font-size: 64px;\n  }", site2Css);
+        Assert.Contains("h2 {\n    font-size: 53px;\n  }", site2Css);
+        Assert.Contains("h3 {\n    font-size: 38px;\n  }", site2Css);
+        Assert.Contains("body {\n    font-size: 21px;\n  }", site2Css);
+
+        // Ultra-Wide / 4K (2600px+)
+        Assert.Contains("@media (min-width: 2600px)", site2Css);
+        Assert.Contains("h1 {\n    font-size: 73px;\n  }", site2Css);
+        Assert.Contains("h2 {\n    font-size: 61px;\n  }", site2Css);
+        Assert.Contains("h3 {\n    font-size: 43px;\n  }", site2Css);
+        Assert.Contains("body {\n    font-size: 24px;\n  }", site2Css);
+    }
+
+    [Fact]
+    public void MobileSections_DoNotHaveHardcodedHeights()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = File.ReadAllText(Path.Combine(cssDir, "site2.css"));
+
+        // Find the @media (max-width: 767.98px) block
+        var mediaIndex = site2Css.IndexOf("@media (max-width: 767.98px)", StringComparison.Ordinal);
+        Assert.True(mediaIndex >= 0, "Mobile media query block not found in site2.css");
+
+        var mobileBlock = site2Css.Substring(mediaIndex);
+
+        // Assert that none of the mobile character section classes declare a height
+        var sectionClasses = new[] { "female-mage", "orc-assassin", "orc-hunter", "barbarian", "dwarf-monk" };
+        foreach (var cls in sectionClasses)
+        {
+            var match = Regex.Match(mobileBlock, $@"\.{cls}\s*\{{([^}}]*)\}}");
+            if (match.Success)
+            {
+                var declarations = match.Groups[1].Value;
+                Assert.DoesNotMatch(@"(?<!min-|max-)height:\s*\d+px", declarations);
+            }
+        }
+    }
+
+    [Fact]
+    public void LayoutStability_HasOverflowClipAndFluidCarouselIndicators()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = File.ReadAllText(Path.Combine(cssDir, "site2.css"));
+        var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
+
+        // Overflow clip on body
+        Assert.Contains("overflow-x: clip;", site2Css);
+
+        // Fluid clamp indicators in carousel.css
+        Assert.Contains("clamp(10px, 3vw, 30px)", carouselCss);
+    }
+
+    [Fact]
+    public void CompiledAssets_ExistAndContainNoForbiddenFiles()
+    {
+        var cssDir = GetWwwRootPath();
+
+        // Minified and standard files must exist and be non-empty
+        var site2Css = new FileInfo(Path.Combine(cssDir, "site2.css"));
+        var site2MinCss = new FileInfo(Path.Combine(cssDir, "site2.min.css"));
+        var carouselCss = new FileInfo(Path.Combine(cssDir, "carousel.css"));
+        var carouselMinCss = new FileInfo(Path.Combine(cssDir, "carousel.min.css"));
+
+        Assert.True(site2Css.Exists && site2Css.Length > 0, "site2.css is missing or empty");
+        Assert.True(site2MinCss.Exists && site2MinCss.Length > 0, "site2.min.css is missing or empty");
+        Assert.True(carouselCss.Exists && carouselCss.Length > 0, "carousel.css is missing or empty");
+        Assert.True(carouselMinCss.Exists && carouselMinCss.Length > 0, "carousel.min.css is missing or empty");
+
+        // Forbidden files (.map and .gz) must NEVER exist in wwwroot/css/
+        var mapFiles = Directory.GetFiles(cssDir, "*.map", SearchOption.AllDirectories);
+        var gzFiles = Directory.GetFiles(cssDir, "*.gz", SearchOption.AllDirectories);
+
+        Assert.Empty(mapFiles);
+        Assert.Empty(gzFiles);
+    }
+}
