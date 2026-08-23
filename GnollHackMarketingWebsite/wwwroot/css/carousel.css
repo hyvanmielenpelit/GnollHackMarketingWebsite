@@ -4,66 +4,66 @@
   border-radius: 9px;
   position: relative;
   contain: layout paint;
+  box-sizing: border-box;
 }
 @media (min-width: 768px) {
   .main-carousel-container {
     padding: 35px;
     width: min(max(48vw, 320px), 980px);
-    height: min(max(29vw, 195px), 590px);
+    height: auto;
   }
 }
 @media (max-width: 767.98px) {
   .main-carousel-container {
     padding: 25px;
     width: 85vw;
-    height: 50vw;
+    height: auto;
   }
 }
 .main-carousel-container .carousel-inner {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+}
+.main-carousel-container .carousel-item {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16/9;
+}
+.main-carousel-container .carousel-item.active, .main-carousel-container .carousel-item.carousel-item-next, .main-carousel-container .carousel-item.carousel-item-prev {
   display: flex;
   align-items: center;
-  height: 100%;
+  justify-content: center;
 }
 
 .main-carousel-img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16/9;
   object-fit: contain;
-  max-width: 92%;
-  max-height: 92%;
+  border-radius: 4px;
   cursor: pointer;
+  display: block;
+  margin: 0 auto;
 }
 
 .main-carousel-video-landscape {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16/9;
   background-color: black;
+  border-radius: 4px;
   margin: 0 auto;
-}
-@media (min-width: 768px) {
-  .main-carousel-video-landscape {
-    width: min(35vw + 70px, 800px);
-    height: min(19.6875vw + 39.375px, 450px);
-  }
-}
-@media (max-width: 767.98px) {
-  .main-carousel-video-landscape {
-    width: 70vw;
-    height: 39.375vw;
-  }
 }
 
 .main-carousel-video-portrait {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 9/16;
   background-color: black;
+  border-radius: 4px;
   margin: 0 auto;
-}
-@media (min-width: 768px) {
-  .main-carousel-video-portrait {
-    width: 12.66vw;
-    height: 22.5vw;
-  }
-}
-@media (max-width: 767.98px) {
-  .main-carousel-video-portrait {
-    width: 23.0625vw;
-    height: 41vw;
-  }
 }
 
 .video-poster-container {
@@ -282,7 +282,7 @@
 }
 @media (max-width: 767.98px) {
   .modal-content {
-    background-position: 70% 50%;
+    background-position: 90% 50%;
   }
 }
 

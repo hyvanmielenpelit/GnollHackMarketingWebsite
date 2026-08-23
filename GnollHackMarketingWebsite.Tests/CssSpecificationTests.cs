@@ -163,6 +163,10 @@ public class CssSpecificationTests
         Assert.Contains("border-top: 10px solid transparent;", carouselCss);
         Assert.Contains("background-clip: padding-box;", carouselCss);
 
+        // Aspect-ratio 16:9 lock and dynamic auto height for exact uniform padding
+        Assert.Contains("aspect-ratio: 16/9;", carouselCss);
+        Assert.Contains("height: auto;", carouselCss);
+
         // Reduced motion and focus-visible
         Assert.Contains("@media (prefers-reduced-motion: reduce)", carouselCss);
         Assert.Contains(":focus-visible", carouselCss);

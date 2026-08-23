@@ -190,5 +190,108 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
 
         await context.CloseAsync();
     }
+
+    [Fact]
+    public async Task MainCarousel_MaintainsUniform16x9GeometryAndCenteredControls()
+    {
+        Assert.NotNull(_browser);
+
+        // Test desktop (1920x1080)
+        var desktopContext = await _browser.NewContextAsync(new BrowserNewContextOptions
+        {
+            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }
+        });
+        var desktopPage = await desktopContext.NewPageAsync();
+        await desktopPage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+
+        var desktopGeometry = await desktopPage.EvaluateAsync<CarouselGeometry>(@"() => {
+            const container = document.getElementById('carouselComponent');
+            const inner = container ? container.querySelector('.carousel-inner') : null;
+            const prev = container ? container.querySelector('.main-carousel-control-prev') : null;
+            const next = container ? container.querySelector('.main-carousel-control-next') : null;
+            const style = container ? window.getComputedStyle(container) : null;
+            const innerRect = inner ? inner.getBoundingClientRect() : null;
+            const prevRect = prev ? prev.getBoundingClientRect() : null;
+            const nextRect = next ? next.getBoundingClientRect() : null;
+
+            return {
+                paddingLeft: style ? parseFloat(style.paddingLeft) : 0,
+                paddingRight: style ? parseFloat(style.paddingRight) : 0,
+                paddingTop: style ? parseFloat(style.paddingTop) : 0,
+                paddingBottom: style ? parseFloat(style.paddingBottom) : 0,
+                innerWidth: innerRect ? innerRect.width : 0,
+                innerHeight: innerRect ? innerRect.height : 0,
+                prevWidth: prevRect ? prevRect.width : 0,
+                nextWidth: nextRect ? nextRect.width : 0
+            };
+        }");
+
+        Assert.Equal(35, desktopGeometry.PaddingLeft);
+        Assert.Equal(35, desktopGeometry.PaddingRight);
+        Assert.Equal(35, desktopGeometry.PaddingTop);
+        Assert.Equal(35, desktopGeometry.PaddingBottom);
+        Assert.Equal(35, desktopGeometry.PrevWidth);
+        Assert.Equal(35, desktopGeometry.NextWidth);
+
+        // Inner aspect ratio should be 16 / 9 (~1.7777) within 0.05 tolerance
+        var desktopAspectRatio = desktopGeometry.InnerWidth / desktopGeometry.InnerHeight;
+        Assert.InRange(desktopAspectRatio, 1.70, 1.82);
+
+        await desktopContext.CloseAsync();
+
+        // Test mobile (360x800)
+        var mobileContext = await _browser.NewContextAsync(new BrowserNewContextOptions
+        {
+            ViewportSize = new ViewportSize { Width = 360, Height = 800 }
+        });
+        var mobilePage = await mobileContext.NewPageAsync();
+        await mobilePage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+
+        var mobileGeometry = await mobilePage.EvaluateAsync<CarouselGeometry>(@"() => {
+            const container = document.getElementById('carouselComponent');
+            const inner = container ? container.querySelector('.carousel-inner') : null;
+            const prev = container ? container.querySelector('.main-carousel-control-prev') : null;
+            const next = container ? container.querySelector('.main-carousel-control-next') : null;
+            const style = container ? window.getComputedStyle(container) : null;
+            const innerRect = inner ? inner.getBoundingClientRect() : null;
+            const prevRect = prev ? prev.getBoundingClientRect() : null;
+            const nextRect = next ? next.getBoundingClientRect() : null;
+
+            return {
+                paddingLeft: style ? parseFloat(style.paddingLeft) : 0,
+                paddingRight: style ? parseFloat(style.paddingRight) : 0,
+                paddingTop: style ? parseFloat(style.paddingTop) : 0,
+                paddingBottom: style ? parseFloat(style.paddingBottom) : 0,
+                innerWidth: innerRect ? innerRect.width : 0,
+                innerHeight: innerRect ? innerRect.height : 0,
+                prevWidth: prevRect ? prevRect.width : 0,
+                nextWidth: nextRect ? nextRect.width : 0
+            };
+        }");
+
+        Assert.Equal(25, mobileGeometry.PaddingLeft);
+        Assert.Equal(25, mobileGeometry.PaddingRight);
+        Assert.Equal(25, mobileGeometry.PaddingTop);
+        Assert.Equal(25, mobileGeometry.PaddingBottom);
+        Assert.Equal(25, mobileGeometry.PrevWidth);
+        Assert.Equal(25, mobileGeometry.NextWidth);
+
+        var mobileAspectRatio = mobileGeometry.InnerWidth / mobileGeometry.InnerHeight;
+        Assert.InRange(mobileAspectRatio, 1.70, 1.82);
+
+        await mobileContext.CloseAsync();
+    }
+
+    private class CarouselGeometry
+    {
+        public double PaddingLeft { get; set; }
+        public double PaddingRight { get; set; }
+        public double PaddingTop { get; set; }
+        public double PaddingBottom { get; set; }
+        public double InnerWidth { get; set; }
+        public double InnerHeight { get; set; }
+        public double PrevWidth { get; set; }
+        public double NextWidth { get; set; }
+    }
 }
 
