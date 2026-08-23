@@ -705,16 +705,6 @@ a.free {
     }
 }
 
-.portrait-only {
-    @media (min-width: $breakpoint-md) {
-        display: none;
-    }
-
-    @media (max-width: #{$breakpoint-md - 0.02px}) {
-        display: inline-block;
-    }
-}
-
 .carousel-container {
     display: inline-block;
 

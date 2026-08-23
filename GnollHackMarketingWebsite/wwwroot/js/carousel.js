@@ -1,5 +1,10 @@
 // GnollHack Marketing Website - Carousel & YouTube Player Integration
 
+var ytApiReady = false;
+var pendingPlayRequests = [];
+var players = {};
+
+// Load YouTube IFrame Player API asynchronously
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -7,33 +12,82 @@ if (firstScriptTag && firstScriptTag.parentNode) {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-var players = [];
-
 function onYouTubeIframeAPIReady() {
-    $("div.thumbnailPlayer, div.modalPlayer").each(function () {
-        var videoID = $(this).attr("data-video-id");
-        var id = $(this).attr("id");
-
-        players.push(new YT.Player(id, {
-            videoId: videoID,
-            playerVars: {
-                'playsinline': 1
-            }
-        }));
-    });
+    ytApiReady = true;
+    while (pendingPlayRequests.length > 0) {
+        var req = pendingPlayRequests.shift();
+        playVideoInModal(req);
+    }
 }
 
 function stopPlayers() {
-    players.forEach(function (player) {
-        if (player && typeof player.stopVideo === "function") {
-            player.stopVideo();
+    Object.keys(players).forEach(function (key) {
+        var player = players[key];
+        if (player && typeof player.pauseVideo === "function") {
+            try {
+                player.pauseVideo();
+            } catch (e) {
+                // Ignore API state errors during transitions
+            }
+        }
+    });
+}
+
+function playVideoInModal(container) {
+    var $container = $(container);
+    if (!$container.hasClass('modalPlayerContainer')) {
+        var index = $container.attr('data-index');
+        var modalContainer = $('#modalPlayerContainer' + index);
+        if (modalContainer.length > 0) {
+            $container = modalContainer;
+        } else {
+            return;
+        }
+    }
+
+    var videoId = $container.attr('data-video-id');
+    var index = $container.attr('data-index');
+    var slotId = 'modalPlayer' + index;
+
+    if (!ytApiReady || typeof YT === "undefined" || !YT.Player) {
+        pendingPlayRequests.push($container[0]);
+        return;
+    }
+
+    $container.addClass('playing');
+
+    if (players[slotId]) {
+        try {
+            players[slotId].playVideo();
+        } catch (e) {
+            // If player errored, re-create
+        }
+        return;
+    }
+
+    players[slotId] = new YT.Player(slotId, {
+        videoId: videoId,
+        playerVars: {
+            'autoplay': 1,
+            'playsinline': 1,
+            'rel': 0
+        },
+        events: {
+            'onReady': function (event) {
+                event.target.playVideo();
+                // Ensure generated iframe has accessible title attribute
+                var iframe = document.getElementById(slotId);
+                if (iframe && !iframe.getAttribute('title')) {
+                    iframe.setAttribute('title', 'YouTube Video Player');
+                }
+            }
         }
     });
 }
 
 $(function () {
-    const thumbnailCarouselElement = document.getElementById('carouselComponent');
-    const modalCarouselElement = document.getElementById('modalCarousel');
+    var thumbnailCarouselElement = document.getElementById('carouselComponent');
+    var modalCarouselElement = document.getElementById('modalCarousel');
     if (!thumbnailCarouselElement || !modalCarouselElement) return;
 
     var thumbnailCarousel = bootstrap.Carousel.getOrCreateInstance(thumbnailCarouselElement);
@@ -41,41 +95,82 @@ $(function () {
     var autoMovingModal = false;
     var autoMovingThumbnail = false;
 
+    // Direct click / keypress on video play buttons and containers in modal
+    $('#fullscreenModal').on('click', '.modalPlayerContainer', function (e) {
+        playVideoInModal(this);
+    });
+
+    // Support keyboard activation (Enter / Space) on role="button" elements
+    $('.main-carousel-container').on('keydown', '.video-poster-container[role="button"]', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            $(this).trigger('click');
+        }
+    });
+
+    // Synchronize carousel slide changes
     thumbnailCarouselElement.addEventListener('slide.bs.carousel', function (event) {
+        stopPlayers();
         if (!autoMovingThumbnail) {
             autoMovingModal = true;
-            if (event.direction === "right") {
-                modalCarousel.prev();
-            } else if (event.direction === "left") {
-                modalCarousel.next();
-            }
+            modalCarousel.to(event.to);
             autoMovingModal = false;
         }
-        stopPlayers();
     });
 
     modalCarouselElement.addEventListener('slide.bs.carousel', function (event) {
+        stopPlayers();
         if (!autoMovingModal) {
             autoMovingThumbnail = true;
-            if (event.direction === "right") {
-                thumbnailCarousel.prev();
-            } else if (event.direction === "left") {
-                thumbnailCarousel.next();
-            }
+            thumbnailCarousel.to(event.to);
             autoMovingThumbnail = false;
         }
-        stopPlayers();
     });
 
     var modal = document.getElementById('fullscreenModal');
     if (modal) {
-        modal.addEventListener('show.bs.modal', function () {
-            $("section.orc-hunter").height("100vh");
+        modal.addEventListener('show.bs.modal', function (event) {
             stopPlayers();
+
+            if (event.relatedTarget) {
+                var $target = $(event.relatedTarget);
+                var targetIndex = $target.attr('data-index');
+                if (targetIndex === undefined) {
+                    targetIndex = $target.closest('[data-index]').attr('data-index');
+                }
+
+                if (targetIndex !== undefined) {
+                    var parsedIndex = parseInt(targetIndex, 10);
+                    autoMovingThumbnail = true;
+                    autoMovingModal = true;
+                    modalCarousel.to(parsedIndex);
+                    thumbnailCarousel.to(parsedIndex);
+                    autoMovingThumbnail = false;
+                    autoMovingModal = false;
+
+                    // If clicked target is a video item, autoplay in modal
+                    var videoId = $target.attr('data-video-id') || $target.closest('[data-video-id]').attr('data-video-id');
+                    if (videoId) {
+                        setTimeout(function () {
+                            var modalContainer = document.getElementById('modalPlayerContainer' + parsedIndex);
+                            if (modalContainer) {
+                                playVideoInModal(modalContainer);
+                            }
+                        }, 250);
+                    }
+                }
+            }
         });
+
         modal.addEventListener('hide.bs.modal', function () {
-            $("section.orc-hunter").height("");
             stopPlayers();
+            var $activeModalItem = $('#modalCarousel .carousel-item.active');
+            if ($activeModalItem.length > 0) {
+                var activeIndex = $activeModalItem.index();
+                if (activeIndex >= 0) {
+                    thumbnailCarousel.to(activeIndex);
+                }
+            }
         });
     }
 });

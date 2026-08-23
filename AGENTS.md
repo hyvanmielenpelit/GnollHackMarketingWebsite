@@ -49,8 +49,6 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 | `human_rogue_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px |
 | `gnoll_barbarian_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px |
 | `stormbringer.webp` | 64 &times; 48 px | **4:3** (1.333) | 1x density | 64 &times; 48 px |
-| `library.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px |
-| `spells.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px |
 
 ## 6. Dynamic Section Heights, Centering & Fluid Typography
 - **No Fixed Heights**: Never use fixed `height: ...px` on content-driven sections. Always use dynamic heights (`height: auto; min-height: auto;` or proportional `min-height`) with flexbox vertical centering.

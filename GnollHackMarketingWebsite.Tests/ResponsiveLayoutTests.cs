@@ -108,4 +108,43 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
         Assert.Equal("53px", desktopH2FontSize);
         await desktopContext.CloseAsync();
     }
+
+    [Fact]
+    public async Task Carousel_ModalAndVideoPosters_HaveHDFacadesAndAriaAttributes()
+    {
+        Assert.NotNull(_browser);
+        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+        {
+            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }
+        });
+
+        var page = await context.NewPageAsync();
+        await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+
+        // 1. Check modal dialog ARIA accessibility attributes
+        var modal = page.Locator("#fullscreenModal");
+        await Assertions.Expect(modal).ToHaveAttributeAsync("role", "dialog");
+        await Assertions.Expect(modal).ToHaveAttributeAsync("aria-modal", "true");
+        await Assertions.Expect(modal).ToHaveAttributeAsync("aria-label", "Fullscreen Media Gallery");
+
+        // 2. Check HD poster image URLs (maxresdefault.jpg) on video items
+        var videoPosters = page.Locator(".video-poster-img");
+        var posterCount = await videoPosters.CountAsync();
+        Assert.True(posterCount > 0, "No video poster images found on page.");
+
+        for (int i = 0; i < posterCount; i++)
+        {
+            var src = await videoPosters.Nth(i).GetAttributeAsync("src");
+            Assert.NotNull(src);
+            Assert.Contains("maxresdefault.jpg", src);
+        }
+
+        // 3. Check play button presence and accessibility label
+        var playBtns = page.Locator(".video-play-btn");
+        var btnCount = await playBtns.CountAsync();
+        Assert.True(btnCount > 0, "No video play buttons found.");
+        await Assertions.Expect(playBtns.First).ToHaveAttributeAsync("aria-label", "Play Video");
+
+        await context.CloseAsync();
+    }
 }

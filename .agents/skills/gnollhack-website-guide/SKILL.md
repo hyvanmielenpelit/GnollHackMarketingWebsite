@@ -118,8 +118,6 @@ Badge image assets in `wwwroot/img/` are borderless (`*-noborders.webp`); all bo
 | `human_rogue_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px | Features (Modernized for Today's Players) |
 | `gnoll_barbarian_male.webp` | 64 &times; 96 px | **2:3** (0.667) | 1x density | 64 &times; 96 px | Features (Endless Replayability) |
 | `stormbringer.webp` | 64 &times; 48 px | **4:3** (1.333) | 1x density | 64 &times; 48 px | Features (Free and Accessible) |
-| `library.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px | Gameplay Information (mobile portrait) |
-| `spells.webp` | 256 &times; 256 px | **1:1** (1.000) | Scaled (2x) | 128 &times; 128 px | Community (mobile portrait) |
 
 - **Container Rule**: `.features-text .imgContainer img` uses `max-width: 100%; height: auto;` alongside explicit HTML `width` and `height` attributes to prevent distortion and allow smooth responsive downscaling.
 

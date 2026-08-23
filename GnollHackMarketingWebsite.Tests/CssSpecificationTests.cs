@@ -112,4 +112,59 @@ public class CssSpecificationTests
         Assert.Empty(mapFiles);
         Assert.Empty(gzFiles);
     }
+
+    [Fact]
+    public void Carousel_ContainsVideoPosterAndModalAccessibilityStyles()
+    {
+        var cssDir = GetWwwRootPath();
+        var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
+
+        // Video poster and play button rules
+        Assert.Contains(".video-poster-container", carouselCss);
+        Assert.Contains(".video-poster-img", carouselCss);
+        Assert.Contains(".video-play-btn", carouselCss);
+        Assert.Contains(".video-play-bg", carouselCss);
+        Assert.Contains(".modal-player-slot", carouselCss);
+
+        // Modal close button styling
+        Assert.Contains(".btn-close", carouselCss);
+    }
+
+    [Fact]
+    public void Carousel_ThematicModalBackgroundAndMediaElevation()
+    {
+        var cssDir = GetWwwRootPath();
+        var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
+
+        // Thematic modal background graphics and vignette
+        Assert.Contains("OrcHunter-shaded-flipped-w1920.webp", carouselCss);
+        Assert.Contains("radial-gradient", carouselCss);
+
+        // Modal media elevation shadows
+        Assert.Contains("box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);", carouselCss);
+
+        // Modal wrappers are transparent
+        Assert.Contains(".modal-dialog {\n  margin: auto;\n  background: transparent;\n}", carouselCss);
+    }
+
+    [Fact]
+    public void Carousel_CenteredControlsAndModernWebStandards()
+    {
+        var cssDir = GetWwwRootPath();
+        var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
+
+        // Containment
+        Assert.Contains("contain: layout paint;", carouselCss);
+
+        // Horizontally centered controls and vertically centered indicators
+        Assert.Contains(".main-carousel-control-prev", carouselCss);
+        Assert.Contains(".main-carousel-control-next", carouselCss);
+        Assert.Contains("border-top: 10px solid transparent;", carouselCss);
+        Assert.Contains("background-clip: padding-box;", carouselCss);
+
+        // Reduced motion and focus-visible
+        Assert.Contains("@media (prefers-reduced-motion: reduce)", carouselCss);
+        Assert.Contains(":focus-visible", carouselCss);
+    }
 }
+

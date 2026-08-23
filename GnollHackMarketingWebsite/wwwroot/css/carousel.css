@@ -2,6 +2,8 @@
 .main-carousel-container {
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 9px;
+  position: relative;
+  contain: layout paint;
 }
 @media (min-width: 768px) {
   .main-carousel-container {
@@ -32,6 +34,7 @@
 
 .main-carousel-video-landscape {
   background-color: black;
+  margin: 0 auto;
 }
 @media (min-width: 768px) {
   .main-carousel-video-landscape {
@@ -48,6 +51,7 @@
 
 .main-carousel-video-portrait {
   background-color: black;
+  margin: 0 auto;
 }
 @media (min-width: 768px) {
   .main-carousel-video-portrait {
@@ -62,45 +66,168 @@
   }
 }
 
+.video-poster-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  cursor: pointer;
+  overflow: hidden;
+}
+.video-poster-container .video-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.video-poster-container .modal-player-slot {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.video-poster-container .modal-player-slot iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-poster-container.playing .modal-player-slot {
+  display: block;
+}
+.video-poster-container.playing .video-poster-img,
+.video-poster-container.playing .video-play-btn {
+  display: none;
+}
+.video-poster-container .video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+.video-poster-container .video-play-btn .video-play-icon {
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  transition: filter 0.2s ease-in-out;
+}
+.video-poster-container .video-play-btn .video-play-bg {
+  transition: fill 0.2s ease-in-out;
+  fill: #ff0000;
+}
+.video-poster-container .video-play-btn:hover, .video-poster-container .video-play-btn:focus-visible {
+  transform: translate(-50%, -50%) scale(1.12);
+  outline: none;
+}
+.video-poster-container .video-play-btn:hover .video-play-bg, .video-poster-container .video-play-btn:focus-visible .video-play-bg {
+  fill: #cc0000;
+}
+.video-poster-container .video-play-btn:hover .video-play-icon, .video-poster-container .video-play-btn:focus-visible .video-play-icon {
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.7));
+}
+
+/* Horizontally Centered Side Navigation in Small Carousel */
 .main-carousel-control-prev {
-  width: 5%;
-  padding-left: 1%;
-  padding-right: 1%;
-  margin-right: 1%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 35px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 767.98px) {
+  .main-carousel-control-prev {
+    width: 25px;
+  }
+}
+.main-carousel-control-prev .carousel-control-prev-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+.main-carousel-control-prev:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
 }
 
 .main-carousel-control-next {
-  width: 5%;
-  padding-right: 1%;
-  padding-left: 1%;
-  margin-left: 1%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 35px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 767.98px) {
+  .main-carousel-control-next {
+    width: 25px;
+  }
+}
+.main-carousel-control-next .carousel-control-next-icon {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+.main-carousel-control-next:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
 }
 
+/* Vertically Centered Bottom Indicators with Accessible Touch Targets */
 .carousel-indicators {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
   margin: 0;
   padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 767.98px) {
+  .carousel-indicators {
+    height: 25px;
+  }
 }
 .carousel-indicators [data-bs-target] {
   width: clamp(10px, 3vw, 30px);
   height: 3px;
   margin: 0 2px;
   flex: 0 1 auto;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  background-clip: padding-box;
+}
+.carousel-indicators [data-bs-target]:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
 }
 
 /* Modal Styling */
 .modal-container {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.85);
   height: 100vh;
   overflow: hidden;
+  contain: layout paint;
 }
 
 .modal-dialog {
   margin: auto;
-  background-color: black;
+  background: transparent;
 }
 
 .modal-backdrop {
@@ -115,11 +242,33 @@
   border-radius: 50%;
   padding: 10px;
   background-color: white;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.btn-close:hover, .btn-close:focus-visible {
+  opacity: 1;
+  transform: scale(1.08);
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.modal-content {
+  background-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.88) 100%), url(/img/OrcHunter-shaded-flipped-w1920.webp);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  border: none;
+}
+@media (max-width: 767.98px) {
+  .modal-content {
+    background-position: 70% 50%;
+  }
 }
 
 .modal-body {
   padding: min(5%, 5px);
-  background-color: black;
+  background: transparent;
   display: flex;
   align-items: center;
 }
@@ -130,7 +279,7 @@
   width: 95%;
   height: 95%;
   margin: auto;
-  background-color: black;
+  background: transparent;
 }
 
 .modal-carousel-image-wrapper {
@@ -140,14 +289,16 @@
   margin: 0 auto;
   width: 80%;
   height: 80vh;
-  background-color: black;
+  background: transparent;
 }
 
 .modal-carousel-img {
   height: min(45vw, 80vh);
   width: min(80vw, 142.22vh);
   margin: auto;
-  background-color: black;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+  background: transparent;
 }
 
 .modal-carousel-video-wrapper {
@@ -157,31 +308,57 @@
   margin: 0 auto;
   width: 70vw;
   height: 80vh;
-  background-color: black;
+  background: transparent;
 }
 
 .modal-carousel-video-landscape {
   height: min(39.375vw, 80vh);
   width: min(70vw, 142.22vh);
-  background-color: black;
   margin: 0 auto;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+  background: transparent;
 }
 
 .modal-carousel-video-portrait {
   height: 80vh;
   width: 45vh;
-  background-color: black;
   margin: 0 auto;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+  background: transparent;
 }
 
-.modal-carousel-control-prev {
-  width: 10%;
-}
-
+.modal-carousel-control-prev,
 .modal-carousel-control-next {
   width: 10%;
+}
+.modal-carousel-control-prev .carousel-control-prev-icon,
+.modal-carousel-control-prev .carousel-control-next-icon,
+.modal-carousel-control-next .carousel-control-prev-icon,
+.modal-carousel-control-next .carousel-control-next-icon {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9));
+}
+.modal-carousel-control-prev:focus-visible,
+.modal-carousel-control-next:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -4px;
 }
 
 .modal-header {
   height: 60px;
+}
+
+/* Accessibility: Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .main-carousel-container,
+  .modal-container,
+  .carousel-item,
+  .btn-close,
+  .video-play-btn,
+  .video-play-icon {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
 }

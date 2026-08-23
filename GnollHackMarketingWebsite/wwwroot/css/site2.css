@@ -798,17 +798,6 @@ a.free:hover {
   color: rgb(100%, 100%, 83.3333333333%);
 }
 
-@media (min-width: 768px) {
-  .portrait-only {
-    display: none;
-  }
-}
-@media (max-width: 767.98px) {
-  .portrait-only {
-    display: inline-block;
-  }
-}
-
 .carousel-container {
   display: inline-block;
 }
