@@ -1,12 +1,17 @@
-﻿@page
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "";
 }
 
+<h1 class="visually-hidden">GnollHack &ndash; The Modern Roguelike</h1>
+
 <section class="main-section">
-    <img src="~/img/gnollhack-image-landscape-w2560.webp" alt="GnollHack" class="landscape-picture" />
-    <img src="~/img/gnollhack-image-portrait-w1080.webp" alt="GnollHack" class="portrait-picture" style="display:none;" />
+    <picture>
+        <source media="(min-width: 768px)" srcset="~/img/gnollhack-image-landscape-w2560.webp" width="2560" height="1440" />
+        <source media="(max-width: 767.98px)" srcset="~/img/gnollhack-image-portrait-w1080.webp" width="1080" height="1920" />
+        <img src="~/img/gnollhack-image-landscape-w2560.webp" alt="GnollHack" fetchpriority="high" width="2560" height="1440" class="hero-picture" />
+    </picture>
 </section>
 
 <section class="right-section orc-assassin">
@@ -19,7 +24,7 @@
                 <div class="download-link-container" data-bs-toggle="tooltip" data-bs-placement="top"
                      data-bs-custom-class="download-link-tooltip"
                      data-bs-title="Android">
-                    <a href="https://play.google.com/store/apps/details?id=com.soundmindentertainment.gnollhack&utm_source=gnollhack"><img src="~/img/google-play-badge-noborders.webp" alt="Get it on Google Play" class="shiny-borders google-play" /></a>
+                    <a href="https://play.google.com/store/apps/details?id=com.soundmindentertainment.gnollhack&utm_source=gnollhack"><img src="~/img/google-play-badge-noborders.webp" alt="Get it on Google Play" loading="lazy" class="shiny-borders google-play" /></a>
                 </div>
             </div>
 
@@ -27,23 +32,16 @@
                 <div class="download-link-container" data-bs-toggle="tooltip" data-bs-placement="top"
                      data-bs-custom-class="download-link-tooltip"
                      data-bs-title="iOS & macOS">
-                    <a href="https://apps.apple.com/app/gnollhack/id1626979951?utm_source=gnollhack"><img src="~/img/app-store-badge-h200-noborders.webp" alt="Download on the App Store" class="shiny-borders apple-app-store" /></a>
+                    <a href="https://apps.apple.com/app/gnollhack/id1626979951?utm_source=gnollhack"><img src="~/img/app-store-badge-h200-noborders.webp" alt="Download on the App Store" loading="lazy" class="shiny-borders apple-app-store" /></a>
                 </div>
             </div>
-
-            @* <div class="download-link-outer-container">
-                <div class="download-link-container">
-                    <a href="https://apps.microsoft.com/store/detail/9P6SBLH8ZR41?utm_source=gnollhack"><img src="~/img/microsoft-store-h200-noborders.webp" alt="Get it from Microsoft" class="shiny-borders microsoft-store" />
-                    </a>
-                </div>
-            </div> *@
 
             <div class="download-link-outer-container">
                 <div class="download-link-container" data-bs-toggle="tooltip" data-bs-placement="top"
                      data-bs-custom-class="download-link-tooltip"
                      data-bs-title="Windows">
                     <a href="https://store.steampowered.com/app/3558190/GnollHack/?utm_source=gnollhack">
-                        <img src="~/img/steambadge-noborders.webp" alt="Available on Steam" class="shiny-borders steam" />
+                        <img src="~/img/steambadge-noborders.webp" alt="Available on Steam" loading="lazy" class="shiny-borders steam" />
                     </a>
                 </div>
             </div>
@@ -53,7 +51,7 @@
                      data-bs-custom-class="download-link-tooltip"
                      data-bs-title="Windows: Legacy & MSIX">
                     <a href="https://github.com/hyvanmielenpelit/GnollHack/releases">
-                        <img src="~/img/GitHubDownloadBadge-NoBorders-h200.webp" alt="Get release on GitHub" class="shiny-borders apple-app-store" />
+                        <img src="~/img/GitHubDownloadBadge-NoBorders-h200.webp" alt="Get release on GitHub" loading="lazy" class="shiny-borders github-releases" />
                     </a>
                 </div>
             </div>
@@ -61,19 +59,18 @@
             <h2>What is GnollHack?</h2>
             <div class="description-center">
                 <div class="description">
-                    GnollHack is the modern way to play the legendary <a href="https://www.nethack.org" target="_blank" class="free">NetHack</a>,
+                    GnollHack is the modern way to play the legendary <a href="https://www.nethack.org" target="_blank" rel="noopener noreferrer" class="free">NetHack</a>,
                     the deepest <i>traditional roguelike</i> ever made.
                     The classic game has been enhanced with graphics, sounds, voiceovers, and a streamlined user interface,
                     all without sacrificing the hardcore depth roguelike players love.
                 </div>
             </div>
             <div class="readmore">
-                <p class="whatis">Learn more on the <a href="https://wiki.gnollhack.com" target="_blank" class="free">wiki</a></p>
+                <p class="whatis">Learn more on the <a href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer" class="free">wiki</a></p>
             </div>
         </div>
     </div>
 </section>
-
 
 <section class="left-section orc-hunter">
     <div class="backdrop">
@@ -86,19 +83,18 @@
     </div>
 </section>
 
-<h1>Features</h1>
-
 <section class="right-section female-mage">
     <div class="backdrop">
         <div class="features-text">
+            <h2>Features</h2>
             <div class="imgContainer extra-padding">
-                <img src="~/img/human_wizard_female.webp" alt="Human Wizard" />
+                <img src="~/img/human_wizard_female.webp" alt="Human Wizard" loading="lazy" width="70" height="70" />
             </div>
             <h3>Challenge Your Wits</h3>
             <p>Perfect your strategies in a turn-based roguelike adventure game in which you build up your knowledge of the dungeon's secrets to overcome impossible odds.</p>
 
             <div class="imgContainer extra-padding">
-                <img src="~/img/human_rogue_male.webp" alt="Human Rogue" />
+                <img src="~/img/human_rogue_male.webp" alt="Human Rogue" loading="lazy" width="70" height="70" />
             </div>
             <h3>Modernized for Today's Players</h3>
             <div class="block-centered-text-left-align">
@@ -118,7 +114,7 @@
     <div class="backdrop">
         <div class="features-text">
             <div class="imgContainer extra-padding">
-                <img src="~/img/gnoll_barbarian_male.webp" alt="Gnoll Barbarian" />
+                <img src="~/img/gnoll_barbarian_male.webp" alt="Gnoll Barbarian" loading="lazy" width="70" height="70" />
             </div>
             <h3>Endless Replayability</h3>
             <div class="block-centered-text-left-align">
@@ -132,7 +128,7 @@
             </div>
 
             <div class="imgContainer extra-padding">
-                <img src="~/img/stormbringer.webp" alt="Stormbringer" />
+                <img src="~/img/stormbringer.webp" alt="Stormbringer" loading="lazy" width="70" height="70" />
             </div>
             <h3>Free and Accessible</h3>
             <div class="block-centered-text-left-align">
@@ -153,14 +149,14 @@
         <div class="features-text">
             <h2>Gameplay Information</h2>
             <div class="imgContainer portrait-only">
-                <img src="~/img/library.webp" alt="Loot" style="width:128px;" />
+                <img src="~/img/library.webp" alt="Loot" loading="lazy" style="width:128px;" />
             </div>
             <p class="important-link"><a href="https://wiki.gnollhack.com">GnollHack Wiki</a></p>
             <p class="important-link"><a href="https://nethackwiki.com">NetHack Wiki</a></p>
 
             <h2>Community</h2>
             <div class="imgContainer portrait-only">
-                <img src="~/img/spells.webp" alt="Loot" style="width:128px;" />
+                <img src="~/img/spells.webp" alt="Loot" loading="lazy" style="width:128px;" />
             </div>
             <p class="important-link"><a href="https://discord.gg/cQuExnzUQy">GnollHack Discord</a></p>
             <p class="important-link"><a href="https://account.gnollhack.com">GnollHack Account</a></p>
@@ -175,5 +171,5 @@
 }
 
 @section Scripts {
-    <script src="~/js/carousel.es5.min.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/js/carousel.js" asp-append-version="true" type="text/javascript"></script>
 }

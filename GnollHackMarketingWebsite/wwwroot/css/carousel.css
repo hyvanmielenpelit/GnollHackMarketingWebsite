@@ -1,16 +1,16 @@
-﻿/* Main Carousel Styling */
+/* Main Carousel Styling */
 .main-carousel-container {
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 9px;
 }
-@media only screen and (orientation: landscape) {
+@media (min-width: 768px) {
   .main-carousel-container {
     padding: 35px;
     width: min(max(48vw, 320px), 980px);
     height: min(max(29vw, 195px), 590px);
   }
 }
-@media only screen and (orientation: portrait) {
+@media (max-width: 767.98px) {
   .main-carousel-container {
     padding: 25px;
     width: 85vw;
@@ -33,13 +33,13 @@
 .main-carousel-video-landscape {
   background-color: black;
 }
-@media only screen and (orientation: landscape) {
+@media (min-width: 768px) {
   .main-carousel-video-landscape {
     width: min(35vw + 70px, 800px);
     height: min(19.6875vw + 39.375px, 450px);
   }
 }
-@media only screen and (orientation: portrait) {
+@media (max-width: 767.98px) {
   .main-carousel-video-landscape {
     width: 70vw;
     height: 39.375vw;
@@ -49,13 +49,13 @@
 .main-carousel-video-portrait {
   background-color: black;
 }
-@media only screen and (orientation: landscape) {
+@media (min-width: 768px) {
   .main-carousel-video-portrait {
     width: 12.66vw;
     height: 22.5vw;
   }
 }
-@media only screen and (orientation: portrait) {
+@media (max-width: 767.98px) {
   .main-carousel-video-portrait {
     width: 23.0625vw;
     height: 41vw;

@@ -1,63 +1,132 @@
-###############################################################################
-# Set default behavior to automatically normalize line endings.
-###############################################################################
+# Auto detect text files and perform LF normalization
 * text=auto
 
-###############################################################################
-# Set default behavior for command prompt diff.
-#
-# This is need for earlier builds of msysgit that does not have it on by
-# default for csharp files.
-# Note: This is only used by command line
-###############################################################################
-#*.cs     diff=csharp
+# .NET and C#
+*.cs text diff=csharp
+*.cshtml text
+*.razor text
+*.xaml text
+*.csproj text
+*.props text
+*.targets text
+*.config text
+*.pubxml text
+*.http text
+*.resx text
 
-###############################################################################
-# Set the merge driver for project and solution files
-#
-# Merging from the command prompt will add diff markers to the files if there
-# are conflicts (Merging from VS is not affected by the settings below, in VS
-# the diff markers are never inserted). Diff markers may cause the following 
-# file extensions to fail to load in VS. An alternative would be to treat
-# these files as binary and thus will always conflict and require user
-# intervention with every merge. To do so, just uncomment the entries below
-###############################################################################
-#*.sln       merge=binary
-#*.csproj    merge=binary
-#*.vbproj    merge=binary
-#*.vcxproj   merge=binary
-#*.vcproj    merge=binary
-#*.dbproj    merge=binary
-#*.fsproj    merge=binary
-#*.lsproj    merge=binary
-#*.wixproj   merge=binary
-#*.modelproj merge=binary
-#*.sqlproj   merge=binary
-#*.wwaproj   merge=binary
+# Solution and Visual Studio files
+*.sln text eol=crlf
+*.slnx text eol=crlf
 
-###############################################################################
-# behavior for image files
-#
-# image files are treated as binary by default.
-###############################################################################
-#*.jpg   binary
-#*.png   binary
-#*.gif   binary
+# Web and Client-side
+*.html text
+*.css text eol=crlf
+*.min.css text eol=crlf
+*.scss text
+*.sass text
+*.less text
+*.js text
+*.jsx text
+*.ts text
+*.tsx text
+*.mjs text
+*.cjs text
+*.mts text
+*.cts text
+*.json text
+*.jsonc text
+*.svg text
+*.webmanifest text
 
-###############################################################################
-# diff behavior for common document formats
-# 
-# Convert binary document formats to text before diffing them. This feature
-# is only available from the command line. Turn it on by uncommenting the 
-# entries below.
-###############################################################################
-#*.doc   diff=astextplain
-#*.DOC   diff=astextplain
-#*.docx  diff=astextplain
-#*.DOCX  diff=astextplain
-#*.dot   diff=astextplain
-#*.DOT   diff=astextplain
-#*.pdf   diff=astextplain
-#*.PDF   diff=astextplain
-#*.rtf   diff=astextplain
-#*.RTF   diff=astextplain
+# Source Maps: Treat as text for line endings, but disable diff generation for performance
+*.map text -diff
+
+# Native and C/C++
+*.c text
+*.cc text
+*.cpp text
+*.h text
+*.hh text
+*.vcxproj text
+*.def text
+*.in text
+
+# Documentation, Data, and Configuration
+*.md text
+*.markdown text
+*.txt text
+*.xml text
+*.yml text
+*.yaml text
+*.sql text
+*.editorconfig text
+*.gitattributes text
+*.gitignore text
+*.gitkeep text
+*.npmignore text
+*.eslintrc text
+*.babelrc text
+*.jshintrc text
+*.nycrc text
+*.sentryclirc text
+
+# Scripts
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+*.sh text eol=lf
+*.py text
+
+# Certificates and Keys
+*.pfx binary
+*.p12 binary
+*.cer binary
+*.crt binary
+*.key binary
+*.der binary
+
+# Images and Media
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.bmp binary
+*.tiff binary
+*.mp3 binary
+*.wav binary
+*.ogg binary
+*.mp4 binary
+
+# Fonts
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+
+# Documents
+*.pdf binary
+*.doc binary
+*.docx binary
+
+# Archives, Compressed Files, and WebAssembly
+*.zip binary
+*.tar.gz binary
+*.tgz binary
+*.gz binary
+*.br binary
+*.wasm binary
+
+# Binaries and Compiled Libraries
+*.dll binary
+*.exe binary
+*.pdb binary
+*.so binary
+*.dylib binary
+*.a binary
+*.node binary
+*.db binary
+*.sqlite binary
+*.bin binary

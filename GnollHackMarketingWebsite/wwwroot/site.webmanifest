@@ -1,12 +1,26 @@
 {
   "short_name": "GnollHack",
   "name": "GnollHack",
-  "icons": [{
-    "src": "img/favicon-196x196.png",
-    "type": "image/png",
-    "sizes": "196x196"
-  }],
+  "icons": [
+    {
+      "src": "/favicon/favicon-196x196.png",
+      "type": "image/png",
+      "sizes": "196x196"
+    },
+    {
+      "src": "/favicon/favicon-128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/img/gnollhack-icon-v2-512.webp",
+      "type": "image/webp",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
   "start_url": "/",
   "background_color": "#000000",
-  "theme_color": "#000000"
+  "theme_color": "#000000",
+  "display": "standalone"
 }

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".agents/skills/gnollhack-website-guide/SKILL.md" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="AGENTS.md" />
+    <File Path="LICENSE.txt" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="GnollHackMarketingWebsite/GnollHackMarketingWebsite.csproj" />
+</Solution>

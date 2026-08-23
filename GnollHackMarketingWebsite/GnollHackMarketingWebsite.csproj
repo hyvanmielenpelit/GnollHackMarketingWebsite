@@ -8,10 +8,19 @@
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
+    <Content Remove="compilerconfig.json.defaults" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\**\*.scss" CopyToPublishDirectory="Never" />
+    <Content Update="wwwroot\**\*.map" CopyToPublishDirectory="Never" />
+    <Content Update="compilerconfig.json" CopyToPublishDirectory="Never" />
+    <Content Update="compilerconfig.json.defaults" CopyToPublishDirectory="Never" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿@model List<(string, string, string)>
+@model List<(string, string, string)>
 
 @* Main Carousel *@
 <div id="carouselComponent" class="carousel slide main-carousel-container" data-bs-ride="false">
@@ -6,9 +6,9 @@
     <div class="carousel-indicators">
         @foreach (var index in Model.Select((_, index) => index))
         {
-                <button type="button" data-bs-target="#carouselComponent" data-bs-slide-to="@index"
-                class="@(index == 0 ? "active" : "")" aria-label="Slide @(index + 1)">
-                </button>
+            <button type="button" data-bs-target="#carouselComponent" data-bs-slide-to="@index"
+                    class="@(index == 0 ? "active" : "")" aria-label="Slide @(index + 1)">
+            </button>
         }
     </div>
 
@@ -16,48 +16,42 @@
     <div class="carousel-inner main-carousel-inner">
         @foreach (var (mediaType, mediaUrl, mediaOrientation, index) in Model.Select((item, index) => (item.Item1, item.Item2, item.Item3, index)))
         {
-                <div class="carousel-item @(index == 0 ? "active" : "")">
-                @if (mediaType == "image")
+            <div class="carousel-item @(index == 0 ? "active" : "")">
+            @if (mediaType == "image")
+            {
+                <img src="@mediaUrl" class="main-carousel-img"
+                     data-bs-toggle="modal" data-bs-target="#fullscreenModal"
+                     data-src="@mediaUrl" alt="GnollHack Screenshot @(index + 1)"
+                     loading="@(index == 0 ? "eager" : "lazy")"
+                     fetchpriority="@(index == 0 ? "auto" : "low")">
+            }
+            else if (mediaType == "video")
+            {
+                @if (mediaOrientation == "landscape")
                 {
-                    @if (mediaOrientation == "landscape")
-                    {
-                                    <img src="@mediaUrl" class="main-carousel-img"
-                                    data-bs-toggle="modal" data-bs-target="#fullscreenModal"
-                                    data-src="@mediaUrl" alt="Slide @(index + 1)">
-                    }
-                    else if (mediaOrientation == "portrait")
-                    {
-                                    <img src="@mediaUrl" class="main-carousel-img"
-                                    data-bs-toggle="modal" data-bs-target="#fullscreenModal"
-                                    data-src="@mediaUrl" alt="Slide @(index + 1)">
-                    }
+                    <div id="thumbnailPlayer@(index)" class="thumbnailPlayer main-carousel-video-landscape" 
+                         data-video-id="@mediaUrl"
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>
                 }
-                else if (mediaType == "video")
+                else if (mediaOrientation == "portrait")
                 {
-                    @if (mediaOrientation == "landscape")
-                    {
-                        <div id="thumbnailPlayer@(index)" class="thumbnailPlayer main-carousel-video-landscape" 
-                            data-video-id="@mediaUrl" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen ></div>
-                    }
-                    else if (mediaOrientation == "portrait")
-                    {
-                        <div id="thumbnailPlayer@(index)" class="thumbnailPlayer main-carousel-video-portrait"
-                            data-video-id="@mediaUrl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>                            
-                    }
+                    <div id="thumbnailPlayer@(index)" class="thumbnailPlayer main-carousel-video-portrait"
+                         data-video-id="@mediaUrl"
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>                            
                 }
-                </div>
+            }
+            </div>
         }
     </div>
 
     @* Navigation Buttons *@
-    <button class="carousel-control-prev main-carousel-control-prev " type="button" data-bs-target="#carouselComponent" data-bs-slide="prev">
+    <button class="carousel-control-prev main-carousel-control-prev" type="button" data-bs-target="#carouselComponent" data-bs-slide="prev" aria-label="Previous Slide">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     </button>
 
-    <button class="carousel-control-next main-carousel-control-next " type="button" data-bs-target="#carouselComponent" data-bs-slide="next">
+    <button class="carousel-control-next main-carousel-control-next" type="button" data-bs-target="#carouselComponent" data-bs-slide="next" aria-label="Next Slide">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
     </button>
 </div>
@@ -72,46 +66,39 @@
                     <div class="carousel-inner">
                         @foreach (var (mediaType, mediaUrl, mediaOrientation, index) in Model.Select((item, index) => (item.Item1, item.Item2, item.Item3, index)))
                         {
-                                <div class="carousel-item @(index == 0 ? "active" : "")">
-                                @if (mediaType == "image")
-                                {
-                                            <div class="modal-carousel-image-wrapper">
-                                                <img src="@mediaUrl" class="d-block modal-carousel-img" alt="Slide @(index + 1)">
-                                            </div>
-                                }
-                                else if (mediaType == "video")
-                                {
-                                            <div class="modal-carousel-video-wrapper">
-                                        @if (mediaOrientation == "landscape")
-                                        {
-                                                        <div id="modalPlayer@(index)" class="modalPlayer d-block modal-carousel-video-landscape" 
-                                                        data-video-id="@mediaUrl" frameborder="0"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen ></div>
-                                            @* <iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="d-block modal-carousel-video-landscape" frameborder="0"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                            </iframe> *@
-                                        }
-                                        else if (mediaOrientation == "portrait")
-                                        {
-                                            @*                                             <iframe src="https://www.youtube.com/embed/@(mediaUrl)" class="d-block modal-carousel-video-portrait" frameborder="0"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                                            </iframe> *@
-                                                        <div id="modalPlayer@(index)" class="modalPlayer d-block modal-carousel-video-portrait"
-                                                             data-video-id="@mediaUrl" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>
-                                        }
-                                            </div>
-                                }
+                            <div class="carousel-item @(index == 0 ? "active" : "")">
+                            @if (mediaType == "image")
+                            {
+                                <div class="modal-carousel-image-wrapper">
+                                    <img src="@mediaUrl" class="d-block modal-carousel-img" alt="GnollHack Screenshot @(index + 1)" loading="lazy">
                                 </div>
+                            }
+                            else if (mediaType == "video")
+                            {
+                                <div class="modal-carousel-video-wrapper">
+                                    @if (mediaOrientation == "landscape")
+                                    {
+                                        <div id="modalPlayer@(index)" class="modalPlayer d-block modal-carousel-video-landscape" 
+                                             data-video-id="@mediaUrl"
+                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>
+                                    }
+                                    else if (mediaOrientation == "portrait")
+                                    {
+                                        <div id="modalPlayer@(index)" class="modalPlayer d-block modal-carousel-video-portrait"
+                                             data-video-id="@mediaUrl"
+                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></div>
+                                    }
+                                </div>
+                            }
+                            </div>
                         }
                     </div>
-                    <button class="carousel-control-prev modal-carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                    <button class="carousel-control-prev modal-carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev" aria-label="Previous Slide">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     </button>
-                    <button class="carousel-control-next modal-carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                    <button class="carousel-control-next modal-carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next" aria-label="Next Slide">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     </button>
                 </div>

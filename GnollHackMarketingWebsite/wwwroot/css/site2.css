@@ -1,4 +1,3 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap");
 .cinzel-400 {
   font-family: "Cinzel", serif;
   font-optical-sizing: auto;
@@ -163,12 +162,12 @@ body {
   color: white;
   font-size: 19px;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   body {
     font-size: 21px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   body {
     font-size: 33.6px;
   }
@@ -185,86 +184,80 @@ main {
 
 h1 {
   font-size: 58px;
-  margin-top: 48px;
-  margin-bottom: 0px;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   h1 {
     font-size: 72px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   h1 {
     font-size: 115.2px;
   }
 }
+h1 {
+  margin-top: 48px;
+  margin-bottom: 0px;
+}
 
 h2 {
   font-size: 48px;
-  margin-top: 32px;
-  margin-bottom: 9px;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   h2 {
     font-size: 64px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   h2 {
     font-size: 102.4px;
   }
 }
+h2 {
+  margin-top: 32px;
+  margin-bottom: 9px;
+}
 
 h3 {
   font-size: 34px;
-  margin-bottom: 9px;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   h3 {
     font-size: 42px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   h3 {
     font-size: 67.2px;
   }
 }
+h3 {
+  margin-bottom: 9px;
+}
 
 h4 {
   font-size: 19px;
-  margin-bottom: 9px;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   h4 {
     font-size: 21px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   h4 {
     font-size: 33.6px;
   }
 }
+h4 {
+  margin-bottom: 9px;
+}
 
-.landscape-picture, .portrait-picture {
+.hero-picture {
   width: 100%;
+  height: auto;
+  display: block;
 }
 
-@media (orientation: landscape) and (min-width: 751px) {
-  .landscape-picture {
-    display: block !important;
-  }
-  .portrait-picture {
-    display: none !important;
-  }
-}
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
-  .landscape-picture {
-    display: none !important;
-  }
-  .portrait-picture {
-    display: block !important;
-  }
-}
 .features-text {
   padding: 20px 0px 20px 0px;
   max-height: 100%;
@@ -273,7 +266,7 @@ h4 {
   text-align: center;
   font-variant: small-caps;
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .features-text h2:first-child {
     margin-top: 0px;
     padding-top: 0px;
@@ -313,12 +306,12 @@ h4 {
   text-align: left;
 }
 
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .backdrop {
     padding: 25px 5px;
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .backdrop {
     backdrop-filter: brightness(40%) blur(3px);
     height: 100%;
@@ -328,7 +321,7 @@ h4 {
   }
 }
 
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .general-section, .full-section, .left-section, .right-section {
     background-size: cover;
     background-repeat: no-repeat;
@@ -336,7 +329,7 @@ h4 {
     align-items: center;
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .general-section, .full-section, .left-section, .right-section {
     background-size: cover;
     background-repeat: no-repeat;
@@ -346,7 +339,7 @@ h4 {
   }
 }
 
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .right-section {
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
     background-position: left;
@@ -357,7 +350,7 @@ h4 {
   }
 }
 
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .left-section {
     display: flex;
     justify-content: end;
@@ -369,18 +362,18 @@ h4 {
   }
 }
 
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .orc-assassin {
     background-image: url(/img/HalfOrcAssassin-w1920.webp);
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
 }
-@media (orientation: landscape) and (min-width: 751px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .orc-assassin {
     background-position-x: -140px;
   }
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .orc-assassin .description-center {
     display: flex;
     justify-content: center;
@@ -403,12 +396,12 @@ h4 {
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
 }
-@media (orientation: landscape) and (min-width: 751px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .female-mage {
     background-position-x: -50px;
   }
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .female-mage .features-text {
     margin-left: calc(min(2560px, 100vw) * 45 / 100);
     width: calc(min(2560px, 100vw) * 50 / 100);
@@ -418,12 +411,12 @@ h4 {
     min-height: calc(min(2560px, 100vw) * 56.25 / 100);
   }
 }
-@media (orientation: landscape) and (min-width: 751px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .barbarian {
     background-position: right -90px top 0px;
   }
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .barbarian .features-text {
     margin-right: calc(min(2560px, 100vw) * 46 / 100);
     width: calc(min(2560px, 100vw) * 50 / 100);
@@ -437,25 +430,19 @@ h4 {
     width: calc(min(2560px, 100vw) * 40 / 100);
   }
 }
-@media (orientation: landscape) and (min-width: 751px) {
-  .dwarf-monk {
-    background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);
-    min-height: calc(min(2560px, 100vw) * 56.25 / 100);
-  }
-}
-@media (orientation: landscape) and (min-width: 751px) and (max-width: 1499px) {
+@media (min-width: 768px) and (max-width: 1499px) {
   .dwarf-monk .features-text {
     margin-left: calc(min(2560px, 100vw) * 56 / 100);
     width: calc(min(2560px, 100vw) * 40 / 100);
   }
 }
-@media (orientation: landscape) and (min-width: 1500px) {
+@media (min-width: 1500px) {
   .dwarf-monk .features-text {
     margin-left: calc(min(2560px, 100vw) * 40 / 100);
     width: calc(min(2560px, 100vw) * 50 / 100);
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .orc-assassin {
     background-image: url(/img/HalfOrcAssassin-w1920.webp);
     background-position-x: -140px;
@@ -499,12 +486,12 @@ h4 {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   .legal-text {
     font-size: 21px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   .legal-text {
     font-size: 33.6px;
   }
@@ -543,22 +530,22 @@ h4 {
   background-color: #222;
   font-size: 12px;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   .consent {
     font-size: 14px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   .consent {
     font-size: 22.4px;
   }
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .consent {
     width: min(max(min(2560px, 100vw) * 25 / 100, 220px), 310px);
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .consent {
     width: min(max(min(2560px, 100vw) * 50 / 100, 220px), 310px);
   }
@@ -588,18 +575,18 @@ h4 {
   border-radius: 8px;
 }
 
-.download-link-outer-container {
-  padding: 12px 0px;
-}
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .download-link-outer-container {
     display: inline-block;
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .download-link-outer-container {
     display: block;
   }
+}
+.download-link-outer-container {
+  padding: 12px 0px;
 }
 
 .download-link-container {
@@ -617,7 +604,7 @@ h4 {
   z-index: 100;
   background-color: black;
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .download-link-container span.beta {
     top: 3px;
     right: calc(0px - min(max(min(2560px, 100vw) * 0.6 / 100, 3px), 15px));
@@ -625,7 +612,7 @@ h4 {
     line-height: 1em;
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .download-link-container span.beta {
     top: 3px;
     right: min(max(min(2560px, 100vw) * -2.5 / 100, -16px), -10px);
@@ -641,14 +628,14 @@ h4 {
   line-height: 1em;
   text-align: center;
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .download-link-container .coming-soon {
     top: 3px;
     right: calc(3px - min(max(min(2560px, 100vw) * 0.2 / 100, 0px), 20px));
     font-size: min(max(min(2560px, 100vw) * 1.1 / 100, 8px), 20px);
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .download-link-container .coming-soon {
     top: 3px;
     right: calc(0px - min(max(min(2560px, 100vw) * 2.5 / 100, 0px), 10px));
@@ -668,14 +655,14 @@ h4 {
   line-height: 1em;
   text-align: center;
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .download-link-container .playtest {
     top: -6px;
     right: calc(3px - min(max(min(2560px, 100vw) * 1.5 / 100, 0px), 30px));
     font-size: min(max(min(2560px, 100vw) * 1.3 / 100, 9px), 24px);
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .download-link-container .playtest {
     top: -6px;
     right: calc(-3px - min(max(min(2560px, 100vw) * 4.5 / 100, 0px), 20px));
@@ -690,6 +677,18 @@ h4 {
 
 .download-link-tooltip {
   font-size: 18px;
+}
+@media (min-width: 1500px) and (max-width: 2599px) {
+  .download-link-tooltip {
+    font-size: 24px;
+  }
+}
+@media (min-width: 2600px) {
+  .download-link-tooltip {
+    font-size: 38.4px;
+  }
+}
+.download-link-tooltip {
   --bs-tooltip-padding-x: 15px;
   --bs-tooltip-padding-y: 5px;
   --bs-tooltip-max-width: min(500px, 85vw);
@@ -697,29 +696,24 @@ h4 {
   border-radius: 5px;
   box-shadow: 0px 0px 6px #ddf;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
-  .download-link-tooltip {
-    font-size: 24px;
-  }
-}
-@media (orientation: landscape) and (min-width: 2600px) {
-  .download-link-tooltip {
-    font-size: 38.4px;
-  }
-}
 
 .shiny-borders {
   border-style: solid;
   margin: 0px 5px;
+  object-fit: contain;
 }
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .shiny-borders {
-    height: min(max(min(2560px, 100vw) * 6 / 100, 50px), 100px);
+    height: min(max(min(2560px, 100vw) * 6 / 100, 50px), 80px);
+    width: auto;
+    max-width: none;
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .shiny-borders {
-    max-width: min(min(2560px, 100vw) * 80 / 100, 290px);
+    width: min(min(2560px, 100vw) * 80 / 100, 280px);
+    height: auto;
+    max-height: none;
   }
 }
 .shiny-borders.google-play {
@@ -764,7 +758,7 @@ a.free:visited, a.free:active {
   color: #ffb;
 }
 a.free:hover {
-  color: rgb(255, 255, 212.5);
+  color: rgb(100%, 100%, 83.3333333333%);
 }
 
 .whatis {
@@ -779,18 +773,20 @@ a.free:hover {
   margin-top: 18px;
   font-weight: 600;
   font-size: 22px;
-  color: #ffb;
-  text-shadow: 2px 2px 4px #ff3;
 }
-@media (orientation: landscape) and (min-width: 1500px) and (max-width: 2599px) {
+@media (min-width: 1500px) and (max-width: 2599px) {
   .important-link {
     font-size: 28px;
   }
 }
-@media (orientation: landscape) and (min-width: 2600px) {
+@media (min-width: 2600px) {
   .important-link {
     font-size: 44.8px;
   }
+}
+.important-link {
+  color: #ffb;
+  text-shadow: 2px 2px 4px #ff3;
 }
 .important-link a {
   color: #ffb;
@@ -799,15 +795,15 @@ a.free:hover {
   color: #ffb;
 }
 .important-link a:hover {
-  color: rgb(255, 255, 212.5);
+  color: rgb(100%, 100%, 83.3333333333%);
 }
 
-@media (orientation: landscape) and (min-width: 751px) {
+@media (min-width: 768px) {
   .portrait-only {
     display: none;
   }
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .portrait-only {
     display: inline-block;
   }
@@ -816,7 +812,7 @@ a.free:hover {
 .carousel-container {
   display: inline-block;
 }
-@media (orientation: portrait), (orientation: landscape) and (max-width: 750px) {
+@media (max-width: 767.98px) {
   .carousel-container {
     display: flex;
     justify-content: center;

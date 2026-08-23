@@ -1,13 +1,16 @@
-﻿@inject IConfiguration Configuration
+@inject IConfiguration Configuration
 
 @{
-    string baseUrl = ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host;
+    string baseUrl = !string.IsNullOrEmpty(Configuration["BaseUrl"])
+        ? Configuration["BaseUrl"]!
+        : (ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host);
+    string description = "GnollHack is the modern way to play the legendary roguelike NetHack.";
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @if(!string.IsNullOrEmpty(Configuration["GoogleTagManagerID"]))
+    @if (!string.IsNullOrEmpty(Configuration["GoogleTagManagerID"]))
     {
         <!-- Google Tag Manager -->
         <script>
@@ -24,11 +27,8 @@
     
     <title>@(!string.IsNullOrEmpty(ViewData["Title"] as string) ? (ViewData["Title"] as string) + " - " : "")GnollHack</title>
 
-    @{
-        string description = "GnollHack is the modern way to play the legendary roguelike NetHack.";
-    }
-
     <meta name="description" content="@description" />
+    <link rel="canonical" href="@baseUrl" />
 
     <meta property="og:title" content="GnollHack" />
     <meta property="og:description" content="@description" />
@@ -60,21 +60,50 @@
     <link rel="icon" type="image/png" href="~/favicon/favicon-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="~/favicon/favicon-128.png" sizes="128x128" />
     <meta name="application-name" content="GnollHack" />
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileColor" content="#000000" />
     <meta name="msapplication-TileImage" content="~/favicon/mstile-144x144.png" />
     <meta name="msapplication-square70x70logo" content="~/favicon/mstile-70x70.png" />
     <meta name="msapplication-square150x150logo" content="~/favicon/mstile-150x150.png" />
     <meta name="msapplication-wide310x150logo" content="~/favicon/mstile-310x150.png" />
     <meta name="msapplication-square310x310logo" content="~/favicon/mstile-310x310.png" />
 
-    <meta name="theme-color" content="#fafafa" />
+    <meta name="theme-color" content="#000000" />
 
-    <script type="importmap"></script>
+    <!-- Google Fonts Preconnect and Stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" />
 
     <link rel="stylesheet" href="~/lib/bootstrap/5.3.3/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site2.min.css" asp-append-version="true" />
     
     @await RenderSectionAsync("Styles", required: false)
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "VideoGame",
+        "name": "GnollHack",
+        "description": "GnollHack is the modern way to play the legendary roguelike NetHack.",
+        "url": "https://gnollhack.com",
+        "image": "https://gnollhack.com/img/gnollhack-open-graph-new.jpg",
+        "genre": ["Roguelike", "RPG", "Turn-based RPG"],
+        "gamePlatform": ["Android", "iOS", "macOS", "Windows"],
+        "applicationCategory": "Game",
+        "operatingSystem": "Android, iOS, macOS, Windows",
+        "offers": {
+            "@@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "publisher": {
+            "@@type": "Organization",
+            "name": "Sound Mind Games",
+            "url": "https://soundmindgames.org/"
+        }
+    }
+    </script>
 </head>
 <body>
     @if (!string.IsNullOrEmpty(Configuration["GoogleTagManagerID"]))
@@ -96,7 +125,7 @@
     <div id="consentDiv" class="consent">
         <div class="text-container">
             By continuing to use this website, you consent to the use of cookies in accordance
-            with our <a target="_blank" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy.md">Cookie Policy</a>.
+            with our <a target="_blank" rel="noopener noreferrer" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy.md">Cookie Policy</a>.
         </div>
         <div class="button-container"><button id="consentButton">OK</button></div>
     </div>
@@ -104,13 +133,13 @@
     <footer class="legal-text padding-10">
         <div class="container">
             <p>Google Play and the Google Play logo are trademarks of Google LLC.</p>
-            <p>&copy; @DateTime.Now.Year <a href="https://soundmindgames.org/">Sound Mind Games</a> &ndash; <a target="_blank" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy.md">Privacy</a></p>
+            <p>&copy; @DateTime.Now.Year <a href="https://soundmindgames.org/">Sound Mind Games</a> &ndash; <a target="_blank" rel="noopener noreferrer" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy.md">Privacy</a></p>
         </div>
     </footer>
 
     <script src="~/js/jquery-3.7.1.min.js"></script>
     <script src="~/lib/bootstrap/5.3.3/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.es5.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
