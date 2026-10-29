@@ -282,6 +282,86 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
         await mobileContext.CloseAsync();
     }
 
+    [Fact]
+    public async Task ResourceCards_HaveAccessibleSemanticsAndMinimumTargetSize()
+    {
+        Assert.NotNull(_browser);
+
+        foreach (var (width, height) in new[] { (360, 800), (1920, 1080) })
+        {
+            var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+            {
+                ViewportSize = new ViewportSize { Width = width, Height = height }
+            });
+            var page = await context.NewPageAsync();
+            await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+
+            // Two lists that keep list semantics under list-style: none
+            var grids = page.Locator("ul.resource-grid");
+            Assert.Equal(2, await grids.CountAsync());
+            for (int i = 0; i < 2; i++)
+            {
+                await Assertions.Expect(grids.Nth(i)).ToHaveAttributeAsync("role", "list");
+            }
+
+            // Six cards, one of them Gnoll Overseer
+            var cards = page.Locator(".resource-card");
+            Assert.Equal(6, await cards.CountAsync());
+            Assert.Equal(1, await page.Locator(".resource-link[href='https://overseer.gnollhack.com']").CountAsync());
+
+            // Every link is described by an existing .resource-desc element
+            var allDescribed = await page.EvaluateAsync<bool>(@"() => {
+                const links = Array.from(document.querySelectorAll('.resource-link'));
+                return links.length === 6 && links.every(link => {
+                    const id = link.getAttribute('aria-describedby');
+                    const desc = id ? document.getElementById(id) : null;
+                    return desc !== null && desc.classList.contains('resource-desc') && desc.textContent.trim().length > 0;
+                });
+            }");
+            Assert.True(allDescribed, $"Every .resource-link must have an aria-describedby resolving to a .resource-desc at {width}x{height}");
+
+            // WCAG 2.5.5 target size
+            for (int i = 0; i < 6; i++)
+            {
+                var box = await cards.Nth(i).BoundingBoxAsync();
+                Assert.NotNull(box);
+                Assert.True(box.Height >= 44, $"Resource card {i} is {box.Height}px tall at {width}x{height}; expected >= 44px");
+            }
+
+            await context.CloseAsync();
+        }
+    }
+
+    [Fact]
+    public async Task DwarfMonk_ContentStaysClearOfArtworkOnWideScreens()
+    {
+        Assert.NotNull(_browser);
+
+        foreach (var (width, height) in new[] { (1440, 900), (1920, 1080), (2560, 1440), (3440, 1440) })
+        {
+            var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+            {
+                ViewportSize = new ViewportSize { Width = width, Height = height }
+            });
+            var page = await context.NewPageAsync();
+            await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+
+            // The monk and his hammer end at 55.2% of the 16:9 artwork, which background-size: cover scales to the section
+            var clearance = await page.EvaluateAsync<double>(@"() => {
+                const section = document.querySelector('.dwarf-monk');
+                const s = section.getBoundingClientRect();
+                const artworkWidth = Math.max(s.width, s.height * 16 / 9);
+                const offsetX = parseFloat(getComputedStyle(section).backgroundPositionX) || 0;
+                const monkRight = s.left + offsetX + artworkWidth * 0.552;
+                const items = Array.from(section.querySelectorAll('h2, .resource-card'));
+                return Math.min(...items.map(e => e.getBoundingClientRect().left)) - monkRight;
+            }");
+            Assert.True(clearance > 0, $"Dwarf monk content overlaps the artwork by {-clearance}px at {width}x{height}");
+
+            await context.CloseAsync();
+        }
+    }
+
     private class CarouselGeometry
     {
         public double PaddingLeft { get; set; }

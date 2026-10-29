@@ -4,7 +4,7 @@
     string baseUrl = !string.IsNullOrEmpty(Configuration["BaseUrl"])
         ? Configuration["BaseUrl"]!
         : (ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host);
-    string description = "GnollHack is the modern way to play the legendary roguelike NetHack.";
+    string description = "GnollHack is the modern way to play the legendary roguelike NetHack: artist-drawn graphics, full voice acting, and an optional AI coach. Free and open source.";
 }
 
 <!DOCTYPE html>
@@ -25,12 +25,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>@(!string.IsNullOrEmpty(ViewData["Title"] as string) ? (ViewData["Title"] as string) + " - " : "")GnollHack</title>
+    <title>@(!string.IsNullOrEmpty(ViewData["Title"] as string) ? (ViewData["Title"] as string) + " - GnollHack" : "GnollHack – The Modern Way to Play NetHack")</title>
 
     <meta name="description" content="@description" />
     <link rel="canonical" href="@baseUrl" />
 
-    <meta property="og:title" content="GnollHack" />
+    <meta property="og:title" content="GnollHack – The Modern Way to Play NetHack" />
     <meta property="og:description" content="@description" />
     <meta property="og:url" content="@baseUrl" />
     <meta property="og:type" content="website" />
@@ -39,7 +39,7 @@
     <meta property="og:image:height" content="630" />
 
     <meta name="twitter:site" content="@@GnollHack" />
-    <meta name="twitter:title" content="GnollHack" />
+    <meta name="twitter:title" content="GnollHack – The Modern Way to Play NetHack" />
     <meta name="twitter:description" content="@description" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image:src" content="@(baseUrl + "/img/gnollhack-open-graph-new.jpg")" />
@@ -85,13 +85,13 @@
         "@@context": "https://schema.org",
         "@@type": "VideoGame",
         "name": "GnollHack",
-        "description": "GnollHack is the modern way to play the legendary roguelike NetHack.",
+        "description": "GnollHack is the modern way to play the legendary roguelike NetHack: artist-drawn graphics, full voice acting, and an optional AI coach. Free and open source.",
         "url": "https://gnollhack.com",
         "image": "https://gnollhack.com/img/gnollhack-open-graph-new.jpg",
         "genre": ["Roguelike", "RPG", "Turn-based RPG"],
-        "gamePlatform": ["Android", "iOS", "macOS", "Windows"],
+        "gamePlatform": ["Android", "iOS", "Linux", "macOS", "Windows"],
         "applicationCategory": "Game",
-        "operatingSystem": "Android, iOS, macOS, Windows",
+        "operatingSystem": "Android, iOS, Linux, macOS, Windows",
         "offers": {
             "@@type": "Offer",
             "price": "0",
@@ -117,7 +117,7 @@
     }
  
     <div class="main-container">
-        <main role="main">
+        <main>
              @RenderBody()
         </main>
     </div>

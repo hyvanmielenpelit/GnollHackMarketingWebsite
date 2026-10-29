@@ -171,5 +171,26 @@ public class CssSpecificationTests
         Assert.Contains("@media (prefers-reduced-motion: reduce)", carouselCss);
         Assert.Contains(":focus-visible", carouselCss);
     }
+
+    [Fact]
+    public void ResourceHubAndModernTypography_StylesExistInCompiledCss()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = File.ReadAllText(Path.Combine(cssDir, "site2.css"));
+
+        // Resource hub card grid
+        Assert.Contains(".resource-grid", site2Css);
+        Assert.Contains(".resource-card", site2Css);
+        Assert.Contains("grid-template-areas", site2Css);
+        Assert.Contains("max-inline-size: 50rem", site2Css);
+
+        // Keyboard focus, balanced headings and reduced motion
+        Assert.Contains(":focus-visible", site2Css);
+        Assert.Contains("text-wrap: balance", site2Css);
+        Assert.Contains("prefers-reduced-motion", site2Css);
+
+        // Legacy link-list styling is gone
+        Assert.DoesNotContain(".important-link", site2Css);
+    }
 }
 

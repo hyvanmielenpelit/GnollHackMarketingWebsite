@@ -134,6 +134,7 @@ main {
 h1 {
     @extend .cinzel-700;
     @include font-sizes(clamp(44px, 11vw, 58px), 64px, 73px);
+    text-wrap: balance;
     margin-top: 48px;
     margin-bottom: 0px;
 }
@@ -141,6 +142,7 @@ h1 {
 h2 {
     @extend .cinzel-700;
     @include font-sizes(clamp(38px, 9.5vw, 48px), 53px, 61px);
+    text-wrap: balance;
     margin-top: 32px;
     margin-bottom: 9px;
 }
@@ -148,11 +150,13 @@ h2 {
 h3 {
     @extend .cinzel-700;
     @include font-sizes(clamp(27px, 7vw, 34px), 38px, 43px);
+    text-wrap: balance;
     margin-bottom: 9px;
 }
 
 h4 {
     @include font-sizes(clamp(18px, 4.5vw, 19px), 21px, 24px);
+    text-wrap: balance;
     margin-bottom: 9px;
 }
 
@@ -219,6 +223,17 @@ h4 {
     ul {
         margin: 0px;
         text-align: left;
+    }
+
+    li {
+        text-wrap: pretty;
+        overflow-wrap: break-word;
+    }
+
+    .feature-lead {
+        max-inline-size: 70ch;
+        margin-inline: auto;
+        text-wrap: pretty;
     }
 }
 
@@ -301,6 +316,8 @@ h4 {
                 max-width: view-width(40);
                 text-align: left;
                 font-weight: bold;
+                text-wrap: pretty;
+                overflow-wrap: break-word;
             }
         }
     }
@@ -343,31 +360,23 @@ h4 {
         }
     }
 
+    // The monk and his hammer end at 55% of the artwork's width; the column starts right of it
     .dwarf-monk {
         background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);
         min-height: view-width(56.25);
 
-        .features-text {
-            margin-left: view-width(56);
-            width: view-width(40);
+        @media (max-width: #{$breakpoint-xl - 0.02px}) {
+            background-position-x: calc(-1 * view-width(8));
         }
-    }
-}
 
-@media (min-width: $breakpoint-md) and (max-width: $normal-font-max-width) {
-    .dwarf-monk {
         .features-text {
-            margin-left: view-width(56);
-            width: view-width(40);
-        }
-    }
-}
+            margin-left: view-width(58);
+            width: view-width(38);
 
-@media (min-width: $larger-font-min-width) {
-    .dwarf-monk {
-        .features-text {
-            margin-left: view-width(40);
-            width: view-width(50);
+            @media (max-width: #{$breakpoint-xl - 0.02px}) {
+                margin-left: view-width(52);
+                width: view-width(45);
+            }
         }
     }
 }
@@ -384,6 +393,8 @@ h4 {
             .description {
                 text-align: left;
                 font-weight: bold;
+                text-wrap: pretty;
+                overflow-wrap: break-word;
             }
         }
     }
@@ -405,6 +416,10 @@ h4 {
     .dwarf-monk {
         background-image: url(/img/DwarfMonk-shaded2-flipped-w1920.webp);
         background-position-x: -270px;
+
+        .features-text {
+            width: min(100%, 32rem);
+        }
     }
 }
 
@@ -511,6 +526,11 @@ h4 {
 
     a {
         text-decoration: none;
+
+        &:focus-visible {
+            outline: 2px solid #ffb;
+            outline-offset: 3px;
+        }
     }
 
     span.beta {
@@ -667,6 +687,8 @@ h4 {
 
 a.free {
     color: #ffb;
+    text-decoration: underline solid color-mix(in srgb, currentColor 65%, transparent) max(1px, 0.08em);
+    text-underline-offset: 0.2em;
 
     &:visited, &:active {
         color: #ffb;
@@ -674,6 +696,16 @@ a.free {
 
     &:hover {
         color: color.adjust(#ffb, $lightness: 5%);
+    }
+
+    &:is(:hover, :focus-visible) {
+        text-decoration-color: currentColor;
+        text-decoration-thickness: max(1px, 0.12em);
+    }
+
+    &:focus-visible {
+        outline: 2px solid #ffb;
+        outline-offset: 3px;
     }
 }
 
@@ -685,23 +717,126 @@ a.free {
     padding: 20px 10px 0px 10px;
 }
 
-.important-link {
-    margin-top: 18px;
-    font-weight: 600;
-    @include font-sizes(22px, 24px, 28px);
-    color: #ffb;
-    text-shadow: 2px 2px 4px #ff3;
+.dwarf-monk .features-text h2 {
+    margin-block-end: 16px;
+}
 
-    a {
-        color: #ffb;
+// One row per resource, capped so rows stay readable on very wide screens
+.features-text ul.resource-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-inline-size: 50rem;
+    list-style: none;
+    padding: 0;
+    margin-block: 0 44px;
+    margin-inline: auto;
 
-        &:visited, &:active {
+    &:last-child {
+        margin-block-end: 0;
+    }
+}
+
+.resource-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "title arrow"
+        "desc arrow";
+    align-content: center;
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 3px;
+    min-inline-size: 0;
+    min-block-size: 48px;
+    padding: 14px 18px 14px 20px;
+    text-align: start;
+    background-image: linear-gradient(160deg, rgba(36, 32, 48, 0.86), rgba(12, 11, 18, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 28px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+
+    @media (prefers-reduced-motion: no-preference) {
+        transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, translate 0.2s ease-out;
+    }
+
+    &:has(.resource-link:is(:hover, :focus-visible)) {
+        border-color: rgba(255, 255, 187, 0.55);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 18px rgba(255, 255, 187, 0.12);
+
+        @media (prefers-reduced-motion: no-preference) {
+            translate: 0 -2px;
+        }
+
+        .resource-arrow {
             color: #ffb;
-        }
+            border-color: rgba(255, 255, 187, 0.55);
+            background-color: rgba(255, 255, 187, 0.1);
 
-        &:hover {
-            color: color.adjust(#ffb, $lightness: 5%);
+            @media (prefers-reduced-motion: no-preference) {
+                translate: 2px -2px;
+            }
         }
+    }
+
+    &:has(.resource-link:focus-visible) {
+        outline: 2px solid #ffb;
+        outline-offset: 3px;
+    }
+}
+
+.features-text .resource-link {
+    @extend .lato-bold;
+    @include font-sizes(19px, 20px, 22px);
+    grid-area: title;
+    color: #ffb;
+    text-decoration: none;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+
+    &:visited, &:hover {
+        color: #ffb;
+    }
+
+    // The card draws the focus ring
+    &:focus-visible {
+        outline: none;
+    }
+
+    // Stretches the link over the whole card
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+    }
+}
+
+.resource-desc {
+    @include font-sizes(15px, 16px, 18px);
+    grid-area: desc;
+    color: #c9cad6;
+    line-height: 1.35;
+    text-wrap: pretty;
+}
+
+.resource-arrow {
+    grid-area: arrow;
+    display: grid;
+    place-items: center;
+    inline-size: 32px;
+    block-size: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+    @include font-sizes(15px, 16px, 18px);
+    line-height: 1;
+    color: rgba(255, 255, 187, 0.7);
+    pointer-events: none;
+
+    @media (prefers-reduced-motion: no-preference) {
+        transition: color 0.2s ease-out, border-color 0.2s ease-out, background-color 0.2s ease-out, translate 0.2s ease-out;
     }
 }
 
