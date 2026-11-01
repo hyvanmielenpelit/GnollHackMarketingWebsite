@@ -23,11 +23,14 @@ public class CssSpecificationTests
         throw new DirectoryNotFoundException("Could not locate wwwroot/css directory.");
     }
 
+    private static string ReadCss(string cssDir, string fileName) =>
+        File.ReadAllText(Path.Combine(cssDir, fileName)).Replace("\r\n", "\n");
+
     [Fact]
     public void Typography_MatchesSpecificationAcrossBreakpoints()
     {
         var cssDir = GetWwwRootPath();
-        var site2Css = File.ReadAllText(Path.Combine(cssDir, "site2.css"));
+        var site2Css = ReadCss(cssDir, "site2.css");
 
         // Base font sizes
         Assert.Contains("font-size: clamp(44px, 11vw, 58px);", site2Css);
@@ -134,7 +137,7 @@ public class CssSpecificationTests
     public void Carousel_ThematicModalBackgroundAndMediaElevation()
     {
         var cssDir = GetWwwRootPath();
-        var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
+        var carouselCss = ReadCss(cssDir, "carousel.css");
 
         // Thematic modal background graphics and vignette
         Assert.Contains("OrcHunter-shaded-flipped-w1920.webp", carouselCss);
@@ -182,7 +185,7 @@ public class CssSpecificationTests
         Assert.Contains(".resource-grid", site2Css);
         Assert.Contains(".resource-card", site2Css);
         Assert.Contains("grid-template-areas", site2Css);
-        Assert.Contains("max-inline-size: 50rem", site2Css);
+        Assert.Contains("max-inline-size: 44rem", site2Css);
 
         // Keyboard focus, balanced headings and reduced motion
         Assert.Contains(":focus-visible", site2Css);
@@ -194,23 +197,26 @@ public class CssSpecificationTests
     }
 
     [Fact]
-    public void ProfessionalFacelift_LightFantasyDesignSystemAndAccessibilityStylesExist()
+    public void DarkFantasyDesignSystemAndAccessibilityStylesExist()
     {
         var cssDir = GetWwwRootPath();
         var site2Css = File.ReadAllText(Path.Combine(cssDir, "site2.css"));
         var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
 
-        // Light-fantasy design tokens and sans-serif font stack
+        // Dark-fantasy design tokens, color-scheme, and sans-serif font stack
+        Assert.Contains("color-scheme: dark;", site2Css);
         Assert.Contains("--gh-header-bg:", site2Css);
         Assert.Contains("--gh-card-bg:", site2Css);
         Assert.Contains("--gh-font-sans:", site2Css);
         Assert.DoesNotContain("\"Lato\", serif", site2Css);
 
-        // Sticky header, skip link, symmetric download grid, intro/feature cards, and footer
+        // Sticky header, skip link, 2x2 subgrid download panel, intro/feature cards, and footer
         Assert.Contains(".skip-link", site2Css);
         Assert.Contains(".site-header", site2Css);
         Assert.Contains(".nav-cta", site2Css);
+        Assert.Contains(".download-panel", site2Css);
         Assert.Contains(".download-grid", site2Css);
+        Assert.Contains("subgrid", site2Css);
         Assert.Contains(".download-platform", site2Css);
         Assert.Contains(".intro-card", site2Css);
         Assert.Contains(".feature-card", site2Css);

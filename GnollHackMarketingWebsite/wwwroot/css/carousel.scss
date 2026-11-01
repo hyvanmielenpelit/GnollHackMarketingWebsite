@@ -1,24 +1,24 @@
 /* Main Carousel Styling */
 
 .main-carousel-container {
-    background-color: rgba(20, 34, 56, 0.90);
-    background-image: linear-gradient(155deg, rgba(30, 48, 74, 0.86) 0%, rgba(16, 26, 44, 0.90) 100%);
-    border: 1px solid rgba(245, 208, 107, 0.36);
+    background-color: rgba(16, 15, 14, 0.90);
+    background-image: linear-gradient(165deg var(--in-oklab), rgba(22, 20, 18, 0.88) 0%, rgba(11, 11, 13, 0.94) 100%);
+    border: 1px solid rgba(212, 168, 83, 0.34);
     border-radius: 14px;
-    box-shadow: inset 0 1px 0 rgba(255, 246, 218, 0.22), 0 14px 34px rgba(6, 12, 24, 0.5);
+    box-shadow: inset 0 1px 0 rgba(255, 240, 200, 0.12), 0 16px 38px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.45);
     position: relative;
     contain: layout paint;
     box-sizing: border-box;
 
     @media (min-width: 768px) {
         padding: 35px;
-        width: min(max(48vw, 320px), 980px);
+        width: min(100%, 54rem);
         height: auto;
     }
 
     @media (max-width: 767.98px) {
         padding: 25px;
-        width: 85vw;
+        width: 100%;
         height: auto;
     }
 

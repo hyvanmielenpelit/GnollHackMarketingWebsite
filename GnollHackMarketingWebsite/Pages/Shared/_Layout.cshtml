@@ -4,7 +4,7 @@
     string baseUrl = !string.IsNullOrEmpty(Configuration["BaseUrl"])
         ? Configuration["BaseUrl"]!
         : (ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host);
-    string description = "GnollHack is the modern way to play the legendary roguelike NetHack: artist-drawn graphics, full voice acting, and an optional AI coach. Free and open source.";
+    string description = "GnollHack is a free, open-source modernization of the classic roguelike NetHack, featuring artist-drawn graphics, full voice acting, original music, and native ports for desktop and mobile.";
 }
 
 <!DOCTYPE html>
@@ -67,6 +67,7 @@
     <meta name="msapplication-wide310x150logo" content="~/favicon/mstile-310x150.png" />
     <meta name="msapplication-square310x310logo" content="~/favicon/mstile-310x310.png" />
 
+    <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#000000" />
 
     <!-- Google Fonts Preconnect and Stylesheet -->
@@ -85,7 +86,7 @@
         "@@context": "https://schema.org",
         "@@type": "VideoGame",
         "name": "GnollHack",
-        "description": "GnollHack is the modern way to play the legendary roguelike NetHack: artist-drawn graphics, full voice acting, and an optional AI coach. Free and open source.",
+        "description": "GnollHack is a free, open-source modernization of the classic roguelike NetHack, featuring artist-drawn graphics, full voice acting, original music, and native ports for desktop and mobile.",
         "url": "https://gnollhack.com",
         "image": "https://gnollhack.com/img/gnollhack-open-graph-new.jpg",
         "genre": ["Roguelike", "RPG", "Turn-based RPG"],
@@ -122,7 +123,7 @@
         <nav class="site-nav" aria-label="Primary">
             <div class="site-nav-inner">
                 <a href="#top" class="site-brand">
-                    <img src="~/favicon/favicon-32x32.png" alt="" width="28" height="28" class="brand-crest" />
+                    <img src="~/img/gnollhack-icon-v2-512.webp" alt="" width="30" height="30" class="brand-crest" />
                     <span class="brand-title">GnollHack</span>
                 </a>
 
@@ -149,7 +150,7 @@
     </header>
 
     <div class="main-container">
-        <main id="main-content">
+        <main id="main-content" tabindex="-1">
              @RenderBody()
         </main>
     </div>

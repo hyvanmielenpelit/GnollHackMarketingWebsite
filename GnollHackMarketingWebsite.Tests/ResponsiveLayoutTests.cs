@@ -337,7 +337,7 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
     {
         Assert.NotNull(_browser);
 
-        foreach (var (width, height) in new[] { (1440, 900), (1920, 1080), (2560, 1440), (3440, 1440) })
+        foreach (var (width, height) in new[] { (1200, 800), (1440, 900), (1920, 1080), (2560, 1440), (3440, 1440) })
         {
             var context = await _browser.NewContextAsync(new BrowserNewContextOptions
             {
@@ -346,17 +346,53 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
             var page = await context.NewPageAsync();
             await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
 
-            // The monk and his hammer end at 55.2% of the 16:9 artwork, which background-size: cover scales to the section
-            var clearance = await page.EvaluateAsync<double>(@"() => {
-                const section = document.querySelector('.dwarf-monk');
-                const s = section.getBoundingClientRect();
-                const artworkWidth = Math.max(s.width, s.height * 16 / 9);
-                const offsetX = parseFloat(getComputedStyle(section).backgroundPositionX) || 0;
-                const monkRight = s.left + offsetX + artworkWidth * 0.552;
-                const items = Array.from(section.querySelectorAll('h2, .resource-card'));
-                return Math.min(...items.map(e => e.getBoundingClientRect().left)) - monkRight;
+            var clearances = await page.EvaluateAsync<SectionClearanceMetric[]>(@"() => {
+                const specs = [
+                    { selector: '.orc-assassin', side: 'left', extent: 0.455 },
+                    { selector: '.orc-hunter', side: 'right', extent: 0.445 },
+                    { selector: '.female-mage', side: 'left', extent: 0.445 },
+                    { selector: '.barbarian', side: 'right', extent: 0.385 },
+                    { selector: '.dwarf-monk', side: 'left', extent: 0.552 }
+                ];
+
+                return specs.map(spec => {
+                    const section = document.querySelector(spec.selector);
+                    const s = section.getBoundingClientRect();
+                    const style = getComputedStyle(section);
+                    const bgSize = style.backgroundSize.trim();
+                    const artworkWidth = bgSize === 'cover'
+                        ? Math.max(s.width, s.height * 16 / 9)
+                        : (bgSize.startsWith('100%') ? s.width : Math.max(s.width, s.height * 16 / 9));
+
+                    const items = Array.from(section.querySelectorAll(
+                        'h2, .section-lead, .download-panel, .intro-card, .main-carousel-container, .feature-card, .resource-card'
+                    ));
+
+                    let clearance;
+                    if (spec.side === 'left') {
+                        const posX = style.backgroundPositionX.endsWith('px') ? (parseFloat(style.backgroundPositionX) || 0) : 0;
+                        const characterRight = s.left + posX + artworkWidth * spec.extent;
+                        const contentLeft = Math.min(...items.map(e => e.getBoundingClientRect().left));
+                        clearance = contentLeft - characterRight;
+                    } else {
+                        const characterLeft = s.right - artworkWidth * spec.extent;
+                        const contentRight = Math.max(...items.map(e => e.getBoundingClientRect().right));
+                        clearance = characterLeft - contentRight;
+                    }
+
+                    return {
+                        selector: spec.selector,
+                        clearance
+                    };
+                });
             }");
-            Assert.True(clearance > 0, $"Dwarf monk content overlaps the artwork by {-clearance}px at {width}x{height}");
+
+            Assert.Equal(5, clearances.Length);
+            foreach (var metric in clearances)
+            {
+                Assert.True(metric.Clearance >= 24,
+                    $"Section {metric.Selector} has {metric.Clearance:F1}px artwork clearance at {width}x{height}; expected >= 24px");
+            }
 
             await context.CloseAsync();
         }
@@ -373,7 +409,8 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
             (768, 1024, new[] { 2, 2 }),
             (1024, 768, new[] { 2, 2 }),
             (1440, 900, new[] { 2, 2 }),
-            (1920, 1080, new[] { 4 })
+            (1920, 1080, new[] { 2, 2 }),
+            (2560, 1440, new[] { 2, 2 })
         };
 
         foreach (var (width, height, expectedRows) in cases)
@@ -455,7 +492,7 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
     }
 
     [Fact]
-    public async Task FeatureCards_HaveAlignedListsAndLightFantasyStickyHeader()
+    public async Task FeatureCards_HaveAlignedListsAndDarkFantasyStickyHeader()
     {
         Assert.NotNull(_browser);
 
@@ -468,7 +505,7 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
             var page = await context.NewPageAsync();
             await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
 
-            // Skip link and sticky light-parchment header
+            // Skip link and sticky dark-fantasy header
             var skipLink = page.Locator("a.skip-link[href='#main-content']");
             Assert.Equal(1, await skipLink.CountAsync());
 
@@ -514,16 +551,22 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
             }");
 
             Assert.Equal("sticky", headerCheck.Position);
-            Assert.True(headerCheck.HeaderR > 220 && headerCheck.HeaderG > 205 && headerCheck.HeaderB > 175,
-                $"Expected warm sunlit-parchment header background at {width}x{height}, got rgb({headerCheck.HeaderR}, {headerCheck.HeaderG}, {headerCheck.HeaderB})");
-            Assert.True(headerCheck.InkR < 90 && headerCheck.InkG < 65 && headerCheck.InkB < 40,
-                $"Expected high-contrast dark bronze brand ink at {width}x{height}, got rgb({headerCheck.InkR}, {headerCheck.InkG}, {headerCheck.InkB})");
+            Assert.True(headerCheck.HeaderR < 40 && headerCheck.HeaderG < 35 && headerCheck.HeaderB < 35,
+                $"Expected smoked-obsidian header background at {width}x{height}, got rgb({headerCheck.HeaderR}, {headerCheck.HeaderG}, {headerCheck.HeaderB})");
+            Assert.True(headerCheck.InkR > 220 && headerCheck.InkG > 210 && headerCheck.InkB > 190,
+                $"Expected high-contrast warm ivory brand ink at {width}x{height}, got rgb({headerCheck.InkR}, {headerCheck.InkG}, {headerCheck.InkB})");
             Assert.InRange(headerCheck.MageSpread, 0, 1.0);
             Assert.InRange(headerCheck.BarbarianSpread, 0, 1.0);
             Assert.True(headerCheck.AllScreenshotsOperable, "All screenshot carousel items must have role='button' and tabindex='0'");
 
             await context.CloseAsync();
         }
+    }
+
+    private class SectionClearanceMetric
+    {
+        public string Selector { get; set; } = "";
+        public double Clearance { get; set; }
     }
 
     private class BadgeLayoutResult
