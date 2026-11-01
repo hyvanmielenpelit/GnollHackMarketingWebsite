@@ -6,7 +6,7 @@
 
 <h1 class="visually-hidden">GnollHack &ndash; The Modern Way to Play NetHack</h1>
 
-<section class="main-section">
+<section id="top" class="main-section">
     <picture>
         <source media="(min-width: 768px)" srcset="~/img/gnollhack-image-landscape-w2560.webp" width="2560" height="1440" />
         <source media="(max-width: 767.98px)" srcset="~/img/gnollhack-image-portrait-w1080.webp" width="1080" height="1920" />
@@ -14,68 +14,65 @@
     </picture>
 </section>
 
-<section class="right-section orc-assassin">
+<section id="download" class="right-section orc-assassin">
     <div class="backdrop">
         <div class="features-text">
             <h2>Download</h2>
-            <h4>Available for <span class="free">free</span> on Android, iOS, Linux, macOS, Steam Deck, and Windows!</h4>
+            <h4>Play free on Windows, macOS, Linux, Steam Deck, iOS, and Android &mdash; no ads, no microtransactions.</h4>
 
-            <div class="download-link-outer-container">
-                <div class="download-link-container" data-bs-toggle="tooltip" data-bs-placement="top"
-                     data-bs-custom-class="download-link-tooltip"
-                     data-bs-title="Android">
-                    <a href="https://play.google.com/store/apps/details?id=com.soundmindentertainment.gnollhack&utm_source=gnollhack"><img src="~/img/google-play-badge-noborders.webp" alt="Get it on Google Play" loading="lazy" class="shiny-borders google-play" /></a>
-                </div>
-            </div>
-
-            <div class="download-link-outer-container">
-                <div class="download-link-container" data-bs-toggle="tooltip" data-bs-placement="top"
-                     data-bs-custom-class="download-link-tooltip"
-                     data-bs-title="iOS & macOS">
-                    <a href="https://apps.apple.com/app/gnollhack/id1626979951?utm_source=gnollhack"><img src="~/img/app-store-badge-h200-noborders.webp" alt="Download on the App Store" loading="lazy" class="shiny-borders apple-app-store" /></a>
-                </div>
-            </div>
-
-            <div class="download-link-outer-container">
-                <div class="download-link-container" data-bs-toggle="tooltip" data-bs-placement="top"
-                     data-bs-custom-class="download-link-tooltip"
-                     data-bs-title="Windows, Linux & Steam Deck">
-                    <a href="https://store.steampowered.com/app/3558190/GnollHack/?utm_source=gnollhack">
-                        <img src="~/img/steambadge-noborders.webp" alt="Available on Steam" loading="lazy" class="shiny-borders steam" />
+            <ul class="download-grid" role="list">
+                <li class="download-item">
+                    <a class="download-badge-link" href="https://play.google.com/store/apps/details?id=com.soundmindentertainment.gnollhack&utm_source=gnollhack" aria-describedby="plat-google-play">
+                        <img src="~/img/google-play-badge-noborders.webp" alt="Get it on Google Play" loading="lazy" width="556" height="160" class="shiny-borders google-play" />
                     </a>
-                </div>
-            </div>
+                    <span id="plat-google-play" class="download-platform">Android</span>
+                </li>
 
-            <div class="download-link-outer-container">
-                <div class="download-link-container" data-bs-toggle="tooltip" data-bs-placement="top"
-                     data-bs-custom-class="download-link-tooltip"
-                     data-bs-title="Windows: Legacy & MSIX | Linux: AppImage">
-                    <a href="https://github.com/hyvanmielenpelit/GnollHack/releases">
-                        <img src="~/img/GitHubDownloadBadge-NoBorders-h200.webp" alt="Get release on GitHub" loading="lazy" class="shiny-borders github-releases" />
+                <li class="download-item">
+                    <a class="download-badge-link" href="https://apps.apple.com/app/gnollhack/id1626979951?utm_source=gnollhack" aria-describedby="plat-app-store">
+                        <img src="~/img/app-store-badge-h200-noborders.webp" alt="Download on the App Store" loading="lazy" width="617" height="200" class="shiny-borders apple-app-store" />
                     </a>
-                </div>
-            </div>
+                    <span id="plat-app-store" class="download-platform">iOS, iPadOS &amp; macOS</span>
+                </li>
 
-            <h2>What is GnollHack?</h2>
-            <div class="description-center">
-                <div class="description">
-                    GnollHack is the modern way to play the legendary <a href="https://www.nethack.org" target="_blank" rel="noopener noreferrer" class="free">NetHack</a>,
-                    the deepest <i>traditional roguelike</i> ever made.
-                    The classic game has been enhanced with artist-drawn graphics, full voice acting, and a streamlined interface,
-                    all without sacrificing the hardcore depth roguelike players love.
-                </div>
-            </div>
-            <div class="readmore">
-                <p class="whatis">Learn more on the <a href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer" class="free">wiki</a> or ask the <a href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer" class="free">Gnoll Overseer</a>!</p>
+                <li class="download-item">
+                    <a class="download-badge-link" href="https://store.steampowered.com/app/3558190/GnollHack/?utm_source=gnollhack" aria-describedby="plat-steam">
+                        <img src="~/img/steambadge-noborders.webp" alt="Available on Steam" loading="lazy" width="556" height="160" class="shiny-borders steam" />
+                    </a>
+                    <span id="plat-steam" class="download-platform">Windows, Linux &amp; Steam Deck</span>
+                </li>
+
+                <li class="download-item">
+                    <a class="download-badge-link" href="https://github.com/hyvanmielenpelit/GnollHack/releases" aria-describedby="plat-github">
+                        <img src="~/img/GitHubDownloadBadge-NoBorders-h200.webp" alt="Get release on GitHub" loading="lazy" width="622" height="200" class="shiny-borders github-releases" />
+                    </a>
+                    <span id="plat-github" class="download-platform">Direct Download &middot; Win &amp; Linux</span>
+                </li>
+            </ul>
+
+            <h2 id="about">What is GnollHack?</h2>
+            <div class="intro-card">
+                <p class="intro-copy">
+                    GnollHack is the definitive modern edition of <a href="https://www.nethack.org" target="_blank" rel="noopener noreferrer" class="inline-accent">NetHack</a>,
+                    the legendary <em>traditional roguelike</em>. It pairs the classic game's boundless tactical discovery and interactive fantasy world with hand-crafted art, full voice acting, an enchanting 37-track soundtrack, and an intuitive modern interface.
+                </p>
+                <p class="intro-copy intro-links">
+                    Explore the <a href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer" class="inline-accent">GnollHack Wiki</a> or ask the <a href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer" class="inline-accent">Gnoll Overseer</a> AI companion anything about your quest.
+                </p>
+                <blockquote class="praise-quote">
+                    <p>&ldquo;This is, by far, the best NetHack rendition I have ever played.&rdquo;</p>
+                    <div class="praise-cite">&mdash; <strong>Steam Review</strong> <span class="praise-stars" role="img" aria-label="5 out of 5 stars">(&#9733;&#9733;&#9733;&#9733;&#9733;)</span></div>
+                </blockquote>
             </div>
         </div>
     </div>
 </section>
 
-<section class="left-section orc-hunter">
+<section id="media" class="left-section orc-hunter">
     <div class="backdrop">
         <div class="features-text">
-            <h2>Videos and Screenshots</h2>
+            <h2>Trailers &amp; Screenshots</h2>
+            <p class="section-lead">Watch gameplay trailers or select any screenshot to view in fullscreen.</p>
             <div class="carousel-container">
                 @await Html.PartialAsync("_Carousel", Model.MediaItems)
             </div>
@@ -83,36 +80,34 @@
     </div>
 </section>
 
-<section class="right-section female-mage">
+<section id="features" class="right-section female-mage">
     <div class="backdrop">
         <div class="features-text">
             <h2>Features</h2>
-            <div class="imgContainer extra-padding">
-                <img src="~/img/human_wizard_female.webp" alt="Human Wizard" loading="lazy" width="64" height="96" />
-            </div>
-            <h3>Traditional Roguelike RPG</h3>
-            <div class="block-centered-text-left-align">
-                <div>
-                    <ul>
-                        <li><b>Turn-based</b> &mdash; Take your time to assess your choices</li>
-                        <li><b>Dungeon crawler</b> &mdash; Descend into the perilous Dungeons of Doom</li>
-                        <li><b>Deeply simulated world</b> &mdash; Dozens of commands and interactions</li>
+            <div class="feature-stack">
+                <article class="feature-card">
+                    <div class="imgContainer">
+                        <img src="~/img/human_wizard_female.webp" alt="Human Wizard" loading="lazy" width="64" height="96" />
+                    </div>
+                    <h3>Traditional Roguelike RPG</h3>
+                    <ul class="feature-list" role="list">
+                        <li><strong>Thoughtful turn-based play</strong> &mdash; Every move happens at your pace; outsmart tricky dungeon encounters one step at a time</li>
+                        <li><strong>Classic fantasy quest</strong> &mdash; Explore the sprawling Dungeons of Doom in search of the legendary Amulet of Yendor</li>
+                        <li><strong>Rich, interactive world</strong> &mdash; Brew potions, zap wands, befriend pets, chat with shopkeepers, and uncover hundreds of clever interactions</li>
                     </ul>
-                </div>
-            </div>
+                </article>
 
-            <div class="imgContainer extra-padding">
-                <img src="~/img/human_rogue_male.webp" alt="Human Rogue" loading="lazy" width="64" height="96" />
-            </div>
-            <h3>Modernized for Today's Players</h3>
-            <div class="block-centered-text-left-align">
-                <div>
-                    <ul>
-                        <li><b>Artist-drawn graphics</b> &mdash; 23,000+ tiles &amp; animations</li>
-                        <li><b>Full voice acting</b> &mdash; 96 voice actors</li>
-                        <li><b>Gnoll Overseer</b> &mdash; Optional, highly advanced AI assistant to help you master the game</li>
+                <article class="feature-card">
+                    <div class="imgContainer">
+                        <img src="~/img/human_rogue_male.webp" alt="Human Rogue" loading="lazy" width="64" height="96" />
+                    </div>
+                    <h3>Modernized for Today's Players</h3>
+                    <ul class="feature-list" role="list">
+                        <li><strong>Hand-crafted fantasy art</strong> &mdash; Over 23,000 artist-drawn tiles with lively character, spell, and dungeon animations</li>
+                        <li><strong>Voice acting &amp; spatial audio</strong> &mdash; 96 voice actors, 37 music tracks, and 1,100+ FMOD sound effects</li>
+                        <li><strong>Optional AI companion</strong> &mdash; Ask <em>Gnoll Overseer</em> in-game for spoiler-aware tips whenever you want a helping hand</li>
                     </ul>
-                </div>
+                </article>
             </div>
         </div>
     </div>
@@ -121,56 +116,55 @@
 <section class="left-section barbarian">
     <div class="backdrop">
         <div class="features-text">
-            <div class="imgContainer extra-padding">
-                <img src="~/img/gnoll_barbarian_male.webp" alt="Gnoll Barbarian" loading="lazy" width="64" height="96" />
-            </div>
-            <h3>Endless Replayability</h3>
-            <div class="block-centered-text-left-align">
-                <div>
-                    <ul>
-                        <li><b>Randomized dungeons</b> &mdash; No two runs alike</li>
-                        <li><b>Deep builds</b> &mdash; 13 classes, 5 races, 200+ spells &amp; mythic gear</li>
-                        <li><b>Your stakes</b> &mdash; 7 difficulty levels, optional permadeath</li>
+            <h2>Replayability &amp; Freedom</h2>
+            <div class="feature-stack">
+                <article class="feature-card">
+                    <div class="imgContainer">
+                        <img src="~/img/gnoll_barbarian_male.webp" alt="Gnoll Barbarian" loading="lazy" width="64" height="96" />
+                    </div>
+                    <h3>Endless Replayability</h3>
+                    <ul class="feature-list" role="list">
+                        <li><strong>Procedural dungeons</strong> &mdash; Randomized floors, shops, secret rooms, and vaults make every adventure fresh</li>
+                        <li><strong>Heroic character builds</strong> &mdash; 13 roles, 5 playable races including Gnolls, 200+ spells, and mythic gear</li>
+                        <li><strong>Welcoming for everyone</strong> &mdash; 7 difficulty levels and optional non-permadeath modes for newcomers and veterans alike</li>
                     </ul>
-                </div>
-            </div>
+                </article>
 
-            <div class="imgContainer extra-padding">
-                <img src="~/img/stormbringer.webp" alt="Stormbringer" loading="lazy" width="64" height="48" />
-            </div>
-            <h3>Free and Accessible</h3>
-            <div class="block-centered-text-left-align">
-                <div>
-                    <ul>
-                        <li><b>Free to play</b> &mdash; No ads or microtransactions</li>
-                        <li><b>Play anywhere</b> &mdash; Mobile, desktop, and Steam Deck</li>
-                        <li><b>All input methods</b> &mdash; Touch, mouse, keyboard, and controller</li>
-                        <li><b>Open source</b></li>
+                <article class="feature-card">
+                    <div class="imgContainer">
+                        <img src="~/img/stormbringer.webp" alt="Stormbringer" loading="lazy" width="64" height="48" />
+                    </div>
+                    <h3>Free and Accessible</h3>
+                    <ul class="feature-list" role="list">
+                        <li><strong>100% free forever</strong> &mdash; Zero ads, paywalls, energy timers, or microtransactions</li>
+                        <li><strong>Play anywhere</strong> &mdash; Native ports across Windows, macOS, Linux, Steam Deck, iOS, and Android</li>
+                        <li><strong>Every control scheme</strong> &mdash; Built for touch, mouse, classic keyboard shortcuts, and gamepads</li>
+                        <li><strong>Open source</strong> &mdash; Crafted transparently by Sound Mind Games, a Finnish non-profit, on GitHub</li>
                     </ul>
-                </div>
+                </article>
             </div>
         </div>
     </div>
 </section>
 
-<section class="right-section dwarf-monk">
+<section id="community" class="right-section dwarf-monk">
     <div class="backdrop">
         <div class="features-text">
             <h2>Learn the Game</h2>
             <ul class="resource-grid" role="list">
                 <li class="resource-card">
                     <a class="resource-link" href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer" aria-describedby="desc-overseer">Gnoll Overseer</a>
-                    <span id="desc-overseer" class="resource-desc">Highly advanced AI assistant</span>
+                    <span id="desc-overseer" class="resource-desc">Interactive AI companion for rules, items &amp; strategy</span>
                     <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                 </li>
                 <li class="resource-card">
                     <a class="resource-link" href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer" aria-describedby="desc-gh-wiki">GnollHack Wiki</a>
-                    <span id="desc-gh-wiki" class="resource-desc">Mechanics, guides &amp; strategy</span>
+                    <span id="desc-gh-wiki" class="resource-desc">Official encyclopedia of items, monsters, spells &amp; guides</span>
                     <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                 </li>
                 <li class="resource-card">
                     <a class="resource-link" href="https://nethackwiki.com" target="_blank" rel="noopener noreferrer" aria-describedby="desc-nh-wiki">NetHack Wiki</a>
-                    <span id="desc-nh-wiki" class="resource-desc">Reference for the original game</span>
+                    <span id="desc-nh-wiki" class="resource-desc">Foundational reference for classic NetHack mechanics</span>
                     <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                 </li>
             </ul>
@@ -179,17 +173,17 @@
             <ul class="resource-grid" role="list">
                 <li class="resource-card">
                     <a class="resource-link" href="https://discord.gg/cQuExnzUQy" target="_blank" rel="noopener noreferrer" aria-describedby="desc-discord">GnollHack Discord</a>
-                    <span id="desc-discord" class="resource-desc">Chat with other players</span>
+                    <span id="desc-discord" class="resource-desc">Chat with players and developers &amp; share your adventures</span>
                     <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                 </li>
                 <li class="resource-card">
                     <a class="resource-link" href="https://account.gnollhack.com" target="_blank" rel="noopener noreferrer" aria-describedby="desc-account">GnollHack Account</a>
-                    <span id="desc-account" class="resource-desc">Top scores, bones sharing &amp; cloud saves</span>
+                    <span id="desc-account" class="resource-desc">Leaderboards, shared bones files &amp; cross-device save transfer</span>
                     <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                 </li>
                 <li class="resource-card">
                     <a class="resource-link" href="https://github.com/hyvanmielenpelit/GnollHack" target="_blank" rel="noopener noreferrer" aria-describedby="desc-github">GitHub Repository</a>
-                    <span id="desc-github" class="resource-desc">GnollHack's open-source code</span>
+                    <span id="desc-github" class="resource-desc">Source code, release notes &amp; issue tracker</span>
                     <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                 </li>
             </ul>

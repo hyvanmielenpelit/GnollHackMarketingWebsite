@@ -106,10 +106,20 @@ $(function () {
     });
 
     // Support keyboard activation (Enter / Space) on role="button" elements
-    $('.main-carousel-container').on('keydown', '.video-poster-container[role="button"]', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
+    var interactiveSlideSelector = '.video-poster-container[role="button"], .main-carousel-img[role="button"]';
+    $('.main-carousel-container').on('keydown', interactiveSlideSelector, function (e) {
+        if (e.key === 'Enter') {
             e.preventDefault();
-            $(this).trigger('click');
+            this.click();
+        } else if (e.key === ' ') {
+            e.preventDefault();
+        }
+    });
+
+    $('.main-carousel-container').on('keyup', interactiveSlideSelector, function (e) {
+        if (e.key === ' ') {
+            e.preventDefault();
+            this.click();
         }
     });
 

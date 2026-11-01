@@ -192,5 +192,34 @@ public class CssSpecificationTests
         // Legacy link-list styling is gone
         Assert.DoesNotContain(".important-link", site2Css);
     }
+
+    [Fact]
+    public void ProfessionalFacelift_LightFantasyDesignSystemAndAccessibilityStylesExist()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = File.ReadAllText(Path.Combine(cssDir, "site2.css"));
+        var carouselCss = File.ReadAllText(Path.Combine(cssDir, "carousel.css"));
+
+        // Light-fantasy design tokens and sans-serif font stack
+        Assert.Contains("--gh-header-bg:", site2Css);
+        Assert.Contains("--gh-card-bg:", site2Css);
+        Assert.Contains("--gh-font-sans:", site2Css);
+        Assert.DoesNotContain("\"Lato\", serif", site2Css);
+
+        // Sticky header, skip link, symmetric download grid, intro/feature cards, and footer
+        Assert.Contains(".skip-link", site2Css);
+        Assert.Contains(".site-header", site2Css);
+        Assert.Contains(".nav-cta", site2Css);
+        Assert.Contains(".download-grid", site2Css);
+        Assert.Contains(".download-platform", site2Css);
+        Assert.Contains(".intro-card", site2Css);
+        Assert.Contains(".feature-card", site2Css);
+        Assert.Contains(".feature-list", site2Css);
+        Assert.Contains(".site-footer", site2Css);
+
+        // High Contrast / Forced Colors Mode support
+        Assert.Contains("@media (forced-colors: active)", site2Css);
+        Assert.Contains("@media (forced-colors: active)", carouselCss);
+    }
 }
 

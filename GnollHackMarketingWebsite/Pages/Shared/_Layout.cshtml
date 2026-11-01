@@ -72,7 +72,7 @@
     <!-- Google Fonts Preconnect and Stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600..800&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" />
 
     <link rel="stylesheet" href="~/lib/bootstrap/5.3.3/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site2.min.css" asp-append-version="true" />
@@ -116,24 +116,73 @@
         <!-- End Google Tag Manager (noscript) -->
     }
  
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header">
+        <nav class="site-nav" aria-label="Primary">
+            <div class="site-nav-inner">
+                <a href="#top" class="site-brand">
+                    <img src="~/favicon/favicon-32x32.png" alt="" width="28" height="28" class="brand-crest" />
+                    <span class="brand-title">GnollHack</span>
+                </a>
+
+                <div id="primaryNavMenu" class="collapse site-nav-collapse">
+                    <ul class="site-nav-list">
+                        <li><a href="#about" class="site-nav-link">About</a></li>
+                        <li><a href="#media" class="site-nav-link">Media</a></li>
+                        <li><a href="#features" class="site-nav-link">Features</a></li>
+                        <li><a href="#community" class="site-nav-link">Community</a></li>
+                        <li><a href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer" class="site-nav-link">Wiki <span aria-hidden="true">&#8599;</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="site-nav-actions">
+                    <a href="#download" class="nav-cta">Download Free</a>
+                    <button type="button" class="nav-toggle" data-bs-toggle="collapse" data-bs-target="#primaryNavMenu" aria-controls="primaryNavMenu" aria-expanded="false" aria-label="Toggle navigation menu">
+                        <span class="nav-toggle-bar" aria-hidden="true"></span>
+                        <span class="nav-toggle-bar" aria-hidden="true"></span>
+                        <span class="nav-toggle-bar" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
     <div class="main-container">
-        <main>
+        <main id="main-content">
              @RenderBody()
         </main>
     </div>
 
-    <div id="consentDiv" class="consent">
+    <div id="consentDiv" class="consent" role="region" aria-label="Cookie notice">
         <div class="text-container">
             By continuing to use this website, you consent to the use of cookies in accordance
-            with our <a target="_blank" rel="noopener noreferrer" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy.md">Cookie Policy</a>.
+            with our <a target="_blank" rel="noopener noreferrer" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy">Cookie Policy</a>.
         </div>
-        <div class="button-container"><button id="consentButton">OK</button></div>
+        <div class="button-container"><button type="button" id="consentButton">OK</button></div>
     </div>
 
-    <footer class="legal-text padding-10">
-        <div class="container">
-            <p>Google Play and the Google Play logo are trademarks of Google LLC.</p>
-            <p>&copy; @DateTime.Now.Year <a href="https://soundmindgames.org/">Sound Mind Games</a> &ndash; <a target="_blank" rel="noopener noreferrer" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy.md">Privacy</a></p>
+    <footer class="site-footer legal-text">
+        <div class="container site-footer-inner">
+            <div class="footer-brand-row">
+                <span class="footer-copyright">&copy; @DateTime.UtcNow.Year <a href="https://soundmindgames.org/" target="_blank" rel="noopener noreferrer">Sound Mind Games</a></span>
+                <span class="footer-sep" aria-hidden="true">&middot;</span>
+                <span class="footer-rating">Rated PEGI 7+ &middot; ESRB Everyone 10+</span>
+            </div>
+
+            <nav class="footer-nav" aria-label="Footer">
+                <ul class="footer-links">
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer">GnollHack Wiki</a></li>
+                    <li><a href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer">Gnoll Overseer</a></li>
+                    <li><a href="https://discord.gg/cQuExnzUQy" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                    <li><a href="https://github.com/hyvanmielenpelit/GnollHack" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li><a href="https://wiki.gnollhack.com/Privacy%20Policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+                    <li><a href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a></li>
+                </ul>
+            </nav>
+
+            <p class="footer-trademarks">Google Play and the Google Play logo are trademarks of Google LLC. App Store, iPadOS, and macOS are trademarks of Apple Inc. Steam and Steam Deck are trademarks and/or registered trademarks of Valve Corporation.</p>
         </div>
     </footer>
 
