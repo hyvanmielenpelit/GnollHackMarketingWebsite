@@ -28,6 +28,7 @@
     --gh-card-sheen: inset 0 1px 0 rgba(255, 240, 200, 0.12);
     --gh-card-shadow: 0 16px 38px rgba(0, 0, 0, 0.62), 0 2px 8px rgba(0, 0, 0, 0.45);
     --gh-gold: #f3ce72;
+    --gh-gold-hover: #fae8bb;
     --gh-gold-strong: #dfb046;
     --gh-ivory: #fbf5e8;
     --gh-prose: #ede7db;
@@ -751,8 +752,7 @@ h3 {
 .inline-accent {
     color: var(--gh-gold);
     font-weight: 700;
-    text-decoration: underline solid color-mix(in oklab, currentColor 65%, transparent) max(1px, 0.08em);
-    text-underline-offset: 0.2em;
+    text-decoration: none;
 
     &:visited,
     &:active {
@@ -760,12 +760,7 @@ h3 {
     }
 
     &:hover {
-        color: var(--gh-ivory);
-    }
-
-    &:is(:hover, :focus-visible) {
-        text-decoration-color: currentColor;
-        text-decoration-thickness: max(1px, 0.12em);
+        color: var(--gh-gold-hover);
     }
 
     &:focus-visible {
@@ -1375,7 +1370,7 @@ h3 {
     }
 
     &:hover {
-        color: var(--gh-ivory);
+        color: var(--gh-gold-hover);
     }
 
     // The card draws the focus ring
@@ -1460,8 +1455,7 @@ h3 {
         a {
             color: var(--gh-gold);
             font-weight: 700;
-            text-decoration: underline;
-            text-underline-offset: 0.18em;
+            text-decoration: none;
 
             &:visited,
             &:active {
@@ -1469,7 +1463,7 @@ h3 {
             }
 
             &:hover {
-                color: var(--gh-ivory);
+                color: var(--gh-gold-hover);
             }
 
             &:focus-visible {
@@ -1532,16 +1526,14 @@ h3 {
 
     a {
         color: var(--gh-gold);
-        text-decoration: underline solid color-mix(in oklab, currentColor 50%, transparent) 1px;
-        text-underline-offset: 0.2em;
+        text-decoration: none;
 
         &:visited {
             color: var(--gh-gold);
         }
 
         &:hover {
-            color: var(--gh-ivory);
-            text-decoration-color: currentColor;
+            color: var(--gh-gold-hover);
         }
 
         &:focus-visible {
@@ -1594,12 +1586,10 @@ h3 {
     color: var(--gh-gold);
     font: inherit;
     cursor: pointer;
-    text-decoration: underline solid color-mix(in oklab, currentColor 50%, transparent) 1px;
-    text-underline-offset: 0.2em;
+    text-decoration: none;
 
     &:hover {
-        color: var(--gh-ivory);
-        text-decoration-color: currentColor;
+        color: var(--gh-gold-hover);
     }
 
     &:focus-visible {

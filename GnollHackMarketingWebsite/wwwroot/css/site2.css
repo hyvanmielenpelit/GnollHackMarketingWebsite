@@ -27,6 +27,7 @@
   --gh-card-sheen: inset 0 1px 0 rgba(255, 240, 200, 0.12);
   --gh-card-shadow: 0 16px 38px rgba(0, 0, 0, 0.62), 0 2px 8px rgba(0, 0, 0, 0.45);
   --gh-gold: #f3ce72;
+  --gh-gold-hover: #fae8bb;
   --gh-gold-strong: #dfb046;
   --gh-ivory: #fbf5e8;
   --gh-prose: #ede7db;
@@ -725,18 +726,13 @@ h3 {
 .inline-accent {
   color: var(--gh-gold);
   font-weight: 700;
-  text-decoration: underline solid color-mix(in oklab, currentColor 65%, transparent) max(1px, 0.08em);
-  text-underline-offset: 0.2em;
+  text-decoration: none;
 }
 .inline-accent:visited, .inline-accent:active {
   color: var(--gh-gold);
 }
 .inline-accent:hover {
-  color: var(--gh-ivory);
-}
-.inline-accent:is(:hover, :focus-visible) {
-  text-decoration-color: currentColor;
-  text-decoration-thickness: max(1px, 0.12em);
+  color: var(--gh-gold-hover);
 }
 .inline-accent:focus-visible {
   outline: 2px solid var(--gh-gold);
@@ -1293,7 +1289,7 @@ h3 {
   color: var(--gh-gold);
 }
 .features-text .resource-link:hover {
-  color: var(--gh-ivory);
+  color: var(--gh-gold-hover);
 }
 .features-text .resource-link:focus-visible {
   outline: none;
@@ -1375,14 +1371,13 @@ h3 {
 .consent .text-container a {
   color: var(--gh-gold);
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
+  text-decoration: none;
 }
 .consent .text-container a:visited, .consent .text-container a:active {
   color: var(--gh-gold);
 }
 .consent .text-container a:hover {
-  color: var(--gh-ivory);
+  color: var(--gh-gold-hover);
 }
 .consent .text-container a:focus-visible {
   outline: 2px solid var(--gh-gold);
@@ -1437,15 +1432,13 @@ h3 {
 }
 .site-footer a {
   color: var(--gh-gold);
-  text-decoration: underline solid color-mix(in oklab, currentColor 50%, transparent) 1px;
-  text-underline-offset: 0.2em;
+  text-decoration: none;
 }
 .site-footer a:visited {
   color: var(--gh-gold);
 }
 .site-footer a:hover {
-  color: var(--gh-ivory);
-  text-decoration-color: currentColor;
+  color: var(--gh-gold-hover);
 }
 .site-footer a:focus-visible {
   outline: 2px solid var(--gh-gold);
@@ -1494,12 +1487,10 @@ h3 {
   color: var(--gh-gold);
   font: inherit;
   cursor: pointer;
-  text-decoration: underline solid color-mix(in oklab, currentColor 50%, transparent) 1px;
-  text-underline-offset: 0.2em;
+  text-decoration: none;
 }
 .footer-link-button:hover {
-  color: var(--gh-ivory);
-  text-decoration-color: currentColor;
+  color: var(--gh-gold-hover);
 }
 .footer-link-button:focus-visible {
   outline: 2px solid var(--gh-gold);
