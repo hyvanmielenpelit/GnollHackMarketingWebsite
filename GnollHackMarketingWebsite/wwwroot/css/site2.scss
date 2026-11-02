@@ -5,6 +5,10 @@
     --in-oklab: ;
     --gh-font-sans: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --gh-font-display: "Cinzel", Georgia, serif;
+    --gh-font-caption: min(1rem, max(0.875rem, calc(0.698rem + 0.189vw)));
+    --gh-font-small: min(1.125rem, max(1rem, calc(0.823rem + 0.189vw)));
+    --gh-font-body: min(1.5rem, max(1.1875rem, calc(0.745rem + 0.472vw)));
+    --gh-header-h: 3.5625rem;
     --gh-page-bg: #000000;
     --gh-header-bg-solid: #0e0c0a;
     --gh-header-bg: linear-gradient(180deg var(--in-oklab), rgba(18, 15, 12, 0.92) 0%, rgba(10, 9, 8, 0.96) 100%);
@@ -146,26 +150,10 @@ $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 $breakpoint-xxl: 1400px;
-$normal-font-max-width: 1499px;
-$larger-font-min-width: 1500px;
-$larger-font-max-width: 2599px;
-$max-font-min-width: 2600px;
 $max-view-width: 2560px;
 
-@mixin font-sizes($small-font-size, $large-font-size, $max-font-size: null) {
-    font-size: $small-font-size;
-
-    @media (min-width: $larger-font-min-width) and (max-width: $larger-font-max-width) {
-        font-size: $large-font-size;
-    }
-
-    @media (min-width: $max-font-min-width) {
-        @if $max-font-size != null {
-            font-size: $max-font-size;
-        } @else {
-            font-size: $large-font-size * 1.143;
-        }
-    }
+@mixin fluid-type($base, $wide-line, $max) {
+    font-size: min($max, max($base, #{$wide-line}));
 }
 
 @function view-width($view-width-units) {
@@ -179,7 +167,8 @@ body {
     color: var(--gh-prose);
     line-height: 1.6;
     overflow-x: clip;
-    @include font-sizes(19px, 21px, 24px);
+    overflow-wrap: break-word;
+    font-size: var(--gh-font-body);
 }
 
 .skip-link {
@@ -194,7 +183,7 @@ body {
     color: var(--gh-cta-ink);
     border: 2px solid var(--gh-cta-border);
     font-weight: 700;
-    font-size: 16px;
+    font-size: var(--gh-font-small);
     line-height: 1.2;
     text-decoration: none;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.65);
@@ -286,7 +275,7 @@ body {
 
     .brand-title {
         @extend .cinzel-700;
-        font-size: clamp(17px, 2vw, 22px);
+        font-size: clamp(1.0625rem, 0.9rem + 0.8vw, 1.375rem);
         letter-spacing: 0.03em;
         line-height: 1.1;
         color: var(--gh-header-ink);
@@ -336,7 +325,7 @@ body {
     padding: 8px 14px;
     min-block-size: 40px;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: var(--gh-font-small);
     line-height: 1.2;
     color: var(--gh-header-link);
     text-decoration: none;
@@ -388,14 +377,14 @@ body {
     border: 1px solid var(--gh-cta-border);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 3px 12px rgba(0, 0, 0, 0.5);
     color: var(--gh-cta-ink);
-    font-size: 15px;
+    font-size: var(--gh-font-small);
     line-height: 1.15;
     text-decoration: none;
     white-space: nowrap;
 
     @media (max-width: 379.98px) {
         padding: 7px 8px;
-        font-size: 13px;
+        font-size: 0.875rem;
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -487,7 +476,7 @@ main {
 
 h1 {
     @extend .cinzel-700;
-    @include font-sizes(clamp(44px, 11vw, 58px), 64px, 73px);
+    @include fluid-type(clamp(2.75rem, 2.125rem + 3.125vw, 3.625rem), calc(2.3rem + 1.415vw), 4.5625rem);
     line-height: 1.18;
     color: var(--gh-ivory);
     text-wrap: balance;
@@ -497,7 +486,7 @@ h1 {
 
 h2 {
     @extend .cinzel-700;
-    @include font-sizes(clamp(38px, 9.5vw, 48px), 53px, 61px);
+    @include fluid-type(clamp(2.375rem, 1.929rem + 2.232vw, 3rem), calc(1.85rem + 1.226vw), 3.8125rem);
     line-height: 1.18;
     color: var(--gh-ivory);
     text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
@@ -508,24 +497,200 @@ h2 {
 
 h3 {
     @extend .cinzel-700;
-    @include font-sizes(clamp(27px, 7vw, 34px), 38px, 43px);
+    @include fluid-type(clamp(1.6875rem, 1.375rem + 1.5625vw, 2.125rem), calc(1.329rem + 0.849vw), 2.6875rem);
     line-height: 1.18;
     color: var(--gh-ivory);
     text-wrap: balance;
     margin-bottom: 10px;
 }
 
-h4 {
-    @include font-sizes(clamp(18px, 4.5vw, 19px), 21px, 24px);
-    color: var(--gh-muted);
-    text-wrap: balance;
-    margin-bottom: 12px;
+.hero {
+    position: relative;
+    isolation: isolate;
+    background-color: #000000;
+    overflow: clip;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $breakpoint-md) {
+        display: grid;
+        grid-template-areas: "stack";
+        min-block-size: max(26rem, min(calc(100svh - var(--gh-header-h)), min(100vw, $max-view-width) * 0.6396));
+    }
 }
 
-.hero-picture {
-    width: 100%;
-    height: auto;
+.hero-art {
+    position: relative;
+    z-index: -1;
     display: block;
+    width: 100%;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg var(--in-oklab), transparent 58%, rgba(0, 0, 0, 0.72) 82%, #000000 100%);
+    }
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 2 / 3;
+        max-block-size: max(16rem, 48svh);
+        object-fit: cover;
+        object-position: 50% 18%;
+    }
+
+    @media (min-width: $breakpoint-md) {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        height: 100%;
+
+        &::after {
+            background:
+                linear-gradient(90deg var(--in-oklab), transparent 36%, rgba(4, 9, 11, 0.55) 58%, rgba(4, 9, 11, 0.82) 100%),
+                linear-gradient(180deg var(--in-oklab), transparent 84%, #000000 100%);
+        }
+
+        img {
+            height: 100%;
+            aspect-ratio: auto;
+            max-block-size: none;
+            object-position: 0% 22%;
+        }
+    }
+}
+
+.hero-content {
+    container-type: inline-size;
+    width: 100%;
+    margin-block-start: -4rem;
+    padding: 0 1.25rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: $breakpoint-md) {
+        grid-area: stack;
+        align-self: center;
+        justify-self: end;
+        width: min(44%, 44rem);
+        margin: 0 3% 0 0;
+        padding: 2rem 0;
+    }
+}
+
+.hero-crest {
+    width: clamp(4.5rem, 24cqi, 11.5rem);
+    height: auto;
+    filter: drop-shadow(0 0.5rem 1.25rem rgba(0, 0, 0, 0.7));
+
+    // Keeps the main button on the first screen on landscape phones
+    @media (max-height: 30rem) {
+        display: none;
+    }
+}
+
+.hero-title {
+    margin: 0;
+    font-size: inherit;
+}
+
+.hero-wordmark {
+    display: block;
+    font-weight: 800;
+    font-size: min(15cqi, 7.25rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    margin-block-start: 0.1em;
+    color: var(--gh-gold);
+    filter: drop-shadow(0 0.05em 0.12em rgba(0, 0, 0, 0.8));
+
+    @supports (background-clip: text) {
+        background-image: linear-gradient(180deg var(--in-oklab), #ffe99a 0%, var(--gh-gold) 45%, #c98f26 100%);
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.hero-slogan {
+    display: block;
+    color: var(--gh-ivory);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 0.95rem + 1vw, 2.25rem);
+    line-height: 1.25;
+    margin-block-start: 0.5rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-block-start: 1.5rem;
+}
+
+.hero-cta {
+    @extend .lato-bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: 3rem;
+    padding: 0.625rem 1.75rem;
+    border-radius: 999px;
+    font-size: 1.125rem;
+    line-height: 1.15;
+    text-decoration: none;
+
+    &:focus-visible {
+        outline: 2px solid var(--gh-ivory);
+        outline-offset: 2px;
+    }
+}
+
+.hero-cta-primary {
+    background-color: #dfb046;
+    background-image: var(--gh-cta-bg);
+    border: 1px solid var(--gh-cta-border);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 6px 20px rgba(0, 0, 0, 0.55);
+
+    &,
+    &:visited,
+    &:hover {
+        color: var(--gh-cta-ink);
+    }
+
+    &:hover {
+        background-image: var(--gh-cta-bg-hover);
+    }
+}
+
+.hero-cta-secondary {
+    background-color: rgba(10, 10, 10, 0.45);
+    border: 1px solid var(--gh-card-border-strong);
+
+    &,
+    &:visited {
+        color: var(--gh-ivory);
+    }
+
+    &:hover {
+        color: var(--gh-header-link-hover);
+        background-color: rgba(223, 176, 70, 0.14);
+    }
+}
+
+.hero-platforms {
+    margin: 1rem 0 0;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: var(--gh-prose);
+    max-inline-size: 40ch;
+    text-wrap: balance;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
 }
 
 .section-block + .section-block {
@@ -560,16 +725,6 @@ h4 {
         text-align: center;
         font-variant: small-caps;
         margin-top: 2px;
-    }
-
-    h4 {
-        text-align: center;
-        font-style: normal;
-        font-weight: 400;
-        max-inline-size: 54ch;
-        margin: 0 auto;
-        padding: 0 0 18px 0;
-        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.82);
     }
 
     .section-lead {
@@ -890,14 +1045,13 @@ h4 {
     max-inline-size: 44rem;
     margin: 16px auto 0;
     padding: clamp(22px, 2.5vw, 32px);
+}
 
-    h4 {
-        color: var(--gh-prose);
-        max-inline-size: 52ch;
-        margin: 0 auto clamp(18px, 2vw, 24px);
-        padding: 0;
-        text-shadow: none;
-    }
+.panel-lead {
+    color: var(--gh-prose);
+    max-inline-size: 52ch;
+    margin: 0 auto clamp(18px, 2vw, 24px);
+    text-wrap: pretty;
 }
 
 .features-text ul.download-grid {
@@ -964,8 +1118,8 @@ h4 {
 .download-platform {
     display: inline-block;
     color: var(--gh-muted);
-    @include font-sizes(13px, 14px, 15px);
-    line-height: 1.35;
+    font-size: var(--gh-font-caption);
+    line-height: 1.45;
     letter-spacing: 0.01em;
 }
 
@@ -1063,7 +1217,7 @@ h4 {
         @extend .lato-regular-italic;
         margin: 0 0 4px;
         text-wrap: pretty;
-        @include font-sizes(18px, 19px, 21px);
+        font-size: var(--gh-font-body);
     }
 
     .praise-cite {
@@ -1071,7 +1225,7 @@ h4 {
         flex-wrap: wrap;
         align-items: center;
         gap: 8px;
-        @include font-sizes(15px, 16px, 18px);
+        font-size: var(--gh-font-small);
         color: var(--gh-muted);
     }
 
@@ -1218,7 +1372,7 @@ h4 {
 
 .features-text .resource-link {
     @extend .lato-bold;
-    @include font-sizes(19px, 20px, 22px);
+    font-size: var(--gh-font-body);
     grid-area: title;
     color: var(--gh-gold);
     text-decoration: none;
@@ -1245,10 +1399,10 @@ h4 {
 }
 
 .resource-desc {
-    @include font-sizes(15px, 16px, 18px);
+    font-size: var(--gh-font-small);
     grid-area: desc;
     color: var(--gh-muted);
-    line-height: 1.35;
+    line-height: 1.45;
     text-wrap: pretty;
 }
 
@@ -1260,7 +1414,7 @@ h4 {
     block-size: 32px;
     border: 1px solid rgba(212, 168, 83, 0.34);
     border-radius: 50%;
-    @include font-sizes(15px, 16px, 18px);
+    font-size: var(--gh-font-small);
     line-height: 1;
     color: var(--gh-gold);
     pointer-events: none;
@@ -1294,7 +1448,7 @@ h4 {
     background-image: var(--gh-card-bg);
     backdrop-filter: blur(10px);
 
-    @include font-sizes(13px, 14px, 16px);
+    font-size: var(--gh-font-caption);
 
     @media (min-width: $breakpoint-md) {
         width: min(max(view-width(26), 250px), 340px);
@@ -1354,7 +1508,7 @@ h4 {
             color: var(--gh-cta-ink);
             font-family: var(--gh-font-sans);
             font-weight: 700;
-            font-size: 14px;
+            font-size: var(--gh-font-caption);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
 
             &:hover {
@@ -1372,7 +1526,7 @@ h4 {
 .legal-text {
     color: var(--gh-muted);
     font-family: var(--gh-font-sans);
-    @include font-sizes(14px, 16px, 18px);
+    font-size: var(--gh-font-caption);
 }
 
 .site-footer {
@@ -1464,7 +1618,7 @@ h4 {
 .footer-trademarks {
     margin: 4px 0 0;
     max-inline-size: 64ch;
-    @include font-sizes(13px, 14px, 15px);
+    font-size: var(--gh-font-caption);
     line-height: 1.5;
     text-wrap: pretty;
 }
@@ -1495,5 +1649,14 @@ h4 {
     .site-nav-link:focus-visible,
     .nav-cta:focus-visible {
         outline: 2px solid Highlight;
+    }
+
+    .hero-wordmark {
+        background-image: none;
+        color: CanvasText;
+    }
+
+    .hero-cta {
+        border: 2px solid ButtonText;
     }
 }

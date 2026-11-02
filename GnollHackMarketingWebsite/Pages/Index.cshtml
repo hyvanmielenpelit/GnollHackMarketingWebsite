@@ -4,14 +4,28 @@
     ViewData["Title"] = "";
 }
 
-<h1 class="visually-hidden">GnollHack &ndash; The Modern Way to Play NetHack</h1>
-
-<section id="top" class="main-section">
-    <picture>
-        <source media="(min-width: 768px)" srcset="~/img/gnollhack-image-landscape-w2560.webp" width="2560" height="1440" />
-        <source media="(max-width: 767.98px)" srcset="~/img/gnollhack-image-portrait-w1080.webp" width="1080" height="1920" />
-        <img src="~/img/gnollhack-image-landscape-w2560.webp" alt="GnollHack" fetchpriority="high" width="2560" height="1440" class="hero-picture" />
+<section id="top" class="hero">
+    <picture class="hero-art">
+        <source media="(min-width: 768px)"
+                srcset="@Url.Content("~/img/hero-ranger-landscape-w1280.webp") 1280w, @Url.Content("~/img/hero-ranger-landscape-w1920.webp") 1920w, @Url.Content("~/img/hero-ranger-landscape-w2560.webp") 2560w"
+                sizes="min(100vw, 2560px)" width="2560" height="1637" />
+        <source media="(max-width: 767.98px)"
+                srcset="@Url.Content("~/img/hero-ranger-portrait-w750.webp") 750w, @Url.Content("~/img/hero-ranger-portrait-w1080.webp") 1080w"
+                sizes="100vw" width="1080" height="1620" />
+        <img src="~/img/hero-ranger-landscape-w1920.webp" alt="A hooded ranger with a glowing arrow in a misty cave" fetchpriority="high" width="2560" height="1637" />
     </picture>
+    <div class="hero-content">
+        <img src="~/img/gnollhack-icon-v2-512.webp" alt="" width="512" height="512" class="hero-crest" />
+        <h1 class="hero-title">
+            <span class="hero-wordmark">GnollHack</span>
+            <span class="hero-slogan">The Modern Way to Play NetHack</span>
+        </h1>
+        <div class="hero-actions">
+            <a href="#download" class="hero-cta hero-cta-primary">Download for Free</a>
+            <a href="#media" class="hero-cta hero-cta-secondary">Watch Trailers</a>
+        </div>
+        <p class="hero-platforms">Free on Windows, macOS, Linux, Steam Deck, iOS, and Android</p>
+    </div>
 </section>
 
 <section id="download" class="right-section orc-assassin">
@@ -20,7 +34,7 @@
             <div class="section-block">
                 <h2>Download</h2>
                 <div class="download-panel">
-                    <h4>Free on Windows, macOS, Linux, Steam Deck, iOS, and Android. No ads, paywalls, or microtransactions.</h4>
+                    <p class="panel-lead">Free on Windows, macOS, Linux, Steam Deck, iOS, and Android. No ads, paywalls, or microtransactions.</p>
 
                     <ul class="download-grid" role="list">
                         <li class="download-item">

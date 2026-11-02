@@ -32,25 +32,43 @@ public class CssSpecificationTests
         var cssDir = GetWwwRootPath();
         var site2Css = ReadCss(cssDir, "site2.css");
 
-        // Base font sizes
-        Assert.Contains("font-size: clamp(44px, 11vw, 58px);", site2Css);
-        Assert.Contains("font-size: clamp(38px, 9.5vw, 48px);", site2Css);
-        Assert.Contains("font-size: clamp(27px, 7vw, 34px);", site2Css);
-        Assert.Contains("font-size: clamp(18px, 4.5vw, 19px);", site2Css);
+        // Text tiers
+        Assert.Contains("--gh-font-caption: min(1rem, max(0.875rem, calc(0.698rem + 0.189vw)));", site2Css);
+        Assert.Contains("--gh-font-small: min(1.125rem, max(1rem, calc(0.823rem + 0.189vw)));", site2Css);
+        Assert.Contains("--gh-font-body: min(1.5rem, max(1.1875rem, calc(0.745rem + 0.472vw)));", site2Css);
 
-        // Large Screens / QHD (1500px - 2599px)
-        Assert.Contains("@media (min-width: 1500px) and (max-width: 2599px)", site2Css);
-        Assert.Contains("h1 {\n    font-size: 64px;\n  }", site2Css);
-        Assert.Contains("h2 {\n    font-size: 53px;\n  }", site2Css);
-        Assert.Contains("h3 {\n    font-size: 38px;\n  }", site2Css);
-        Assert.Contains("body {\n    font-size: 21px;\n  }", site2Css);
+        // Headings
+        Assert.Contains("font-size: min(4.5625rem, max(clamp(2.75rem, 2.125rem + 3.125vw, 3.625rem), calc(2.3rem + 1.415vw)));", site2Css);
+        Assert.Contains("font-size: min(3.8125rem, max(clamp(2.375rem, 1.929rem + 2.232vw, 3rem), calc(1.85rem + 1.226vw)));", site2Css);
+        Assert.Contains("font-size: min(2.6875rem, max(clamp(1.6875rem, 1.375rem + 1.5625vw, 2.125rem), calc(1.329rem + 0.849vw)));", site2Css);
+    }
 
-        // Ultra-Wide / 4K (2600px+)
-        Assert.Contains("@media (min-width: 2600px)", site2Css);
-        Assert.Contains("h1 {\n    font-size: 73px;\n  }", site2Css);
-        Assert.Contains("h2 {\n    font-size: 61px;\n  }", site2Css);
-        Assert.Contains("h3 {\n    font-size: 43px;\n  }", site2Css);
-        Assert.Contains("body {\n    font-size: 24px;\n  }", site2Css);
+    [Fact]
+    public void Typography_HasNoPixelFontSizes()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = ReadCss(cssDir, "site2.css");
+
+        var pixelSizes = Regex.Matches(site2Css, @"font-size:[^;}]*\dpx[^;}]*").Select(m => m.Value).ToArray();
+
+        Assert.Empty(pixelSizes);
+    }
+
+    [Fact]
+    public void Hero_StylesExistInCompiledCss()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = ReadCss(cssDir, "site2.css");
+
+        var heroClasses = new[]
+        {
+            ".hero", ".hero-art", ".hero-content", ".hero-crest", ".hero-title", ".hero-wordmark",
+            ".hero-slogan", ".hero-actions", ".hero-cta", ".hero-cta-primary", ".hero-cta-secondary", ".hero-platforms"
+        };
+        foreach (var cls in heroClasses)
+        {
+            Assert.Contains(cls + " {", site2Css);
+        }
     }
 
     [Fact]

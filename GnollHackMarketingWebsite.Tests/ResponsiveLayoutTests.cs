@@ -74,21 +74,21 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
     {
         Assert.NotNull(_browser);
 
-        // Test Narrow Mobile (360px)
+        // Test Narrowest Mobile (320px)
         var mobileContext = await _browser.NewContextAsync(new BrowserNewContextOptions
         {
-            ViewportSize = new ViewportSize { Width = 360, Height = 800 }
+            ViewportSize = new ViewportSize { Width = 320, Height = 568 }
         });
         var mobilePage = await mobileContext.NewPageAsync();
         await mobilePage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
 
-        var mobileH2FontSize = await mobilePage.EvaluateAsync<string>(@"() => {
+        var mobileH2FontSize = await mobilePage.EvaluateAsync<double>(@"() => {
             const h2 = document.querySelector('h2');
-            return h2 ? window.getComputedStyle(h2).fontSize : '';
+            return h2 ? parseFloat(window.getComputedStyle(h2).fontSize) : 0;
         }");
 
-        // At 360px, h2 (clamp 38px, 9.5vw, 48px) resolves to 38px
-        Assert.Equal("38px", mobileH2FontSize);
+        // At 320px, the h2 clamp sits at its 38px minimum
+        Assert.InRange(mobileH2FontSize, 38, 38.1);
         await mobileContext.CloseAsync();
 
         // Test Standard Desktop (1920px)
@@ -99,14 +99,156 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
         var desktopPage = await desktopContext.NewPageAsync();
         await desktopPage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
 
-        var desktopH2FontSize = await desktopPage.EvaluateAsync<string>(@"() => {
+        var desktopH2FontSize = await desktopPage.EvaluateAsync<double>(@"() => {
             const h2 = document.querySelector('h2');
-            return h2 ? window.getComputedStyle(h2).fontSize : '';
+            return h2 ? parseFloat(window.getComputedStyle(h2).fontSize) : 0;
         }");
 
-        // At 1920px, h2 in the 1500px-2599px media query resolves to 53px
-        Assert.Equal("53px", desktopH2FontSize);
+        // At 1920px, the wide-screen h2 line resolves to about 53px
+        Assert.InRange(desktopH2FontSize, 52.5, 53.5);
         await desktopContext.CloseAsync();
+    }
+
+    [Theory]
+    [InlineData(320, 568)]
+    [InlineData(1366, 768)]
+    public async Task Typography_HasNoTextBelowFourteenPixels(int width, int height)
+    {
+        var (context, page) = await OpenPageAsync(width, height);
+
+        var tooSmall = await page.EvaluateAsync<string[]>(@"() =>
+            Array.from(document.body.querySelectorAll('*'))
+                .filter(el => !el.closest('.visually-hidden, .skip-link, script, style, noscript'))
+                .filter(el => Array.from(el.childNodes).some(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim().length > 0))
+                .filter(el => parseFloat(getComputedStyle(el).fontSize) < 14)
+                .map(el => `${el.tagName}.${el.className}: ${getComputedStyle(el).fontSize}`)");
+
+        Assert.Empty(tooSmall);
+        await context.CloseAsync();
+    }
+
+    [Fact]
+    public async Task Hero_HasOneVisibleH1WithWordmarkAndSlogan()
+    {
+        var (context, page) = await OpenPageAsync(1366, 768);
+
+        var headings = page.Locator("h1");
+        Assert.Equal(1, await headings.CountAsync());
+        await Assertions.Expect(headings).ToBeVisibleAsync();
+
+        var text = await headings.InnerTextAsync();
+        Assert.Contains("GnollHack", text, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("The Modern Way to Play NetHack", text, StringComparison.OrdinalIgnoreCase);
+
+        await context.CloseAsync();
+    }
+
+    [Theory]
+    [InlineData(320, 568, "portrait")]
+    [InlineData(390, 844, "portrait")]
+    [InlineData(767, 1024, "portrait")]
+    [InlineData(768, 1024, "landscape")]
+    [InlineData(1366, 768, "landscape")]
+    public async Task Hero_LoadsArtForViewportWithHighPriority(int width, int height, string expectedArt)
+    {
+        var (context, page) = await OpenPageAsync(width, height);
+
+        var image = page.Locator(".hero-art img");
+        await Assertions.Expect(image).ToHaveAttributeAsync("fetchpriority", "high");
+        Assert.Null(await image.GetAttributeAsync("loading"));
+
+        await page.WaitForFunctionAsync("() => document.querySelector('.hero-art img').currentSrc !== ''");
+        var currentSrc = await image.EvaluateAsync<string>("img => img.currentSrc");
+        Assert.Contains($"/img/hero-ranger-{expectedArt}-", currentSrc);
+
+        await context.CloseAsync();
+    }
+
+    [Theory]
+    [InlineData(320, 568)]
+    [InlineData(390, 844)]
+    [InlineData(768, 1024)]
+    [InlineData(1366, 768)]
+    [InlineData(1920, 1080)]
+    public async Task Hero_WordmarkFitsWithinViewport(int width, int height)
+    {
+        var (context, page) = await OpenPageAsync(width, height);
+        await page.EvaluateAsync("() => document.fonts.ready.then(() => true)");
+
+        var bounds = await page.EvaluateAsync<double[]>(@"() => {
+            const range = document.createRange();
+            range.selectNodeContents(document.querySelector('.hero-wordmark'));
+            const rect = range.getBoundingClientRect();
+            return [rect.left, rect.right];
+        }");
+
+        Assert.True(bounds[0] >= 0 && bounds[1] <= width,
+            $"Wordmark spans {bounds[0]:F1}px to {bounds[1]:F1}px at {width}x{height}");
+
+        await context.CloseAsync();
+    }
+
+    [Theory]
+    [InlineData(320, 568)]
+    [InlineData(390, 844)]
+    [InlineData(844, 390)]
+    [InlineData(1366, 768)]
+    public async Task Hero_PrimaryButtonIsOnFirstScreen(int width, int height)
+    {
+        var (context, page) = await OpenPageAsync(width, height);
+        await page.EvaluateAsync("() => document.fonts.ready.then(() => true)");
+
+        var box = await page.Locator(".hero-cta-primary").BoundingBoxAsync();
+        Assert.NotNull(box);
+        Assert.True(box.X >= 0 && box.Y >= 0 && box.X + box.Width <= width && box.Y + box.Height <= height,
+            $"Primary button is at ({box.X:F1}, {box.Y:F1}) sized {box.Width:F1}x{box.Height:F1} at {width}x{height}");
+
+        await context.CloseAsync();
+    }
+
+    [Theory]
+    [InlineData(1280, 800)]
+    [InlineData(320, 568)]
+    public async Task Viewport_HasZeroHorizontalOverflowAtDoubleFontSize(int width, int height)
+    {
+        var (context, page) = await OpenPageAsync(width, height);
+        await page.AddStyleTagAsync(new PageAddStyleTagOptions { Content = "html { font-size: 200%; }" });
+
+        var scrollWidth = await page.EvaluateAsync<double>("() => document.documentElement.scrollWidth");
+
+        Assert.True(scrollWidth <= width, $"Page is {scrollWidth}px wide at 200% font size in a {width}px viewport");
+        await context.CloseAsync();
+    }
+
+    [Fact]
+    public async Task ShareImage_TagsAndFileMatchSpecification()
+    {
+        const string imagePath = "/img/gnollhack-open-graph-v2.jpg";
+        var (context, page) = await OpenPageAsync(1366, 768);
+
+        var ogImage = await page.Locator("meta[property='og:image']").GetAttributeAsync("content");
+        var twitterImage = await page.Locator("meta[name='twitter:image']").GetAttributeAsync("content");
+        var jsonLdImage = await page.EvaluateAsync<string>(
+            "() => JSON.parse(document.querySelector('script[type=\"application/ld+json\"]').textContent).image");
+
+        Assert.EndsWith(imagePath, ogImage);
+        Assert.EndsWith(imagePath, twitterImage);
+        Assert.EndsWith(imagePath, jsonLdImage);
+        Assert.DoesNotContain("gnollhack-open-graph-new.jpg", await page.ContentAsync());
+
+        var response = await page.APIRequest.GetAsync(new Uri(new Uri(_server.ServerAddress), imagePath).ToString());
+        Assert.Equal(200, response.Status);
+        Assert.True((await response.BodyAsync()).Length <= 150_000, "Share image is larger than 150 KB");
+
+        var size = await page.EvaluateAsync<int[]>(@"src => new Promise((resolve, reject) => {
+            const image = new Image();
+            image.onload = () => resolve([image.naturalWidth, image.naturalHeight]);
+            image.onerror = () => reject(new Error('Share image did not decode'));
+            image.src = src;
+        })", imagePath);
+        Assert.Equal(new[] { 1200, 630 }, size);
+
+        await context.CloseAsync();
     }
 
     [Fact]
@@ -564,6 +706,18 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
 
             await context.CloseAsync();
         }
+    }
+
+    private async Task<(IBrowserContext Context, IPage Page)> OpenPageAsync(int width, int height)
+    {
+        Assert.NotNull(_browser);
+        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+        {
+            ViewportSize = new ViewportSize { Width = width, Height = height }
+        });
+        var page = await context.NewPageAsync();
+        await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+        return (context, page);
     }
 
     private class SectionClearanceMetric

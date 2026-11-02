@@ -5,7 +5,7 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 ## 1. Architecture & Tech Stack
 - **Framework**: ASP.NET Core 10.0 Razor Pages (`net10.0`).
 - **Client Stack**: Plain JavaScript (ES6+) with **jQuery 3.7.1** and Bootstrap 5.3.3. Do not introduce TypeScript or large frontend frameworks unless explicitly requested.
-- **Styling**: SCSS located in `wwwroot/css/` compiled via `compilerconfig.json`. Fonts are self-hosted: files live in `wwwroot/fonts/` (with their OFL licenses) and are declared in `wwwroot/css/fonts.scss`. Never load fonts from a third-party host or add `preconnect` hints for one, because that sends the visitor's IP address to the host before any consent choice.
+- **Styling**: SCSS located in `wwwroot/css/` compiled via `compilerconfig.json`. Fonts are self-hosted: files live in `wwwroot/fonts/` (with their OFL licenses) and are declared in `wwwroot/css/fonts.scss`. Never load fonts from a third-party host or add `preconnect` hints for one, because that sends the visitor's IP address to the host before any consent choice. `_Layout.cshtml` preloads the Cinzel file so the hero wordmark does not shift when the font swaps in; the preload URL must stay identical to the one in `fonts.scss`.
 
 ## 2. Azure Front Door (AFD) Caching & Middleware Pipeline
 - The site runs behind Azure Front Door.
@@ -16,6 +16,7 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 ## 3. SEO & Reverse Proxy Rules
 - Always resolve `BaseUrl` from `Configuration["BaseUrl"]` (default: `https://gnollhack.com`) for canonical and OpenGraph tags to avoid reverse proxy host distortion.
 - Preserve Schema.org `VideoGame` structured data in `_Layout.cshtml`.
+- The share image is `wwwroot/img/gnollhack-open-graph-v2.jpg`, composed at 1200 &times; 630 px. `og:image`, `twitter:image`, and the JSON-LD `image` all point at it.
 - Maintain `robots.txt` and `sitemap.xml` in `wwwroot/`.
 
 ## 4. SCSS Compiling Strategy, Publishing & FTP Footprint
@@ -42,6 +43,18 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 
 - **Video Posters**: Served locally as `wwwroot/img/video-poster-<YouTube ID>.jpg` (1280 &times; 720 px, **16:9**), never from `img.youtube.com`. A new video in `Pages/Index.cshtml.cs` needs its own poster file there.
 
+- **Hero Art**: An `<img>` in a `<picture>`, never a CSS background, with no logo or text burnt in. WebP at quality 85. Use `@Url.Content` for `srcset` URLs, because `~/` resolves only at the start of the attribute.
+
+| Hero Asset | Dimensions | Used At |
+| :--- | :--- | :--- |
+| `hero-ranger-landscape-w2560.webp` | 2560 &times; 1637 px | `>= 768px` |
+| `hero-ranger-landscape-w1920.webp` | 1920 &times; 1227 px | `>= 768px`, and the `<img>` fallback |
+| `hero-ranger-landscape-w1280.webp` | 1280 &times; 818 px | `>= 768px` |
+| `hero-ranger-portrait-w1080.webp` | 1080 &times; 1620 px | `< 768px` |
+| `hero-ranger-portrait-w750.webp` | 750 &times; 1125 px | `< 768px` |
+
+- **Share Image JPEG**: Encode once from a lossless master with Pillow at quality 85, 4:4:4 chroma (`subsampling=0`), optimized, progressive, with no metadata and at most 150 KB. Never re-save the JPEG itself. A changed image needs a new file name, because `/img` files are cached for a year.
+
 - **Feature & Gameplay Icons**:
   - Maintain intrinsic aspect ratios in HTML (`width` & `height`) and CSS (`max-width: 100%; height: auto;`).
 
@@ -56,15 +69,20 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 - **No Fixed Heights**: Never use fixed `height: ...px` on content-driven sections. Always use dynamic heights (`height: auto; min-height: auto;` or proportional `min-height`) with flexbox vertical centering.
 - **Vertical Padding**: Mobile `.backdrop` must use vertical padding (`padding: clamp(30px, 6vh, 50px) 20px;`) with flex-column centering so background images stretch dynamically to fit content.
 - **Fluid Typography**: Use `clamp()` for headings on mobile to prevent overflow on narrow screens (>= 320px).
+- **Font Size Units**: Set every font size in `rem` so a visitor's browser font-size setting applies, combine `rem` and `vw` in fluid sizes, and never set a font size on `html` or `:root`.
+- **Minimum Text Size**: No text goes below 14 px at the default browser setting.
 - **Overflow Protection**: Keep `overflow-x: clip;` on `body` to prevent horizontal jitter.
 
-| Element | Mobile (< 400px) | Mobile / Phablet | Tablet & Desktop | Large Screens / QHD | Ultra-Wide / 4K |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `body` | `19px` | `19px` | `19px` | `21px` | `24px` |
-| `h1` | `44px` *(clamp)* | `44px` &rarr; `58px` | `58px` | `64px` | `73px` |
-| `h2` | `38px` *(clamp)* | `38px` &rarr; `48px` | `48px` | `53px` | `61px` |
-| `h3` | `27px` *(clamp)* | `27px` &rarr; `34px` | `34px` | `38px` | `43px` |
-| `h4` | `18px` *(clamp)* | `18px` &rarr; `19px` | `19px` | `21px` | `24px` |
+Sizes assume the default 16 px browser setting and rise smoothly from 1500 px to 2560 px. `--` means the size does not change in that range.
+
+| Tier | 320 px to 768 px | Up to 1500 px | At 2560 px and wider | Used By |
+| :--- | :--- | :--- | :--- | :--- |
+| Caption (`--gh-font-caption`) | -- | `14px` | `16px` | Footer, trademarks, platform labels, cookie notice and buttons |
+| Small (`--gh-font-small`) | -- | `16px` | `18px` | Navigation, header button, skip link, resource descriptions and arrows, review citation |
+| Body (`--gh-font-body`) | -- | `19px` | `24px` | Body, lead text, resource links, review quote |
+| `h3` | `27px` &rarr; `34px` | `34px` | `43px` | |
+| `h2` | `38px` &rarr; `48px` | `48px` | `61px` | |
+| `h1` | `44px` &rarr; `58px` | `58px` | `73px` | Error page; the hero has its own sizes |
 
 ## 7. Automated CSS Specification & Responsive Testing
 - **Test Suite**: `GnollHackMarketingWebsite.Tests/` contains xUnit AST specifications (`CssSpecificationTests.cs`) and Playwright E2E responsive tests (`ResponsiveLayoutTests.cs`).

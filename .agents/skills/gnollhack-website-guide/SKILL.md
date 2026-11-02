@@ -16,7 +16,7 @@ This skill provides essential guidelines, architectural context, Azure Front Doo
 
 - **Platform**: ASP.NET Core 10.0 (Razor Pages) targeting `net10.0`.
 - **Primary Pages**:
-  - `Pages/Index.cshtml`: Main landing page with hero picture, download badges, roguelike description, video/screenshot carousel, features breakdown, and community links.
+  - `Pages/Index.cshtml`: Main landing page with a live-text hero (separate art, crest, wordmark, slogan, buttons, and platform line), download badges, roguelike description, video/screenshot carousel, features breakdown, and community links.
   - `Pages/Index.cshtml.cs`: Supplies media items (`MediaItems`) to `_Carousel.cshtml`.
   - `Pages/Shared/_Layout.cshtml`: Global layout including SEO metadata, self-hosted fonts stylesheet, theme color, OpenGraph, JSON-LD Schema (`VideoGame`), cookie consent dialog, and script bundles.
   - `Pages/_Carousel.cshtml`: Partial for the synchronized main thumbnail carousel and fullscreen modal carousel with YouTube iframe API support.
@@ -47,8 +47,9 @@ The marketing website sits behind **Azure Front Door (AFD)** as a CDN / Edge rev
 
 - **Base URL Resolution**: Because the origin runs behind reverse proxies (Azure Front Door / App Service), `HttpContext.Request.Host` can resolve to internal hostnames. Always configure and resolve `"BaseUrl": "https://gnollhack.com"` from `appsettings.json` for canonical URLs (`<link rel="canonical">`) and OpenGraph/Twitter card image links (`<meta property="og:image">`).
 - **Structured Data**: The site embeds Schema.org `VideoGame` / `SoftwareApplication` JSON-LD in `_Layout.cshtml` for rich game snippets in Google and search engines.
+- **Share Image**: `wwwroot/img/gnollhack-open-graph-v2.jpg` (1200 &times; 630 px) is used by `og:image`, `twitter:image`, and the JSON-LD `image`. It is composed from the hero art, crest, and live-text styling, then encoded once from a lossless master with Pillow: quality 85, 4:4:4 chroma, optimized, progressive, no metadata, at most 150 KB. Never re-save the JPEG itself. A changed image needs a new file name, because `/img` files are cached for a year.
 - **Performance (LCP / CLS)**:
-  - The hero image uses a responsive `<picture>` element with `<source media="...">` breakpoints and `fetchpriority="high"`.
+  - The hero art is an `<img>` in a responsive `<picture>` with `<source media="...">` breakpoints, `srcset` widths, and `fetchpriority="high"`, never a CSS background. The `h1` is live text inside the hero. Use `@Url.Content` for `srcset` URLs, because `~/` resolves only at the start of the attribute.
   - Fonts are self-hosted from `wwwroot/fonts/` and declared in `wwwroot/css/fonts.scss`, so no third-party host is contacted before a consent choice.
   - Below-the-fold badge and character images use `loading="lazy"` and explicit dimensions.
 
@@ -135,13 +136,19 @@ To ensure complete stability across all viewport sizes (from 320px mobile to ult
    - Apply dynamic vertical padding to `.backdrop` (`padding: clamp(30px, 6vh, 50px) 20px;`) so content is always vertically centered with adequate breathing room at top and bottom.
 ### Typography Proportions & Viewport Scale Reference
 
-| Element | Mobile (< 400px)<br>*(e.g., 360px)* | Mobile / Phablet<br>*(400px – 530px)* | Tablet & Standard Desktop<br>*(530px – 1499px)* | Large Screens / QHD<br>*(1500px – 2599px)* | Ultra-Wide / 4K<br>*(≥ 2600px)* | Target Ratio vs. Body |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`body`** | **`19px`** | **`19px`** | **`19px`** | **`21px`** | **`24px`** | **1.00&times;** |
-| **`h1`** | **`44px`** *(clamp min)* | `44px` &rarr; `58px` *(fluid)* | **`58px`** | **`64px`** | **`73px`** | **~3.05&times;** |
-| **`h2`** | **`38px`** *(clamp min)* | `38px` &rarr; `48px` *(fluid)* | **`48px`** | **`53px`** | **`61px`** | **~2.53&times;** |
-| **`h3`** | **`27px`** *(clamp min)* | `27px` &rarr; `34px` *(fluid)* | **`34px`** | **`38px`** | **`43px`** | **~1.79&times;** |
-| **`h4`** | **`18px`** *(clamp min)* | `18px` &rarr; `19px` *(fluid)* | **`19px`** | **`21px`** | **`24px`** | **1.00&times;** |
+All font sizes use `rem` so a visitor's browser font-size setting applies, and no text goes below 14 px at the default setting. Sizes rise smoothly above 1500 px and stop at 2560 px. Never set a font size on `html` or `:root`. Pixel values below assume the default 16 px setting. `--` means the size does not change in that range.
+
+| Element | 320px – 768px | Up to 1500px | At 2560px and wider | Target Ratio vs. Body |
+| :--- | :--- | :--- | :--- | :--- |
+| **Caption** (`--gh-font-caption`) | -- | **`14px`** | **`16px`** | **~0.74&times;** |
+| **Small** (`--gh-font-small`) | -- | **`16px`** | **`18px`** | **~0.84&times;** |
+| **Body** (`--gh-font-body`) | -- | **`19px`** | **`24px`** | **1.00&times;** |
+| **`h3`** | `27px` &rarr; `34px` *(fluid)* | **`34px`** | **`43px`** | **~1.79&times;** |
+| **`h2`** | `38px` &rarr; `48px` *(fluid)* | **`48px`** | **`61px`** | **~2.53&times;** |
+| **`h1`** | `44px` &rarr; `58px` *(fluid)* | **`58px`** | **`73px`** | **~3.05&times;** |
+
+- **Caption** is for the footer, trademarks, platform labels, and cookie notice and buttons. **Small** is for navigation, the header button, skip link, resource descriptions and arrows, and the review citation.
+- The `h1` scale applies to the error page. The hero has its own sizes in `.hero-wordmark` and `.hero-slogan`.
 
 ---
 
