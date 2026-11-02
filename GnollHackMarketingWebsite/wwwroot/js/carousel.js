@@ -74,6 +74,7 @@ function playVideoInModal(container) {
     }
 
     players[slotId] = new YT.Player(slotId, {
+        host: 'https://www.youtube-nocookie.com',
         videoId: videoId,
         playerVars: {
             'autoplay': 1,

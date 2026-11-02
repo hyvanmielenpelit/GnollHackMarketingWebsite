@@ -18,10 +18,10 @@ This skill provides essential guidelines, architectural context, Azure Front Doo
 - **Primary Pages**:
   - `Pages/Index.cshtml`: Main landing page with hero picture, download badges, roguelike description, video/screenshot carousel, features breakdown, and community links.
   - `Pages/Index.cshtml.cs`: Supplies media items (`MediaItems`) to `_Carousel.cshtml`.
-  - `Pages/Shared/_Layout.cshtml`: Global layout including SEO metadata, Google Fonts, theme color, OpenGraph, JSON-LD Schema (`VideoGame`), cookie consent dialog, and script bundles.
+  - `Pages/Shared/_Layout.cshtml`: Global layout including SEO metadata, self-hosted fonts stylesheet, theme color, OpenGraph, JSON-LD Schema (`VideoGame`), cookie consent dialog, and script bundles.
   - `Pages/_Carousel.cshtml`: Partial for the synchronized main thumbnail carousel and fullscreen modal carousel with YouTube iframe API support.
 - **Client Assets**:
-  - CSS: `wwwroot/css/site2.scss` -> `site2.css` / `site2.min.css`, `carousel.scss` -> `carousel.css` / `carousel.min.css`.
+  - CSS: `wwwroot/css/site2.scss` -> `site2.css` / `site2.min.css`, `carousel.scss` -> `carousel.css` / `carousel.min.css`, `fonts.scss` -> `fonts.css` / `fonts.min.css`.
   - JavaScript: Vanilla ES6+ with **jQuery 3.7.1** (`wwwroot/js/site.js`, `wwwroot/js/carousel.js`).
   - Framework: Bootstrap 5.3.3 (`wwwroot/lib/bootstrap/5.3.3/`).
 
@@ -31,7 +31,7 @@ This skill provides essential guidelines, architectural context, Azure Front Doo
 
 The marketing website sits behind **Azure Front Door (AFD)** as a CDN / Edge reverse proxy. The caching rules configured in `GnollHackMarketingWebsite/Program.cs` MUST adhere to the following:
 
-1. **Static Assets (`/css`, `/js`, `/img`, `/lib`, `/favicon`, `site.webmanifest`, `robots.txt`, `sitemap.xml`)**:
+1. **Static Assets (`/css`, `/js`, `/img`, `/fonts`, `/lib`, `/favicon`, `site.webmanifest`, `robots.txt`, `sitemap.xml`)**:
    - Header: `Cache-Control: public,max-age=31536000,immutable`
    - Purpose: AFD and client browsers cache static assets for 1 year. Static assets leverage ASP.NET Core asset versioning (`asp-append-version="true"`) for automatic cache-busting on changes.
 2. **Root & Dynamic Pages (`GET /`, `GET /Error`)**:
@@ -49,7 +49,7 @@ The marketing website sits behind **Azure Front Door (AFD)** as a CDN / Edge rev
 - **Structured Data**: The site embeds Schema.org `VideoGame` / `SoftwareApplication` JSON-LD in `_Layout.cshtml` for rich game snippets in Google and search engines.
 - **Performance (LCP / CLS)**:
   - The hero image uses a responsive `<picture>` element with `<source media="...">` breakpoints and `fetchpriority="high"`.
-  - Google Fonts are preconnected (`<link rel="preconnect">`) in `<head>` rather than `@import` in CSS.
+  - Fonts are self-hosted from `wwwroot/fonts/` and declared in `wwwroot/css/fonts.scss`, so no third-party host is contacted before a consent choice.
   - Below-the-fold badge and character images use `loading="lazy"` and explicit dimensions.
 
 ---

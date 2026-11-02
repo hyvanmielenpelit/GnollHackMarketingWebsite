@@ -36,6 +36,7 @@ app.Use((context, next) =>
         if (path.StartsWithSegments("/css") ||
             path.StartsWithSegments("/js") ||
             path.StartsWithSegments("/img") ||
+            path.StartsWithSegments("/fonts") ||
             path.StartsWithSegments("/lib") ||
             path.StartsWithSegments("/favicon") ||
             path == "/site.webmanifest" ||

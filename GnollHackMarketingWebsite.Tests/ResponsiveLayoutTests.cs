@@ -127,7 +127,7 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
         await Assertions.Expect(modal).ToHaveAttributeAsync("aria-modal", "true");
         await Assertions.Expect(modal).ToHaveAttributeAsync("aria-label", "Fullscreen Media Gallery");
 
-        // 2. Check HD poster image URLs (maxresdefault.jpg) on video items
+        // 2. Check locally served HD poster images on video items
         var videoPosters = page.Locator(".video-poster-img");
         var posterCount = await videoPosters.CountAsync();
         Assert.True(posterCount > 0, "No video poster images found on page.");
@@ -136,7 +136,10 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
         {
             var src = await videoPosters.Nth(i).GetAttributeAsync("src");
             Assert.NotNull(src);
-            Assert.Contains("maxresdefault.jpg", src);
+            Assert.StartsWith("/img/video-poster-", src);
+
+            var posterResponse = await page.APIRequest.GetAsync(new Uri(new Uri(_server.ServerAddress), src).ToString());
+            Assert.True(posterResponse.Ok, $"Poster {src} returned {posterResponse.Status}");
         }
 
         // 3. Check play button presence and accessibility label

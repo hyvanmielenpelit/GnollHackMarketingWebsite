@@ -20,5 +20,16 @@
     "options": {
       "sourceMap": false
     }
+  },
+  {
+    "outputFile": "wwwroot/css/fonts.css",
+    "inputFile": "wwwroot/css/fonts.scss",
+    "minify": {
+      "enabled": true,
+      "gzip": false
+    },
+    "options": {
+      "sourceMap": false
+    }
   }
 ]

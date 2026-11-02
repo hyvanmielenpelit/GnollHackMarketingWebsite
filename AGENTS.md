@@ -5,12 +5,12 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 ## 1. Architecture & Tech Stack
 - **Framework**: ASP.NET Core 10.0 Razor Pages (`net10.0`).
 - **Client Stack**: Plain JavaScript (ES6+) with **jQuery 3.7.1** and Bootstrap 5.3.3. Do not introduce TypeScript or large frontend frameworks unless explicitly requested.
-- **Styling**: SCSS located in `wwwroot/css/` compiled via `compilerconfig.json`. Do not use `@import` for external fonts in SCSS; use `<link rel="preconnect">` in `_Layout.cshtml`.
+- **Styling**: SCSS located in `wwwroot/css/` compiled via `compilerconfig.json`. Fonts are self-hosted: files live in `wwwroot/fonts/` (with their OFL licenses) and are declared in `wwwroot/css/fonts.scss`. Never load fonts from a third-party host or add `preconnect` hints for one, because that sends the visitor's IP address to the host before any consent choice.
 
 ## 2. Azure Front Door (AFD) Caching & Middleware Pipeline
 - The site runs behind Azure Front Door.
 - Header middleware in `GnollHackMarketingWebsite/Program.cs` MUST be placed **before** `app.UseRouting()`, `app.MapStaticAssets()`, and `app.MapRazorPages()`.
-- Set `Cache-Control: public,max-age=31536000,immutable` for `/css`, `/js`, `/img`, `/lib`, `/favicon`, `site.webmanifest`, `robots.txt`, `sitemap.xml`.
+- Set `Cache-Control: public,max-age=31536000,immutable` for `/css`, `/js`, `/img`, `/fonts`, `/lib`, `/favicon`, `site.webmanifest`, `robots.txt`, `sitemap.xml`.
 - Set `Cache-Control: no-cache` for the root `/` and dynamic Razor Pages.
 
 ## 3. SEO & Reverse Proxy Rules
@@ -39,6 +39,8 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 | `app-store-badge-h200-noborders.webp` | 617 &times; 200 px | **3.085** | `.apple-app-store` | `2px solid #b2b4b6`, `border-radius: 12px` |
 | `steambadge-noborders.webp` | 556 &times; 160 px | **3.475** | `.steam` | `2px solid #a8a8a8`, `border-radius: 12px` |
 | `GitHubDownloadBadge-NoBorders-h200.webp` | 622 &times; 200 px | **3.110** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` |
+
+- **Video Posters**: Served locally as `wwwroot/img/video-poster-<YouTube ID>.jpg` (1280 &times; 720 px, **16:9**), never from `img.youtube.com`. A new video in `Pages/Index.cshtml.cs` needs its own poster file there.
 
 - **Feature & Gameplay Icons**:
   - Maintain intrinsic aspect ratios in HTML (`width` & `height`) and CSS (`max-width: 100%; height: auto;`).

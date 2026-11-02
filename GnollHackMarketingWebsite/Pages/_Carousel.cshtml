@@ -34,7 +34,7 @@
                      data-video-id="@mediaUrl" data-index="@index"
                      role="button" tabindex="0" aria-label="Open fullscreen video @(index + 1)">
                     <img class="video-poster-img"
-                         src="https://img.youtube.com/vi/@mediaUrl/maxresdefault.jpg"
+                         src="/img/video-poster-@(mediaUrl).jpg"
                          alt="GnollHack Video Poster @(index + 1)"
                          loading="@(index == 0 ? "eager" : "lazy")"
                          fetchpriority="@(index == 0 ? null : "low")"
