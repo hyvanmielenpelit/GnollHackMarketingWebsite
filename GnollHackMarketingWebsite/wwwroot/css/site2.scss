@@ -1135,7 +1135,7 @@ h3 {
 
     // Desktop (>= 768px): Uniform height, natural aspect-ratio width
     @media (min-width: $breakpoint-md) {
-        height: clamp(46px, 3.3vw, 58px);
+        height: clamp(56px, 4vw, 68px);
         width: auto;
         max-width: none;
     }

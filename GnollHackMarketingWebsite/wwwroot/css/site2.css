@@ -1076,7 +1076,7 @@ h3 {
 }
 @media (min-width: 768px) {
   .shiny-borders {
-    height: clamp(46px, 3.3vw, 58px);
+    height: clamp(56px, 4vw, 68px);
     width: auto;
     max-width: none;
   }
