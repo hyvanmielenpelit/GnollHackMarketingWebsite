@@ -1325,11 +1325,13 @@ h4 {
     }
 
     .button-container {
-        text-align: right;
+        display: flex;
+        gap: 8px;
         margin: 0;
         padding: 0;
 
         button {
+            flex: 1 1 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -1430,6 +1432,31 @@ h4 {
         display: inline-flex;
         align-items: center;
         min-block-size: 32px;
+    }
+}
+
+.footer-link-button {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 32px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--gh-gold);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline solid color-mix(in oklab, currentColor 50%, transparent) 1px;
+    text-underline-offset: 0.2em;
+
+    &:hover {
+        color: var(--gh-ivory);
+        text-decoration-color: currentColor;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--gh-gold);
+        outline-offset: 3px;
+        border-radius: 3px;
     }
 }
 

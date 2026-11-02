@@ -3,13 +3,20 @@
 var ytApiReady = false;
 var pendingPlayRequests = [];
 var players = {};
+var ytApiRequested = false;
 
-// Load YouTube IFrame Player API asynchronously
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-if (firstScriptTag && firstScriptTag.parentNode) {
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+// Load YouTube IFrame Player API asynchronously, the first time a visitor plays a video
+function loadYouTubeApi() {
+    if (ytApiRequested) {
+        return;
+    }
+    ytApiRequested = true;
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    if (firstScriptTag && firstScriptTag.parentNode) {
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
 }
 
 function onYouTubeIframeAPIReady() {
@@ -51,6 +58,7 @@ function playVideoInModal(container) {
 
     if (!ytApiReady || typeof YT === "undefined" || !YT.Player) {
         pendingPlayRequests.push($container[0]);
+        loadYouTubeApi();
         return;
     }
 

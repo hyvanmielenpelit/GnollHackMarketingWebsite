@@ -4,24 +4,13 @@
     string baseUrl = !string.IsNullOrEmpty(Configuration["BaseUrl"])
         ? Configuration["BaseUrl"]!
         : (ViewContext.HttpContext.Request.Scheme + "://" + ViewContext.HttpContext.Request.Host);
+    string? googleTagManagerId = Configuration["GoogleTagManagerID"];
     string description = "GnollHack is a free, open-source modernization of the classic roguelike NetHack, featuring artist-drawn graphics, full voice acting, original music, and native ports for desktop and mobile.";
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @if (!string.IsNullOrEmpty(Configuration["GoogleTagManagerID"]))
-    {
-        <!-- Google Tag Manager -->
-        <script>
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','@(Configuration["GoogleTagManagerID"])');</script>
-        <!-- End Google Tag Manager -->
-    }
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -107,15 +96,6 @@
     </script>
 </head>
 <body>
-    @if (!string.IsNullOrEmpty(Configuration["GoogleTagManagerID"]))
-    {
-        <!-- Google Tag Manager (noscript) -->
-        <noscript>
-            <iframe src="@("https://www.googletagmanager.com/ns.html?id=" + Configuration["GoogleTagManagerID"])"
-                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
-        </noscript>
-        <!-- End Google Tag Manager (noscript) -->
-    }
  
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -155,13 +135,20 @@
         </main>
     </div>
 
-    <div id="consentDiv" class="consent" role="region" aria-label="Cookie notice">
-        <div class="text-container">
-            By continuing to use this website, you consent to the use of cookies in accordance
-            with our <a target="_blank" rel="noopener noreferrer" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy">Cookie Policy</a>.
+    @if (!string.IsNullOrEmpty(googleTagManagerId))
+    {
+        <div id="consentDiv" class="consent" role="region" aria-label="Cookie consent" data-gtm-id="@googleTagManagerId">
+            <div class="text-container">
+                We&rsquo;d like to use optional Google cookies and tags (Tag Manager, Analytics, and Ads conversion tracking) to measure visits and ad performance.
+                They load only if you accept. You can change your choice at any time under Cookie Settings in the footer.
+                See our <a target="_blank" rel="noopener noreferrer" href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy">Cookie Policy</a>.
+            </div>
+            <div class="button-container">
+                <button type="button" id="consentAcceptButton" data-consent-choice="accepted">Accept</button>
+                <button type="button" id="consentDeclineButton" data-consent-choice="declined">Decline</button>
+            </div>
         </div>
-        <div class="button-container"><button type="button" id="consentButton">OK</button></div>
-    </div>
+    }
 
     <footer class="site-footer legal-text">
         <div class="container site-footer-inner">
@@ -180,6 +167,10 @@
                     <li><a href="https://github.com/hyvanmielenpelit/GnollHack" target="_blank" rel="noopener noreferrer">GitHub</a></li>
                     <li><a href="https://wiki.gnollhack.com/Privacy%20Policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
                     <li><a href="https://wiki.gnollhack.com/GnollHack.com%20Cookie%20Policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a></li>
+                    @if (!string.IsNullOrEmpty(googleTagManagerId))
+                    {
+                        <li><button type="button" id="cookieSettingsButton" class="footer-link-button">Cookie Settings</button></li>
+                    }
                 </ul>
             </nav>
 

@@ -68,3 +68,7 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 - **Test Suite**: `GnollHackMarketingWebsite.Tests/` contains xUnit AST specifications (`CssSpecificationTests.cs`) and Playwright E2E responsive tests (`ResponsiveLayoutTests.cs`).
 - **Run Tests**: `dotnet test GnollHackMarketingWebsite.slnx`.
 
+## 8. Cookie Consent
+- Non-essential third-party tags load only after an explicit Accept. `wwwroot/js/site.js` injects Google Tag Manager from `#consentDiv`'s `data-gtm-id`; never add a tag snippet or `<noscript>` tag frame to `_Layout.cshtml`.
+- Accept and Decline must stay equally prominent, and the footer's Cookie Settings button must keep reopening the notice.
+- If the notice's tag list changes, update the Cookie Policy wiki page too.
