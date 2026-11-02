@@ -168,3 +168,11 @@ The solution includes a dedicated automated test suite in `GnollHackMarketingWeb
 ```powershell
 dotnet test GnollHackMarketingWebsite.slnx
 ```
+
+---
+
+## 8. Commits & Pushes
+
+- **Never commit or push to this repository automatically.** Both need the developer's explicit permission, and the developer usually makes them manually.
+- Finishing a task, a passing test run, or a plan's step does not grant that permission, and permission for one commit or push does not extend to the next.
+- Leave changes uncommitted in the working tree for the developer to review.

@@ -92,3 +92,8 @@ Sizes assume the default 16 px browser setting and rise smoothly from 1500 px to
 - Non-essential third-party tags load only after an explicit Accept. `wwwroot/js/site.js` injects Google Tag Manager from `#consentDiv`'s `data-gtm-id`; never add a tag snippet or `<noscript>` tag frame to `_Layout.cshtml`.
 - Accept and Decline must stay equally prominent, and the footer's Cookie Settings button must keep reopening the notice.
 - If the notice's tag list changes, update the Cookie Policy wiki page too.
+
+## 9. Commits & Pushes
+- **Never commit or push to this repository automatically.** Both need the developer's explicit permission, and the developer usually makes them manually.
+- Finishing a task, a passing test run, or a plan's step does not grant that permission, and permission for one commit or push does not extend to the next.
+- Leave changes uncommitted in the working tree for the developer to review.
