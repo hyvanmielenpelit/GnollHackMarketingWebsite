@@ -3,34 +3,13 @@ using Xunit;
 
 namespace GnollHackMarketingWebsite.Tests;
 
-public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLifetime
+public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>
 {
     private readonly TestServerFixture _server;
-    private IPlaywright? _playwright;
-    private IBrowser? _browser;
 
     public ResponsiveLayoutTests(TestServerFixture server)
     {
         _server = server;
-    }
-
-    public async Task InitializeAsync()
-    {
-        _playwright = await Playwright.CreateAsync();
-        _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-        {
-            Headless = true
-        });
-    }
-
-    public async Task DisposeAsync()
-    {
-        if (_browser != null)
-        {
-            await _browser.DisposeAsync();
-        }
-
-        _playwright?.Dispose();
     }
 
     [Theory]
@@ -43,8 +22,7 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
     [InlineData(1920, 1080)] // Desktop 1080p
     public async Task Viewport_HasZeroHorizontalOverflow(int width, int height)
     {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+        await using var context = await _server.Browser.NewContextAsync(new BrowserNewContextOptions
         {
             ViewportSize = new ViewportSize { Width = width, Height = height }
         });
@@ -66,47 +44,50 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
         }");
 
         Assert.False(isOverflowing, $"Page has horizontal overflow at {width}x{height} viewport (scrollWidth > innerWidth)");
-        await context.CloseAsync();
+    }
+
+    [Theory]
+    [InlineData(1280, 800)]
+    [InlineData(320, 568)]
+    public async Task Viewport_HasZeroHorizontalOverflowAtDoubleFontSize(int width, int height)
+    {
+        var (context, page) = await _server.OpenPageAsync(width, height);
+        await using var contextScope = context;
+        await page.AddStyleTagAsync(new PageAddStyleTagOptions { Content = "html { font-size: 200%; }" });
+
+        var scrollWidth = await page.EvaluateAsync<double>("() => document.documentElement.scrollWidth");
+
+        Assert.True(scrollWidth <= width, $"Page is {scrollWidth}px wide at 200% font size in a {width}px viewport");
     }
 
     [Fact]
     public async Task Typography_ComputedStyles_ScaleProportionallyOnMobileAndDesktop()
     {
-        Assert.NotNull(_browser);
-
         // Test Narrowest Mobile (320px)
-        var mobileContext = await _browser.NewContextAsync(new BrowserNewContextOptions
+        var (mobileContext, mobilePage) = await _server.OpenPageAsync(320, 568);
+        await using (mobileContext)
         {
-            ViewportSize = new ViewportSize { Width = 320, Height = 568 }
-        });
-        var mobilePage = await mobileContext.NewPageAsync();
-        await mobilePage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-        var mobileH2FontSize = await mobilePage.EvaluateAsync<double>(@"() => {
+            var mobileH2FontSize = await mobilePage.EvaluateAsync<double>(@"() => {
             const h2 = document.querySelector('h2');
             return h2 ? parseFloat(window.getComputedStyle(h2).fontSize) : 0;
         }");
 
-        // At 320px, the h2 clamp sits at its 38px minimum
-        Assert.InRange(mobileH2FontSize, 38, 38.1);
-        await mobileContext.CloseAsync();
+            // At 320px, the h2 clamp sits at its 38px minimum
+            Assert.InRange(mobileH2FontSize, 38, 38.1);
+        }
 
         // Test Standard Desktop (1920px)
-        var desktopContext = await _browser.NewContextAsync(new BrowserNewContextOptions
+        var (desktopContext, desktopPage) = await _server.OpenPageAsync(1920, 1080);
+        await using (desktopContext)
         {
-            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }
-        });
-        var desktopPage = await desktopContext.NewPageAsync();
-        await desktopPage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-        var desktopH2FontSize = await desktopPage.EvaluateAsync<double>(@"() => {
+            var desktopH2FontSize = await desktopPage.EvaluateAsync<double>(@"() => {
             const h2 = document.querySelector('h2');
             return h2 ? parseFloat(window.getComputedStyle(h2).fontSize) : 0;
         }");
 
-        // At 1920px, the wide-screen h2 line resolves to about 53px
-        Assert.InRange(desktopH2FontSize, 52.5, 53.5);
-        await desktopContext.CloseAsync();
+            // At 1920px, the wide-screen h2 line resolves to about 53px
+            Assert.InRange(desktopH2FontSize, 52.5, 53.5);
+        }
     }
 
     [Theory]
@@ -114,7 +95,8 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
     [InlineData(1366, 768)]
     public async Task Typography_HasNoTextBelowFourteenPixels(int width, int height)
     {
-        var (context, page) = await OpenPageAsync(width, height);
+        var (context, page) = await _server.OpenPageAsync(width, height);
+        await using var contextScope = context;
 
         var tooSmall = await page.EvaluateAsync<string[]>(@"() =>
             Array.from(document.body.querySelectorAll('*'))
@@ -124,372 +106,15 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
                 .map(el => `${el.tagName}.${el.className}: ${getComputedStyle(el).fontSize}`)");
 
         Assert.Empty(tooSmall);
-        await context.CloseAsync();
-    }
-
-    [Fact]
-    public async Task Hero_HasOneVisibleH1WithWordmarkAndSlogan()
-    {
-        var (context, page) = await OpenPageAsync(1366, 768);
-
-        var headings = page.Locator("h1");
-        Assert.Equal(1, await headings.CountAsync());
-        await Assertions.Expect(headings).ToBeVisibleAsync();
-
-        var text = await headings.InnerTextAsync();
-        Assert.Contains("GnollHack", text, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("The Modern Way to Play NetHack", text, StringComparison.OrdinalIgnoreCase);
-
-        await context.CloseAsync();
-    }
-
-    [Theory]
-    [InlineData(320, 568, "portrait")]
-    [InlineData(390, 844, "portrait")]
-    [InlineData(767, 1024, "portrait")]
-    [InlineData(768, 1024, "landscape")]
-    [InlineData(1366, 768, "landscape")]
-    public async Task Hero_LoadsArtForViewportWithHighPriority(int width, int height, string expectedArt)
-    {
-        var (context, page) = await OpenPageAsync(width, height);
-
-        var image = page.Locator(".hero-art img");
-        await Assertions.Expect(image).ToHaveAttributeAsync("fetchpriority", "high");
-        Assert.Null(await image.GetAttributeAsync("loading"));
-
-        await page.WaitForFunctionAsync("() => document.querySelector('.hero-art img').currentSrc !== ''");
-        var currentSrc = await image.EvaluateAsync<string>("img => img.currentSrc");
-        Assert.Contains($"/img/hero-ranger-{expectedArt}-", currentSrc);
-
-        await context.CloseAsync();
-    }
-
-    [Theory]
-    [InlineData(320, 568)]
-    [InlineData(390, 844)]
-    [InlineData(768, 1024)]
-    [InlineData(1366, 768)]
-    [InlineData(1920, 1080)]
-    public async Task Hero_WordmarkFitsWithinViewport(int width, int height)
-    {
-        var (context, page) = await OpenPageAsync(width, height);
-        await page.EvaluateAsync("() => document.fonts.ready.then(() => true)");
-
-        var bounds = await page.EvaluateAsync<double[]>(@"() => {
-            const range = document.createRange();
-            range.selectNodeContents(document.querySelector('.hero-wordmark'));
-            const rect = range.getBoundingClientRect();
-            return [rect.left, rect.right];
-        }");
-
-        Assert.True(bounds[0] >= 0 && bounds[1] <= width,
-            $"Wordmark spans {bounds[0]:F1}px to {bounds[1]:F1}px at {width}x{height}");
-
-        await context.CloseAsync();
-    }
-
-    [Theory]
-    [InlineData(320, 568)]
-    [InlineData(390, 844)]
-    [InlineData(844, 390)]
-    [InlineData(1366, 768)]
-    public async Task Hero_PrimaryButtonIsOnFirstScreen(int width, int height)
-    {
-        var (context, page) = await OpenPageAsync(width, height);
-        await page.EvaluateAsync("() => document.fonts.ready.then(() => true)");
-
-        var box = await page.Locator(".hero-cta-primary").BoundingBoxAsync();
-        Assert.NotNull(box);
-        Assert.True(box.X >= 0 && box.Y >= 0 && box.X + box.Width <= width && box.Y + box.Height <= height,
-            $"Primary button is at ({box.X:F1}, {box.Y:F1}) sized {box.Width:F1}x{box.Height:F1} at {width}x{height}");
-
-        await context.CloseAsync();
-    }
-
-    [Theory]
-    [InlineData(1280, 800)]
-    [InlineData(320, 568)]
-    public async Task Viewport_HasZeroHorizontalOverflowAtDoubleFontSize(int width, int height)
-    {
-        var (context, page) = await OpenPageAsync(width, height);
-        await page.AddStyleTagAsync(new PageAddStyleTagOptions { Content = "html { font-size: 200%; }" });
-
-        var scrollWidth = await page.EvaluateAsync<double>("() => document.documentElement.scrollWidth");
-
-        Assert.True(scrollWidth <= width, $"Page is {scrollWidth}px wide at 200% font size in a {width}px viewport");
-        await context.CloseAsync();
-    }
-
-    [Fact]
-    public async Task ShareImage_TagsAndFileMatchSpecification()
-    {
-        const string imagePath = "/img/gnollhack-open-graph-v2.jpg";
-        var (context, page) = await OpenPageAsync(1366, 768);
-
-        var ogImage = await page.Locator("meta[property='og:image']").GetAttributeAsync("content");
-        var twitterImage = await page.Locator("meta[name='twitter:image']").GetAttributeAsync("content");
-        var jsonLdImage = await page.EvaluateAsync<string>(
-            "() => JSON.parse(document.querySelector('script[type=\"application/ld+json\"]').textContent).image");
-
-        Assert.EndsWith(imagePath, ogImage);
-        Assert.EndsWith(imagePath, twitterImage);
-        Assert.EndsWith(imagePath, jsonLdImage);
-        Assert.DoesNotContain("gnollhack-open-graph-new.jpg", await page.ContentAsync());
-
-        var response = await page.APIRequest.GetAsync(new Uri(new Uri(_server.ServerAddress), imagePath).ToString());
-        Assert.Equal(200, response.Status);
-        Assert.True((await response.BodyAsync()).Length <= 150_000, "Share image is larger than 150 KB");
-
-        var size = await page.EvaluateAsync<int[]>(@"src => new Promise((resolve, reject) => {
-            const image = new Image();
-            image.onload = () => resolve([image.naturalWidth, image.naturalHeight]);
-            image.onerror = () => reject(new Error('Share image did not decode'));
-            image.src = src;
-        })", imagePath);
-        Assert.Equal(new[] { 1200, 630 }, size);
-
-        await context.CloseAsync();
-    }
-
-    [Fact]
-    public async Task Carousel_ModalAndVideoPosters_HaveHDFacadesAndAriaAttributes()
-    {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
-        {
-            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }
-        });
-
-        var page = await context.NewPageAsync();
-        await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-        // 1. Check modal dialog ARIA accessibility attributes
-        var modal = page.Locator("#fullscreenModal");
-        await Assertions.Expect(modal).ToHaveAttributeAsync("role", "dialog");
-        await Assertions.Expect(modal).ToHaveAttributeAsync("aria-modal", "true");
-        await Assertions.Expect(modal).ToHaveAttributeAsync("aria-label", "Fullscreen Media Gallery");
-
-        // 2. Check locally served HD poster images on video items
-        var videoPosters = page.Locator(".video-poster-img");
-        var posterCount = await videoPosters.CountAsync();
-        Assert.True(posterCount > 0, "No video poster images found on page.");
-
-        for (int i = 0; i < posterCount; i++)
-        {
-            var src = await videoPosters.Nth(i).GetAttributeAsync("src");
-            Assert.NotNull(src);
-            Assert.StartsWith("/img/video-poster-", src);
-
-            var posterResponse = await page.APIRequest.GetAsync(new Uri(new Uri(_server.ServerAddress), src).ToString());
-            Assert.True(posterResponse.Ok, $"Poster {src} returned {posterResponse.Status}");
-        }
-
-        // 3. Check play button presence and accessibility label
-        var playBtns = page.Locator(".video-play-btn");
-        var btnCount = await playBtns.CountAsync();
-        Assert.True(btnCount > 0, "No video play buttons found.");
-        await Assertions.Expect(playBtns.First).ToHaveAttributeAsync("aria-label", "Play Video");
-
-        await context.CloseAsync();
-    }
-
-    [Fact]
-    public async Task FullscreenModal_OnMobileViewport_OpensAtRootAndCoversFullViewport()
-    {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
-        {
-            ViewportSize = new ViewportSize { Width = 360, Height = 800 }
-        });
-
-        var page = await context.NewPageAsync();
-        await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-        // Click first carousel item to open modal
-        var firstItem = page.Locator("#carouselComponent .carousel-item.active img, #carouselComponent .carousel-item.active .video-poster-container").First;
-        await firstItem.ClickAsync();
-
-        // Wait for modal to become visible
-        var modal = page.Locator("#fullscreenModal");
-        await Assertions.Expect(modal).ToBeVisibleAsync();
-
-        // Verify modal bounding box covers full 360x800 viewport
-        var modalBox = await modal.BoundingBoxAsync();
-        Assert.NotNull(modalBox);
-        Assert.Equal(0, modalBox.X);
-        Assert.Equal(0, modalBox.Y);
-        Assert.Equal(360, modalBox.Width);
-        Assert.Equal(800, modalBox.Height);
-
-        // Verify modal is direct child of body (not trapped inside a section with backdrop-filter)
-        var isDirectBodyChild = await page.EvaluateAsync<bool>(@"() => {
-            const modal = document.getElementById('fullscreenModal');
-            return modal && modal.parentNode === document.body;
-        }");
-        Assert.True(isDirectBodyChild, "fullscreenModal must be a direct child of document.body");
-
-        // Verify close button closes modal
-        var closeBtn = page.Locator("#fullscreenModal .btn-close");
-        await closeBtn.ClickAsync();
-        await Assertions.Expect(modal).ToBeHiddenAsync();
-
-        await context.CloseAsync();
-    }
-
-    [Fact]
-    public async Task MainCarousel_MaintainsUniform16x9GeometryAndCenteredControls()
-    {
-        Assert.NotNull(_browser);
-
-        // Test desktop (1920x1080)
-        var desktopContext = await _browser.NewContextAsync(new BrowserNewContextOptions
-        {
-            ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }
-        });
-        var desktopPage = await desktopContext.NewPageAsync();
-        await desktopPage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-        var desktopGeometry = await desktopPage.EvaluateAsync<CarouselGeometry>(@"() => {
-            const container = document.getElementById('carouselComponent');
-            const inner = container ? container.querySelector('.carousel-inner') : null;
-            const prev = container ? container.querySelector('.main-carousel-control-prev') : null;
-            const next = container ? container.querySelector('.main-carousel-control-next') : null;
-            const style = container ? window.getComputedStyle(container) : null;
-            const innerRect = inner ? inner.getBoundingClientRect() : null;
-            const prevRect = prev ? prev.getBoundingClientRect() : null;
-            const nextRect = next ? next.getBoundingClientRect() : null;
-
-            return {
-                paddingLeft: style ? parseFloat(style.paddingLeft) : 0,
-                paddingRight: style ? parseFloat(style.paddingRight) : 0,
-                paddingTop: style ? parseFloat(style.paddingTop) : 0,
-                paddingBottom: style ? parseFloat(style.paddingBottom) : 0,
-                innerWidth: innerRect ? innerRect.width : 0,
-                innerHeight: innerRect ? innerRect.height : 0,
-                prevWidth: prevRect ? prevRect.width : 0,
-                nextWidth: nextRect ? nextRect.width : 0
-            };
-        }");
-
-        Assert.Equal(35, desktopGeometry.PaddingLeft);
-        Assert.Equal(35, desktopGeometry.PaddingRight);
-        Assert.Equal(35, desktopGeometry.PaddingTop);
-        Assert.Equal(35, desktopGeometry.PaddingBottom);
-        Assert.Equal(35, desktopGeometry.PrevWidth);
-        Assert.Equal(35, desktopGeometry.NextWidth);
-
-        // Inner aspect ratio should be 16 / 9 (~1.7777) within 0.05 tolerance
-        var desktopAspectRatio = desktopGeometry.InnerWidth / desktopGeometry.InnerHeight;
-        Assert.InRange(desktopAspectRatio, 1.70, 1.82);
-
-        await desktopContext.CloseAsync();
-
-        // Test mobile (360x800)
-        var mobileContext = await _browser.NewContextAsync(new BrowserNewContextOptions
-        {
-            ViewportSize = new ViewportSize { Width = 360, Height = 800 }
-        });
-        var mobilePage = await mobileContext.NewPageAsync();
-        await mobilePage.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-        var mobileGeometry = await mobilePage.EvaluateAsync<CarouselGeometry>(@"() => {
-            const container = document.getElementById('carouselComponent');
-            const inner = container ? container.querySelector('.carousel-inner') : null;
-            const prev = container ? container.querySelector('.main-carousel-control-prev') : null;
-            const next = container ? container.querySelector('.main-carousel-control-next') : null;
-            const style = container ? window.getComputedStyle(container) : null;
-            const innerRect = inner ? inner.getBoundingClientRect() : null;
-            const prevRect = prev ? prev.getBoundingClientRect() : null;
-            const nextRect = next ? next.getBoundingClientRect() : null;
-
-            return {
-                paddingLeft: style ? parseFloat(style.paddingLeft) : 0,
-                paddingRight: style ? parseFloat(style.paddingRight) : 0,
-                paddingTop: style ? parseFloat(style.paddingTop) : 0,
-                paddingBottom: style ? parseFloat(style.paddingBottom) : 0,
-                innerWidth: innerRect ? innerRect.width : 0,
-                innerHeight: innerRect ? innerRect.height : 0,
-                prevWidth: prevRect ? prevRect.width : 0,
-                nextWidth: nextRect ? nextRect.width : 0
-            };
-        }");
-
-        Assert.Equal(25, mobileGeometry.PaddingLeft);
-        Assert.Equal(25, mobileGeometry.PaddingRight);
-        Assert.Equal(25, mobileGeometry.PaddingTop);
-        Assert.Equal(25, mobileGeometry.PaddingBottom);
-        Assert.Equal(25, mobileGeometry.PrevWidth);
-        Assert.Equal(25, mobileGeometry.NextWidth);
-
-        var mobileAspectRatio = mobileGeometry.InnerWidth / mobileGeometry.InnerHeight;
-        Assert.InRange(mobileAspectRatio, 1.70, 1.82);
-
-        await mobileContext.CloseAsync();
-    }
-
-    [Fact]
-    public async Task ResourceCards_HaveAccessibleSemanticsAndMinimumTargetSize()
-    {
-        Assert.NotNull(_browser);
-
-        foreach (var (width, height) in new[] { (360, 800), (1920, 1080) })
-        {
-            var context = await _browser.NewContextAsync(new BrowserNewContextOptions
-            {
-                ViewportSize = new ViewportSize { Width = width, Height = height }
-            });
-            var page = await context.NewPageAsync();
-            await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-            // Two lists that keep list semantics under list-style: none
-            var grids = page.Locator("ul.resource-grid");
-            Assert.Equal(2, await grids.CountAsync());
-            for (int i = 0; i < 2; i++)
-            {
-                await Assertions.Expect(grids.Nth(i)).ToHaveAttributeAsync("role", "list");
-            }
-
-            // Six cards, one of them Gnoll Overseer
-            var cards = page.Locator(".resource-card");
-            Assert.Equal(6, await cards.CountAsync());
-            Assert.Equal(1, await page.Locator(".resource-link[href='https://overseer.gnollhack.com']").CountAsync());
-
-            // Every link is described by an existing .resource-desc element
-            var allDescribed = await page.EvaluateAsync<bool>(@"() => {
-                const links = Array.from(document.querySelectorAll('.resource-link'));
-                return links.length === 6 && links.every(link => {
-                    const id = link.getAttribute('aria-describedby');
-                    const desc = id ? document.getElementById(id) : null;
-                    return desc !== null && desc.classList.contains('resource-desc') && desc.textContent.trim().length > 0;
-                });
-            }");
-            Assert.True(allDescribed, $"Every .resource-link must have an aria-describedby resolving to a .resource-desc at {width}x{height}");
-
-            // WCAG 2.5.5 target size
-            for (int i = 0; i < 6; i++)
-            {
-                var box = await cards.Nth(i).BoundingBoxAsync();
-                Assert.NotNull(box);
-                Assert.True(box.Height >= 44, $"Resource card {i} is {box.Height}px tall at {width}x{height}; expected >= 44px");
-            }
-
-            await context.CloseAsync();
-        }
     }
 
     [Fact]
     public async Task DwarfMonk_ContentStaysClearOfArtworkOnWideScreens()
     {
-        Assert.NotNull(_browser);
-
         foreach (var (width, height) in new[] { (1200, 800), (1440, 900), (1920, 1080), (2560, 1440), (3440, 1440) })
         {
-            var context = await _browser.NewContextAsync(new BrowserNewContextOptions
-            {
-                ViewportSize = new ViewportSize { Width = width, Height = height }
-            });
-            var page = await context.NewPageAsync();
-            await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
+            var (context, page) = await _server.OpenPageAsync(width, height);
+            await using var contextScope = context;
 
             var clearances = await page.EvaluateAsync<SectionClearanceMetric[]>(@"() => {
                 const specs = [
@@ -538,186 +163,7 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
                 Assert.True(metric.Clearance >= 24,
                     $"Section {metric.Selector} has {metric.Clearance:F1}px artwork clearance at {width}x{height}; expected >= 24px");
             }
-
-            await context.CloseAsync();
         }
-    }
-
-    [Fact]
-    public async Task DownloadBadges_HaveVisibleCaptionsAndSymmetricRows()
-    {
-        Assert.NotNull(_browser);
-
-        var cases = new (int Width, int Height, int[] ExpectedRowCounts)[]
-        {
-            (360, 800, new[] { 1, 1, 1, 1 }),
-            (768, 1024, new[] { 2, 2 }),
-            (1024, 768, new[] { 2, 2 }),
-            (1440, 900, new[] { 2, 2 }),
-            (1920, 1080, new[] { 2, 2 }),
-            (2560, 1440, new[] { 2, 2 })
-        };
-
-        foreach (var (width, height, expectedRows) in cases)
-        {
-            var context = await _browser.NewContextAsync(new BrowserNewContextOptions
-            {
-                ViewportSize = new ViewportSize { Width = width, Height = height }
-            });
-            var page = await context.NewPageAsync();
-            await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-            // Visible platform labels on every viewport
-            var captions = page.Locator(".download-platform");
-            Assert.Equal(4, await captions.CountAsync());
-            for (int i = 0; i < 4; i++)
-            {
-                await Assertions.Expect(captions.Nth(i)).ToBeVisibleAsync();
-            }
-
-            var layout = await page.EvaluateAsync<BadgeLayoutResult>(@"() => {
-                const items = Array.from(document.querySelectorAll('.download-grid .download-item'));
-                const rows = [];
-                for (const item of items) {
-                    const top = item.getBoundingClientRect().top;
-                    const existing = rows.find(r => Math.abs(r.top - top) < 8);
-                    if (existing) {
-                        existing.count += 1;
-                    } else {
-                        rows.push({ top, count: 1 });
-                    }
-                }
-                rows.sort((a, b) => a.top - b.top);
-
-                const badges = Array.from(document.querySelectorAll('.download-grid img.shiny-borders')).map(img => {
-                    const rect = img.getBoundingClientRect();
-                    const style = getComputedStyle(img);
-                    const borderX = (parseFloat(style.borderLeftWidth) || 0) + (parseFloat(style.borderRightWidth) || 0);
-                    const borderY = (parseFloat(style.borderTopWidth) || 0) + (parseFloat(style.borderBottomWidth) || 0);
-                    const contentWidth = rect.width - borderX;
-                    const contentHeight = rect.height - borderY;
-                    const attrWidth = parseFloat(img.getAttribute('width') || '0');
-                    const attrHeight = parseFloat(img.getAttribute('height') || '1');
-                    return {
-                        outerWidth: rect.width,
-                        outerHeight: rect.height,
-                        renderedRatio: contentHeight > 0 ? contentWidth / contentHeight : 0,
-                        intrinsicRatio: attrWidth / attrHeight
-                    };
-                });
-
-                return {
-                    rowCounts: rows.map(r => r.count),
-                    badges
-                };
-            }");
-
-            Assert.Equal(expectedRows, layout.RowCounts);
-            Assert.Equal(4, layout.Badges.Length);
-
-            foreach (var badge in layout.Badges)
-            {
-                Assert.True(Math.Abs(badge.RenderedRatio - badge.IntrinsicRatio) < 0.08,
-                    $"Badge aspect ratio {badge.RenderedRatio:F3} drifted from {badge.IntrinsicRatio:F3} at {width}x{height}");
-            }
-
-            if (width >= 768)
-            {
-                var heights = layout.Badges.Select(b => b.OuterHeight).ToArray();
-                Assert.True(heights.Max() - heights.Min() <= 1.5, $"Desktop badge heights should match at {width}x{height}");
-            }
-            else
-            {
-                var widths = layout.Badges.Select(b => b.OuterWidth).ToArray();
-                Assert.True(widths.Max() - widths.Min() <= 1.5, $"Mobile badge widths should match at {width}x{height}");
-            }
-
-            await context.CloseAsync();
-        }
-    }
-
-    [Fact]
-    public async Task FeatureCards_HaveAlignedListsAndDarkFantasyStickyHeader()
-    {
-        Assert.NotNull(_browser);
-
-        foreach (var (width, height) in new[] { (360, 800), (1920, 1080) })
-        {
-            var context = await _browser.NewContextAsync(new BrowserNewContextOptions
-            {
-                ViewportSize = new ViewportSize { Width = width, Height = height }
-            });
-            var page = await context.NewPageAsync();
-            await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-
-            // Skip link and sticky dark-fantasy header
-            var skipLink = page.Locator("a.skip-link[href='#main-content']");
-            Assert.Equal(1, await skipLink.CountAsync());
-
-            var header = page.Locator("header.site-header");
-            await Assertions.Expect(header).ToBeVisibleAsync();
-
-            var headerCheck = await page.EvaluateAsync<HeaderAndAlignmentResult>(@"() => {
-                const header = document.querySelector('header.site-header');
-                const brand = document.querySelector('.brand-title');
-                const headerStyle = getComputedStyle(header);
-                const brandStyle = getComputedStyle(brand);
-
-                const parseRgb = (str) => {
-                    const m = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
-                    return m ? [parseInt(m[1], 10), parseInt(m[2], 10), parseInt(m[3], 10)] : [0, 0, 0];
-                };
-
-                const bgRgb = parseRgb(headerStyle.backgroundColor);
-                const inkRgb = parseRgb(brandStyle.color);
-
-                const listLeftSpread = (selector) => {
-                    const lists = Array.from(document.querySelectorAll(selector));
-                    const lefts = lists.map(el => el.getBoundingClientRect().left);
-                    return lefts.length >= 2 ? Math.max(...lefts) - Math.min(...lefts) : -1;
-                };
-
-                const screenshotSlides = Array.from(document.querySelectorAll('.main-carousel-img'));
-                const allScreenshotsOperable = screenshotSlides.length > 0 && screenshotSlides.every(img =>
-                    img.getAttribute('role') === 'button' && img.getAttribute('tabindex') === '0');
-
-                return {
-                    position: headerStyle.position,
-                    headerR: bgRgb[0],
-                    headerG: bgRgb[1],
-                    headerB: bgRgb[2],
-                    inkR: inkRgb[0],
-                    inkG: inkRgb[1],
-                    inkB: inkRgb[2],
-                    mageSpread: listLeftSpread('.female-mage .feature-list'),
-                    barbarianSpread: listLeftSpread('.barbarian .feature-list'),
-                    allScreenshotsOperable
-                };
-            }");
-
-            Assert.Equal("sticky", headerCheck.Position);
-            Assert.True(headerCheck.HeaderR < 40 && headerCheck.HeaderG < 35 && headerCheck.HeaderB < 35,
-                $"Expected smoked-obsidian header background at {width}x{height}, got rgb({headerCheck.HeaderR}, {headerCheck.HeaderG}, {headerCheck.HeaderB})");
-            Assert.True(headerCheck.InkR > 220 && headerCheck.InkG > 210 && headerCheck.InkB > 190,
-                $"Expected high-contrast warm ivory brand ink at {width}x{height}, got rgb({headerCheck.InkR}, {headerCheck.InkG}, {headerCheck.InkB})");
-            Assert.InRange(headerCheck.MageSpread, 0, 1.0);
-            Assert.InRange(headerCheck.BarbarianSpread, 0, 1.0);
-            Assert.True(headerCheck.AllScreenshotsOperable, "All screenshot carousel items must have role='button' and tabindex='0'");
-
-            await context.CloseAsync();
-        }
-    }
-
-    private async Task<(IBrowserContext Context, IPage Page)> OpenPageAsync(int width, int height)
-    {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
-        {
-            ViewportSize = new ViewportSize { Width = width, Height = height }
-        });
-        var page = await context.NewPageAsync();
-        await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
-        return (context, page);
     }
 
     private class SectionClearanceMetric
@@ -725,45 +171,4 @@ public class ResponsiveLayoutTests : IClassFixture<TestServerFixture>, IAsyncLif
         public string Selector { get; set; } = "";
         public double Clearance { get; set; }
     }
-
-    private class BadgeLayoutResult
-    {
-        public int[] RowCounts { get; set; } = [];
-        public BadgeMetric[] Badges { get; set; } = [];
-    }
-
-    private class BadgeMetric
-    {
-        public double OuterWidth { get; set; }
-        public double OuterHeight { get; set; }
-        public double RenderedRatio { get; set; }
-        public double IntrinsicRatio { get; set; }
-    }
-
-    private class HeaderAndAlignmentResult
-    {
-        public string Position { get; set; } = "";
-        public int HeaderR { get; set; }
-        public int HeaderG { get; set; }
-        public int HeaderB { get; set; }
-        public int InkR { get; set; }
-        public int InkG { get; set; }
-        public int InkB { get; set; }
-        public double MageSpread { get; set; }
-        public double BarbarianSpread { get; set; }
-        public bool AllScreenshotsOperable { get; set; }
-    }
-
-    private class CarouselGeometry
-    {
-        public double PaddingLeft { get; set; }
-        public double PaddingRight { get; set; }
-        public double PaddingTop { get; set; }
-        public double PaddingBottom { get; set; }
-        public double InnerWidth { get; set; }
-        public double InnerHeight { get; set; }
-        public double PrevWidth { get; set; }
-        public double NextWidth { get; set; }
-    }
 }
-

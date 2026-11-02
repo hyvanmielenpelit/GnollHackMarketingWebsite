@@ -85,7 +85,11 @@ Sizes assume the default 16 px browser setting and rise smoothly from 1500 px to
 | `h1` | `44px` &rarr; `58px` | `58px` | `73px` | Error page; the hero has its own sizes |
 
 ## 7. Automated CSS Specification & Responsive Testing
-- **Test Suite**: `GnollHackMarketingWebsite.Tests/` contains xUnit AST specifications (`CssSpecificationTests.cs`) and Playwright E2E responsive tests (`ResponsiveLayoutTests.cs`).
+- **CSS Specifications**: `CssSpecificationTests.cs` runs text and regular-expression checks of the compiled CSS.
+- **Browser Tests**: `ResponsiveLayoutTests.cs`, `HeroTests.cs`, `CarouselTests.cs`, `ContentSectionTests.cs`, `CookieConsentTests.cs`, and `ExternalRequestTests.cs` run in Playwright. Each class shares one server and one Chromium, through `TestServerFixture`, and each test opens its own browser context.
+- **Header Tests**: `ResponseHeaderTests.cs` checks the cache and security headers over HTTP.
+- **Test Environment**: Browser and header tests run against the real `Program.cs` through `WebApplicationFactory<Program>`, as `Development`. An unpublished `Production` run serves fingerprinted CSS and JS with empty bodies, probably because their compressed variants exist only in build or publish output. The HSTS and exception-handler branch of `Program.cs` is therefore untested.
+- **Playwright Updates**: After updating `Microsoft.Playwright`, build and then install its browser, or every browser test fails at launch: `powershell -NoProfile -ExecutionPolicy Bypass -File GnollHackMarketingWebsite.Tests\bin\Debug\net10.0\playwright.ps1 install chromium`.
 - **Run Tests**: `dotnet test GnollHackMarketingWebsite.slnx`.
 
 ## 8. Cookie Consent

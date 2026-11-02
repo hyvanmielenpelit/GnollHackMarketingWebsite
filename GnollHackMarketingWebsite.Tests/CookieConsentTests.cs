@@ -3,98 +3,75 @@ using Xunit;
 
 namespace GnollHackMarketingWebsite.Tests;
 
-public class CookieConsentTests : IClassFixture<TestServerFixture>, IAsyncLifetime
+public class CookieConsentTests : IClassFixture<TestServerFixture>
 {
     private const string StorageKey = "cookieConsentChoice";
 
     private readonly TestServerFixture _server;
-    private IPlaywright? _playwright;
-    private IBrowser? _browser;
 
     public CookieConsentTests(TestServerFixture server)
     {
         _server = server;
     }
 
-    public async Task InitializeAsync()
-    {
-        _playwright = await Playwright.CreateAsync();
-        _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-        {
-            Headless = true
-        });
-    }
-
-    public async Task DisposeAsync()
-    {
-        if (_browser != null)
-        {
-            await _browser.DisposeAsync();
-        }
-
-        _playwright?.Dispose();
-    }
-
     [Fact]
     public async Task FirstVisit_ShowsEqualChoicesAndLoadsNoThirdPartyTags()
     {
         var (context, page, thirdPartyRequests) = await OpenSiteAsync();
+        await using var contextScope = context;
 
-        Assert.True(await page.IsVisibleAsync("#consentDiv"));
+        await Assertions.Expect(page.Locator("#consentDiv")).ToBeVisibleAsync();
         Assert.Empty(thirdPartyRequests);
         Assert.Equal(0, await page.EvaluateAsync<int>("() => document.querySelectorAll('iframe[src*=\"googletagmanager\"]').length"));
 
         var accept = await ButtonAppearanceAsync(page, "#consentAcceptButton");
         var decline = await ButtonAppearanceAsync(page, "#consentDeclineButton");
         Assert.Equal(accept, decline);
-
-        await context.CloseAsync();
     }
 
     [Fact]
     public async Task Accept_LoadsTagManagerAndIsRemembered()
     {
         var (context, page, thirdPartyRequests) = await OpenSiteAsync();
+        await using var contextScope = context;
 
-        await page.ClickAsync("#consentAcceptButton");
+        await page.RunAndWaitForResponseAsync(() => page.ClickAsync("#consentAcceptButton"), IsTagManagerResponse);
         await page.WaitForSelectorAsync("#consentDiv", new PageWaitForSelectorOptions { State = WaitForSelectorState.Hidden });
         Assert.Contains(thirdPartyRequests, url => url.Contains("googletagmanager.com/gtm.js?id="));
         Assert.Equal("accepted", await ReadStoredChoiceAsync(page));
 
         thirdPartyRequests.Clear();
-        await page.ReloadAsync(new PageReloadOptions { WaitUntil = WaitUntilState.Load });
-        Assert.False(await page.IsVisibleAsync("#consentDiv"));
+        await page.RunAndWaitForResponseAsync(() => page.ReloadAsync(new PageReloadOptions { WaitUntil = WaitUntilState.Load }), IsTagManagerResponse);
+        await Assertions.Expect(page.Locator("#consentDiv")).ToBeHiddenAsync();
         Assert.Contains(thirdPartyRequests, url => url.Contains("googletagmanager.com/gtm.js?id="));
-
-        await context.CloseAsync();
     }
 
     [Fact]
     public async Task Decline_LoadsNoTagsAndIsRemembered()
     {
         var (context, page, thirdPartyRequests) = await OpenSiteAsync();
+        await using var contextScope = context;
 
         await page.ClickAsync("#consentDeclineButton");
         await page.WaitForSelectorAsync("#consentDiv", new PageWaitForSelectorOptions { State = WaitForSelectorState.Hidden });
         Assert.Equal("declined", await ReadStoredChoiceAsync(page));
 
         await page.ReloadAsync(new PageReloadOptions { WaitUntil = WaitUntilState.Load });
-        Assert.False(await page.IsVisibleAsync("#consentDiv"));
+        await Assertions.Expect(page.Locator("#consentDiv")).ToBeHiddenAsync();
         Assert.Empty(thirdPartyRequests);
-
-        await context.CloseAsync();
     }
 
     [Fact]
     public async Task CookieSettings_WithdrawingConsentStopsTagsAndClearsCookies()
     {
         var (context, page, thirdPartyRequests) = await OpenSiteAsync();
+        await using var contextScope = context;
 
         await page.ClickAsync("#consentAcceptButton");
         await page.EvaluateAsync("() => { document.cookie = '_ga=GA1.1.1; path=/'; document.cookie = '_gcl_au=1.1.1; path=/'; document.cookie = 'unrelated=1; path=/'; }");
 
         await page.ClickAsync("#cookieSettingsButton");
-        Assert.True(await page.IsVisibleAsync("#consentDiv"));
+        await Assertions.Expect(page.Locator("#consentDiv")).ToBeVisibleAsync();
         Assert.Equal("consentAcceptButton", await page.EvaluateAsync<string>("() => document.activeElement.id"));
 
         thirdPartyRequests.Clear();
@@ -103,37 +80,31 @@ public class CookieConsentTests : IClassFixture<TestServerFixture>, IAsyncLifeti
         await page.WaitForFunctionAsync("() => !window.beforeReload && document.readyState === 'complete'");
 
         Assert.Empty(thirdPartyRequests);
-        Assert.False(await page.IsVisibleAsync("#consentDiv"));
+        await Assertions.Expect(page.Locator("#consentDiv")).ToBeHiddenAsync();
         Assert.Equal("declined", await ReadStoredChoiceAsync(page));
         Assert.Equal("unrelated=1", await page.EvaluateAsync<string>("() => document.cookie"));
 
         await page.ClickAsync("#cookieSettingsButton");
-        await page.ClickAsync("#consentAcceptButton");
+        await page.RunAndWaitForResponseAsync(() => page.ClickAsync("#consentAcceptButton"), IsTagManagerResponse);
         Assert.Contains(thirdPartyRequests, url => url.Contains("googletagmanager.com/gtm.js?id="));
         Assert.Equal("accepted", await ReadStoredChoiceAsync(page));
-
-        await context.CloseAsync();
     }
 
     [Fact]
     public async Task FormerImpliedConsent_IsNotHonored()
     {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync();
+        await using var context = await _server.Browser.NewContextAsync();
         await context.AddInitScriptAsync("if (!sessionStorage.getItem('seeded')) { sessionStorage.setItem('seeded', '1'); localStorage.setItem('consentOKClicked', 'true'); }");
         var (page, thirdPartyRequests) = await OpenPageAsync(context);
 
-        Assert.True(await page.IsVisibleAsync("#consentDiv"));
+        await Assertions.Expect(page.Locator("#consentDiv")).ToBeVisibleAsync();
         Assert.Empty(thirdPartyRequests);
         Assert.Null(await page.EvaluateAsync<string?>("() => localStorage.getItem('consentOKClicked')"));
-
-        await context.CloseAsync();
     }
 
     private async Task<(IBrowserContext Context, IPage Page, List<string> ThirdPartyRequests)> OpenSiteAsync()
     {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync();
+        var context = await _server.Browser.NewContextAsync();
         var (page, thirdPartyRequests) = await OpenPageAsync(context);
         return (context, page, thirdPartyRequests);
     }
@@ -154,6 +125,12 @@ public class CookieConsentTests : IClassFixture<TestServerFixture>, IAsyncLifeti
 
         await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.Load });
         return (page, thirdPartyRequests);
+    }
+
+    // A stubbed response arrives only after its route handler has recorded the request
+    private static bool IsTagManagerResponse(IResponse response)
+    {
+        return response.Url.Contains("googletagmanager.com/gtm.js?id=");
     }
 
     private static Task<string?> ReadStoredChoiceAsync(IPage page)

@@ -3,41 +3,19 @@ using Xunit;
 
 namespace GnollHackMarketingWebsite.Tests;
 
-public class ExternalRequestTests : IClassFixture<TestServerFixture>, IAsyncLifetime
+public class ExternalRequestTests : IClassFixture<TestServerFixture>
 {
     private readonly TestServerFixture _server;
-    private IPlaywright? _playwright;
-    private IBrowser? _browser;
 
     public ExternalRequestTests(TestServerFixture server)
     {
         _server = server;
     }
 
-    public async Task InitializeAsync()
-    {
-        _playwright = await Playwright.CreateAsync();
-        _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-        {
-            Headless = true
-        });
-    }
-
-    public async Task DisposeAsync()
-    {
-        if (_browser != null)
-        {
-            await _browser.DisposeAsync();
-        }
-
-        _playwright?.Dispose();
-    }
-
     [Fact]
     public async Task FreshPageLoad_RequestsNothingFromOtherHosts()
     {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync(new BrowserNewContextOptions
+        await using var context = await _server.Browser.NewContextAsync(new BrowserNewContextOptions
         {
             ViewportSize = new ViewportSize { Width = 1920, Height = 1080 }
         });
@@ -71,14 +49,12 @@ public class ExternalRequestTests : IClassFixture<TestServerFixture>, IAsyncLife
         await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
 
         Assert.Empty(externalRequests);
-        await context.CloseAsync();
     }
 
     [Fact]
     public async Task SelfHostedFonts_LoadFromSite()
     {
-        Assert.NotNull(_browser);
-        var context = await _browser.NewContextAsync();
+        await using var context = await _server.Browser.NewContextAsync();
         var page = await context.NewPageAsync();
         await page.GotoAsync(_server.ServerAddress, new PageGotoOptions { WaitUntil = WaitUntilState.Load });
 
@@ -94,7 +70,5 @@ public class ExternalRequestTests : IClassFixture<TestServerFixture>, IAsyncLife
             var response = await page.APIRequest.GetAsync($"{_server.ServerAddress.TrimEnd('/')}/fonts/{fontFile}");
             Assert.True(response.Ok, $"{fontFile} returned {response.Status}");
         }
-
-        await context.CloseAsync();
     }
 }

@@ -1,76 +1,70 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Playwright;
 using Xunit;
 
 namespace GnollHackMarketingWebsite.Tests;
 
 public class TestServerFixture : IAsyncLifetime
 {
-    private WebApplication? _app;
+    private SiteFactory? _factory;
+    private IPlaywright? _playwright;
+
+    public IBrowser Browser { get; private set; } = null!;
     public string ServerAddress { get; private set; } = string.Empty;
 
     public async Task InitializeAsync()
     {
-        var contentRoot = GetContentRootPath();
-        var webRoot = Path.Combine(contentRoot, "wwwroot");
+        _factory = new SiteFactory();
+        _factory.UseKestrel();
+        _factory.StartServer();
 
-        var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-        {
-            ContentRootPath = contentRoot,
-            WebRootPath = webRoot,
-            EnvironmentName = Environments.Production
-        });
+        var server = _factory.Services.GetRequiredService<IServer>();
+        ServerAddress = server.Features.Get<IServerAddressesFeature>()!.Addresses.First();
 
-        builder.WebHost.UseKestrel();
-        builder.WebHost.UseUrls("http://127.0.0.1:0");
-
-        builder.Services.AddRazorPages()
-            .AddApplicationPart(typeof(Program).Assembly);
-
-        _app = builder.Build();
-
-        _app.UseStaticFiles(new StaticFileOptions
-        {
-            FileProvider = new PhysicalFileProvider(webRoot)
-        });
-        _app.UseRouting();
-        _app.MapRazorPages();
-
-        await _app.StartAsync();
-
-        var server = _app.Services.GetRequiredService<IServer>();
-        var addresses = server.Features.Get<IServerAddressesFeature>();
-        ServerAddress = addresses?.Addresses.FirstOrDefault() ?? "http://127.0.0.1:5000";
+        _playwright = await Playwright.CreateAsync();
+        Browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
     }
 
     public async Task DisposeAsync()
     {
-        if (_app != null)
+        if (Browser != null)
         {
-            await _app.StopAsync();
-            await _app.DisposeAsync();
+            await Browser.DisposeAsync();
+        }
+
+        _playwright?.Dispose();
+
+        if (_factory != null)
+        {
+            await _factory.DisposeAsync();
         }
     }
 
-    private static string GetContentRootPath()
+    public async Task<(IBrowserContext Context, IPage Page)> OpenPageAsync(
+        int width,
+        int height,
+        WaitUntilState waitUntil = WaitUntilState.DOMContentLoaded)
     {
-        var currentDir = Directory.GetCurrentDirectory();
-        var dir = new DirectoryInfo(currentDir);
-        while (dir != null)
+        var context = await Browser.NewContextAsync(new BrowserNewContextOptions
         {
-            var target = Path.Combine(dir.FullName, "GnollHackMarketingWebsite");
-            if (Directory.Exists(target) && File.Exists(Path.Combine(target, "Program.cs")))
-            {
-                return target;
-            }
-            dir = dir.Parent;
-        }
+            ViewportSize = new ViewportSize { Width = width, Height = height }
+        });
+        var page = await context.NewPageAsync();
+        await page.GotoAsync(ServerAddress, new PageGotoOptions { WaitUntil = waitUntil });
+        return (context, page);
+    }
 
-        throw new DirectoryNotFoundException("Could not locate GnollHackMarketingWebsite project directory.");
+    private sealed class SiteFactory : WebApplicationFactory<Program>
+    {
+        // Compressed static assets exist only in build or publish output, so the site runs as Development
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.UseEnvironment("Development");
+            builder.UseUrls("http://127.0.0.1:0");
+        }
     }
 }

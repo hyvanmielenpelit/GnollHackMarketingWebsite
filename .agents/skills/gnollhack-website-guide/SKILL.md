@@ -154,19 +154,29 @@ All font sizes use `rem` so a visitor's browser font-size setting applies, and n
 
 ## 7. Automated CSS Specification & Responsive UI Testing
 
-The solution includes a dedicated automated test suite in `GnollHackMarketingWebsite.Tests/` using the 3-Layer UI Testing Pyramid:
+The solution includes a dedicated automated test suite in `GnollHackMarketingWebsite.Tests/` with three layers:
 
-- **Layer 1: Static CSS Rule & AST Tests (`CssSpecificationTests.cs`)**:
+- **Layer 1: Static CSS Rule Tests (`CssSpecificationTests.cs`)**:
+  - Runs text and regular-expression checks of the compiled CSS.
   - Validates that compiled `site2.css` and `carousel.css` adhere to the typography scale, mobile dynamic height rules, and overflow guards.
   - Validates that minified assets exist and forbidden files (`.map`, `.gz`) are not created.
-- **Layer 2: Real-Browser Computed Style & Overflow Tests (`ResponsiveLayoutTests.cs`)**:
-  - Uses Playwright + `WebApplicationFactory` to spin up headless Chromium.
-  - Validates `scrollWidth <= innerWidth` across canonical viewports (`320px`, `360px`, `390px`, `430px`, `768px`, `1920px`, `3840px`).
-  - Validates `getComputedStyle()` font-sizes at run time.
+- **Layer 2: Real-Browser Tests (`ResponsiveLayoutTests.cs`, `HeroTests.cs`, `CarouselTests.cs`, `ContentSectionTests.cs`, `CookieConsentTests.cs`, `ExternalRequestTests.cs`)**:
+  - Run in headless Chromium through Playwright. Each class shares one server and one browser, through `TestServerFixture`, and each test opens its own browser context.
+  - Validate `scrollWidth <= innerWidth` across the viewports listed in `ResponsiveLayoutTests.cs`.
+  - Validate `getComputedStyle()` font-sizes at run time.
+- **Layer 3: HTTP Header Tests (`ResponseHeaderTests.cs`)**:
+  - Validates the cache and security headers from `Program.cs`.
+
+Browser and header tests run against the real `Program.cs` through `WebApplicationFactory<Program>`, as `Development`. An unpublished `Production` run serves fingerprinted CSS and JS with empty bodies, probably because their compressed variants exist only in build or publish output. The HSTS and exception-handler branch of `Program.cs` is therefore untested.
 
 **Running Tests**:
 ```powershell
 dotnet test GnollHackMarketingWebsite.slnx
+```
+
+**After Updating `Microsoft.Playwright`**: build and then install its browser, or every browser test fails at launch:
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File GnollHackMarketingWebsite.Tests\bin\Debug\net10.0\playwright.ps1 install chromium
 ```
 
 ---
