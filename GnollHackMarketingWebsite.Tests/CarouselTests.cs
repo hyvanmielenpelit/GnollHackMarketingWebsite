@@ -44,7 +44,7 @@ public class CarouselTests : IClassFixture<TestServerFixture>
         var modal = page.Locator("#fullscreenModal");
         await Assertions.Expect(modal).ToHaveAttributeAsync("role", "dialog");
         await Assertions.Expect(modal).ToHaveAttributeAsync("aria-modal", "true");
-        await Assertions.Expect(modal).ToHaveAttributeAsync("aria-label", "Fullscreen Media Gallery");
+        await Assertions.Expect(modal).ToHaveAttributeAsync("aria-label", "Full-Screen Media Gallery");
 
         // 2. Check locally served HD poster images on video items
         var videoPosters = page.Locator(".video-poster-img");

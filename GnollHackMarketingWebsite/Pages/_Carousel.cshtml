@@ -22,7 +22,7 @@
                 <img src="@mediaUrl" class="main-carousel-img"
                      data-bs-toggle="modal" data-bs-target="#fullscreenModal"
                      data-src="@mediaUrl" data-index="@index" alt="GnollHack Screenshot @(index + 1)"
-                     role="button" tabindex="0" aria-label="Open screenshot @(index + 1) in fullscreen"
+                     role="button" tabindex="0" aria-label="Open screenshot @(index + 1) in full screen"
                      width="1920" height="1080"
                      loading="@(index == 0 ? "eager" : "lazy")"
                      fetchpriority="@(index == 0 ? null : "low")">
@@ -32,7 +32,7 @@
                 <div class="video-poster-container main-carousel-video-container @(mediaOrientation == "landscape" ? "main-carousel-video-landscape" : "main-carousel-video-portrait")"
                      data-bs-toggle="modal" data-bs-target="#fullscreenModal"
                      data-video-id="@mediaUrl" data-index="@index"
-                     role="button" tabindex="0" aria-label="Open fullscreen video @(index + 1)">
+                     role="button" tabindex="0" aria-label="Open video @(index + 1) in full screen">
                     <img class="video-poster-img"
                          src="/img/video-poster-@(mediaUrl).jpg"
                          alt="GnollHack Video Poster @(index + 1)"
