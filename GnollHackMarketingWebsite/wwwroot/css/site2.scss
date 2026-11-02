@@ -387,10 +387,6 @@ body {
         font-size: 0.875rem;
     }
 
-    @media (prefers-reduced-motion: no-preference) {
-        transition: filter 0.16s ease-out, transform 0.16s ease-out, box-shadow 0.16s ease-out;
-    }
-
     &:visited {
         color: var(--gh-cta-ink);
     }
@@ -398,11 +394,6 @@ body {
     &:hover {
         color: var(--gh-cta-ink);
         background-image: var(--gh-cta-bg-hover);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 4px 16px rgba(223, 176, 70, 0.28);
-
-        @media (prefers-reduced-motion: no-preference) {
-            transform: translateY(-1px);
-        }
     }
 
     &:focus-visible {
