@@ -65,18 +65,17 @@ public class CssSpecificationTests
     }
 
     [Fact]
-    public void Links_HaveNoUnderlineAndLightenedGoldHover()
+    public void Links_HaveNoUnderlineAndIvoryHover()
     {
         var cssDir = GetWwwRootPath();
         var site2Css = ReadCss(cssDir, "site2.css");
 
         Assert.DoesNotContain("underline", site2Css);
-        Assert.Matches(@"--gh-gold-hover: #fae8bb;", site2Css);
-        Assert.Matches(@"\.inline-accent:hover \{\s*color: var\(--gh-gold-hover\);", site2Css);
-        Assert.Matches(@"\.resource-link:hover \{\s*color: var\(--gh-gold-hover\);", site2Css);
-        Assert.Matches(@"\.text-container a:hover \{\s*color: var\(--gh-gold-hover\);", site2Css);
-        Assert.Matches(@"\.site-footer a:hover \{\s*color: var\(--gh-gold-hover\);", site2Css);
-        Assert.Matches(@"\.footer-link-button:hover \{\s*color: var\(--gh-gold-hover\);", site2Css);
+        Assert.Matches(@"\.inline-accent:hover \{\s*color: var\(--gh-ivory\);", site2Css);
+        Assert.Matches(@"\.resource-link:hover \{\s*color: var\(--gh-ivory\);", site2Css);
+        Assert.Matches(@"\.text-container a:hover \{\s*color: var\(--gh-ivory\);", site2Css);
+        Assert.Matches(@"\.site-footer a:hover \{\s*color: var\(--gh-ivory\);", site2Css);
+        Assert.Matches(@"\.footer-link-button:hover \{\s*color: var\(--gh-ivory\);", site2Css);
     }
 
     [Fact]

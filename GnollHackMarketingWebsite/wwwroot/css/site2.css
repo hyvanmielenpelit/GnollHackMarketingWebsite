@@ -27,7 +27,6 @@
   --gh-card-sheen: inset 0 1px 0 rgba(255, 240, 200, 0.12);
   --gh-card-shadow: 0 16px 38px rgba(0, 0, 0, 0.62), 0 2px 8px rgba(0, 0, 0, 0.45);
   --gh-gold: #f3ce72;
-  --gh-gold-hover: #fae8bb;
   --gh-gold-strong: #dfb046;
   --gh-ivory: #fbf5e8;
   --gh-prose: #ede7db;
@@ -732,7 +731,7 @@ h3 {
   color: var(--gh-gold);
 }
 .inline-accent:hover {
-  color: var(--gh-gold-hover);
+  color: var(--gh-ivory);
 }
 .inline-accent:focus-visible {
   outline: 2px solid var(--gh-gold);
@@ -1289,7 +1288,7 @@ h3 {
   color: var(--gh-gold);
 }
 .features-text .resource-link:hover {
-  color: var(--gh-gold-hover);
+  color: var(--gh-ivory);
 }
 .features-text .resource-link:focus-visible {
   outline: none;
@@ -1377,7 +1376,7 @@ h3 {
   color: var(--gh-gold);
 }
 .consent .text-container a:hover {
-  color: var(--gh-gold-hover);
+  color: var(--gh-ivory);
 }
 .consent .text-container a:focus-visible {
   outline: 2px solid var(--gh-gold);
@@ -1438,7 +1437,7 @@ h3 {
   color: var(--gh-gold);
 }
 .site-footer a:hover {
-  color: var(--gh-gold-hover);
+  color: var(--gh-ivory);
 }
 .site-footer a:focus-visible {
   outline: 2px solid var(--gh-gold);
@@ -1490,7 +1489,7 @@ h3 {
   text-decoration: none;
 }
 .footer-link-button:hover {
-  color: var(--gh-gold-hover);
+  color: var(--gh-ivory);
 }
 .footer-link-button:focus-visible {
   outline: 2px solid var(--gh-gold);

@@ -28,7 +28,6 @@
     --gh-card-sheen: inset 0 1px 0 rgba(255, 240, 200, 0.12);
     --gh-card-shadow: 0 16px 38px rgba(0, 0, 0, 0.62), 0 2px 8px rgba(0, 0, 0, 0.45);
     --gh-gold: #f3ce72;
-    --gh-gold-hover: #fae8bb;
     --gh-gold-strong: #dfb046;
     --gh-ivory: #fbf5e8;
     --gh-prose: #ede7db;
@@ -760,7 +759,7 @@ h3 {
     }
 
     &:hover {
-        color: var(--gh-gold-hover);
+        color: var(--gh-ivory);
     }
 
     &:focus-visible {
@@ -1370,7 +1369,7 @@ h3 {
     }
 
     &:hover {
-        color: var(--gh-gold-hover);
+        color: var(--gh-ivory);
     }
 
     // The card draws the focus ring
@@ -1463,7 +1462,7 @@ h3 {
             }
 
             &:hover {
-                color: var(--gh-gold-hover);
+                color: var(--gh-ivory);
             }
 
             &:focus-visible {
@@ -1533,7 +1532,7 @@ h3 {
         }
 
         &:hover {
-            color: var(--gh-gold-hover);
+            color: var(--gh-ivory);
         }
 
         &:focus-visible {
@@ -1589,7 +1588,7 @@ h3 {
     text-decoration: none;
 
     &:hover {
-        color: var(--gh-gold-hover);
+        color: var(--gh-ivory);
     }
 
     &:focus-visible {
