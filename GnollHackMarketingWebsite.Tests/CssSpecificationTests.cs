@@ -55,6 +55,16 @@ public class CssSpecificationTests
     }
 
     [Fact]
+    public void ResourceLink_VisitedColorMatchesNormalColor()
+    {
+        var cssDir = GetWwwRootPath();
+        var site2Css = ReadCss(cssDir, "site2.css");
+
+        Assert.Matches(@"\.resource-link \{[^}]*\bcolor: var\(--gh-gold\);", site2Css);
+        Assert.Matches(@"\.resource-link:visited \{\s*color: var\(--gh-gold\);", site2Css);
+    }
+
+    [Fact]
     public void Hero_StylesExistInCompiledCss()
     {
         var cssDir = GetWwwRootPath();

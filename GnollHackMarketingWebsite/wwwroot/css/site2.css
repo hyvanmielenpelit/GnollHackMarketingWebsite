@@ -1289,7 +1289,10 @@ h3 {
   line-height: 1.25;
   letter-spacing: 0.01em;
 }
-.features-text .resource-link:visited, .features-text .resource-link:hover {
+.features-text .resource-link:visited {
+  color: var(--gh-gold);
+}
+.features-text .resource-link:hover {
   color: var(--gh-ivory);
 }
 .features-text .resource-link:focus-visible {
