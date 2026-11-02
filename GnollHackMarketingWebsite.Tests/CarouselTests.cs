@@ -142,6 +142,37 @@ public class CarouselTests : IClassFixture<TestServerFixture>
         }
     }
 
+    [Fact]
+    public async Task HiddenSlideImages_DoNotLoadBeforeCarouselIsNearViewport()
+    {
+        var (context, page) = await _server.OpenPageAsync(1600, 1000, WaitUntilState.Load);
+        await using var contextScope = context;
+
+        var loadedCount = await page.EvaluateAsync<int>(@"() =>
+            [...document.querySelectorAll('#carouselComponent .carousel-item:not(.active) img, #modalCarousel .carousel-item:not(.active) img')]
+                .filter(image => image.naturalWidth > 0).length");
+
+        Assert.Equal(0, loadedCount);
+    }
+
+    [Fact]
+    public async Task AllSlideImages_LoadWhenCarouselIsReached_BeforeAnySlideStarts()
+    {
+        var (context, page) = await _server.OpenPageAsync(1600, 1000, WaitUntilState.Load);
+        await using var contextScope = context;
+
+        await page.Locator("#carouselComponent").ScrollIntoViewIfNeededAsync();
+
+        await page.WaitForFunctionAsync(@"() =>
+            [...document.querySelectorAll('#carouselComponent img, #modalCarousel img')]
+                .every(image => image.complete && image.naturalWidth > 0)");
+
+        var activeIndex = await page.EvaluateAsync<int>(@"() =>
+            [...document.querySelectorAll('#carouselComponent .carousel-item')]
+                .findIndex(item => item.classList.contains('active'))");
+        Assert.Equal(0, activeIndex);
+    }
+
     private class CarouselGeometry
     {
         public double PaddingLeft { get; set; }

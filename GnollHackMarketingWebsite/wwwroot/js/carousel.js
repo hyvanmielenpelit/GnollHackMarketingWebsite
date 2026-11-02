@@ -104,6 +104,15 @@ $(function () {
     var modalCarouselElement = document.getElementById('modalCarousel');
     if (!thumbnailCarouselElement || !modalCarouselElement) return;
 
+    // Hidden slides do not fetch their lazy images, so they are requested before the carousel is reached
+    var slideImageObserver = new IntersectionObserver(function (entries, observer) {
+        if (entries.some(function (entry) { return entry.isIntersecting; })) {
+            observer.disconnect();
+            $('#carouselComponent img, #modalCarousel img').attr('loading', 'eager');
+        }
+    }, { rootMargin: '800px 0px' });
+    slideImageObserver.observe(thumbnailCarouselElement);
+
     var thumbnailCarousel = bootstrap.Carousel.getOrCreateInstance(thumbnailCarouselElement);
     var modalCarousel = bootstrap.Carousel.getOrCreateInstance(modalCarouselElement);
     var autoMovingModal = false;

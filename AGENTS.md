@@ -42,6 +42,7 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 | `GitHubDownloadBadge-NoBorders-h200.webp` | 622 &times; 200 px | **3.110** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` |
 
 - **Video Posters**: Served locally as `wwwroot/img/video-poster-<YouTube ID>.jpg` (1280 &times; 720 px, **16:9**), never from `img.youtube.com`. A new video in `Pages/Index.cshtml.cs` needs its own poster file there.
+- **Carousel Images**: Slide images keep `loading="lazy"` in the markup. `wwwroot/js/carousel.js` switches them to eager when the carousel nears the viewport, because hidden slides do not fetch lazy images and would otherwise be blank while sliding in.
 
 - **Hero Art**: An `<img>` in a `<picture>`, never a CSS background, with no logo or text burnt in. WebP at quality 85. Use `@Url.Content` for `srcset` URLs, because `~/` resolves only at the start of the attribute.
 
