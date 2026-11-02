@@ -20,7 +20,7 @@
             <div class="section-block">
                 <h2>Download</h2>
                 <div class="download-panel">
-                    <h4>Free on Windows, macOS, Linux, Steam Deck, iOS, and Android. No ads, timers, or microtransactions.</h4>
+                    <h4>Free on Windows, macOS, Linux, Steam Deck, iOS, and Android. No ads, paywalls, or microtransactions.</h4>
 
                     <ul class="download-grid" role="list">
                         <li class="download-item">
@@ -48,7 +48,7 @@
                             <a class="download-badge-link" href="https://github.com/hyvanmielenpelit/GnollHack/releases" aria-describedby="plat-github">
                                 <img src="~/img/GitHubDownloadBadge-NoBorders-h200.webp" alt="Get release on GitHub" loading="lazy" width="622" height="200" class="shiny-borders github-releases" />
                             </a>
-                            <span id="plat-github" class="download-platform">Direct Installers &middot; Win &amp; Linux</span>
+                            <span id="plat-github" class="download-platform">Windows &amp; Linux Downloads</span>
                         </li>
                     </ul>
                 </div>
@@ -59,10 +59,10 @@
                 <div class="intro-card">
                     <p class="intro-copy">
                         GnollHack brings <a href="https://www.nethack.org" target="_blank" rel="noopener noreferrer" class="inline-accent">NetHack</a>,
-                        one of gaming's deepest turn-based dungeon crawlers, to modern desktop and mobile platforms. Every classic dungeon branch, monster interaction, and tactical rule remains intact, backed by artist-drawn graphics, full voice acting, original music, and native touch, mouse, and controller controls.
+                        one of gaming's deepest turn-based dungeon crawlers, to modern desktop and mobile platforms. The classic dungeon branches, monster interactions, and tactical depth are all here, backed by artist-drawn graphics, full voice acting, original music, and native touch, mouse, and controller support.
                     </p>
                     <p class="intro-copy intro-links">
-                        New to the Dungeons of Doom? Browse the <a href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer" class="inline-accent">GnollHack Wiki</a> for item, spell, and class reference guides, or connect <a href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer" class="inline-accent">Gnoll Overseer</a> for optional context-aware advice during your run.
+                        New to the Dungeons of Doom? Browse the <a href="https://wiki.gnollhack.com" target="_blank" rel="noopener noreferrer" class="inline-accent">GnollHack Wiki</a> for item, spell, and class reference guides, or connect <a href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer" class="inline-accent">Gnoll Overseer</a> for optional, context-aware AI advice during your run.
                     </p>
                     <blockquote class="praise-quote">
                         <p>&ldquo;This is, by far, the best NetHack rendition I have ever played.&rdquo;</p>
@@ -78,7 +78,7 @@
     <div class="backdrop">
         <div class="features-text">
             <h2>Gameplay &amp; Trailers</h2>
-            <p class="section-lead">Watch the trailers or click any screenshot to inspect it in fullscreen.</p>
+            <p class="section-lead">Watch the trailers or open any screenshot in fullscreen.</p>
             <div class="carousel-container">
                 @await Html.PartialAsync("_Carousel", Model.MediaItems)
             </div>
@@ -99,7 +99,7 @@
                     <ul class="feature-list" role="list">
                         <li><strong>Hand-Crafted Pixel Art.</strong> Over 23,000 animated dungeon, monster, and item tiles drawn by human artists, with zero AI-generated in-game art.</li>
                         <li><strong>Full Voice Acting.</strong> More than 5,000 voiced lines performed by 96 actors bring shopkeepers, quest leaders, demons, and bosses to life.</li>
-                        <li><strong>Original Soundtrack &amp; Spatial Sound.</strong> A 37-track fantasy score paired with over 1,100 FMOD sound effects that react to dungeon acoustics.</li>
+                        <li><strong>Original Soundtrack &amp; Spatial Sound.</strong> A 37-track fantasy score paired with over 1,100 sound effects that react to dungeon acoustics.</li>
                     </ul>
                 </article>
 
@@ -111,7 +111,7 @@
                     <ul class="feature-list" role="list">
                         <li><strong>Built for Every Screen.</strong> Play natively with touch controls on phones and tablets, mouse and keyboard on PC, or gamepad on Steam Deck.</li>
                         <li><strong>Readable Modern Interface.</strong> Context menus, inventory filters, status tooltips, and visual map indicators replace cryptic keystroke memorization.</li>
-                        <li><strong>Optional Gnoll Overseer Coach.</strong> Connect an optional AI companion for real-time mechanics help without tabbing out of the dungeon.</li>
+                        <li><strong>Optional AI Advisor.</strong> Connect Gnoll Overseer for real-time mechanics help without tabbing out of the dungeon.</li>
                     </ul>
                 </article>
             </div>
@@ -140,7 +140,7 @@
                     <div class="imgContainer">
                         <img src="~/img/stormbringer.webp" alt="Stormbringer" loading="lazy" width="64" height="48" />
                     </div>
-                    <h3>Fair Modes &amp; Open Source</h3>
+                    <h3>Flexible Modes &amp; Open Source</h3>
                     <ul class="feature-list" role="list">
                         <li><strong>Seven Difficulty Tiers.</strong> Start on gentler settings while learning the ropes, or take on unforgiving veteran challenges.</li>
                         <li><strong>Classic Permadeath or Reloadable Saves.</strong> Commit to traditional single-life ascensions or play in modes that allow saving and reloading.</li>
@@ -165,8 +165,8 @@
                         <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                     </li>
                     <li class="resource-card">
-                        <a class="resource-link" href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer" aria-describedby="desc-overseer">Gnoll Overseer AI</a>
-                        <span id="desc-overseer" class="resource-desc">Optional real-time dungeon advisor &amp; setup guide</span>
+                        <a class="resource-link" href="https://overseer.gnollhack.com" target="_blank" rel="noopener noreferrer" aria-describedby="desc-overseer">Gnoll Overseer</a>
+                        <span id="desc-overseer" class="resource-desc">Optional real-time AI advisor &amp; setup guide</span>
                         <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                     </li>
                     <li class="resource-card">
@@ -182,7 +182,7 @@
                 <ul class="resource-grid" role="list">
                     <li class="resource-card">
                         <a class="resource-link" href="https://discord.gg/cQuExnzUQy" target="_blank" rel="noopener noreferrer" aria-describedby="desc-discord">GnollHack Discord</a>
-                        <span id="desc-discord" class="resource-desc">Talk strategy with players and the development team</span>
+                        <span id="desc-discord" class="resource-desc">Discuss strategy, report issues &amp; talk to the developers</span>
                         <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                     </li>
                     <li class="resource-card">
@@ -192,7 +192,7 @@
                     </li>
                     <li class="resource-card">
                         <a class="resource-link" href="https://github.com/hyvanmielenpelit/GnollHack" target="_blank" rel="noopener noreferrer" aria-describedby="desc-github">GitHub Repository</a>
-                        <span id="desc-github" class="resource-desc">Open-source codebase, release notes &amp; issue tracker</span>
+                        <span id="desc-github" class="resource-desc">Open-source codebase &amp; release notes</span>
                         <span class="resource-arrow" aria-hidden="true">&#8599;</span>
                     </li>
                 </ul>

@@ -247,6 +247,11 @@ body {
   column-gap: 14px;
   row-gap: 8px;
 }
+@media (max-width: 379.98px) {
+  .site-nav-inner {
+    column-gap: 8px;
+  }
+}
 
 .site-brand {
   display: inline-flex;
@@ -362,6 +367,11 @@ body {
     margin-inline-start: auto;
   }
 }
+@media (max-width: 379.98px) {
+  .site-nav-actions {
+    gap: 8px;
+  }
+}
 
 .nav-cta {
   display: inline-flex;
@@ -382,7 +392,7 @@ body {
 }
 @media (max-width: 379.98px) {
   .nav-cta {
-    padding: 7px 12px;
+    padding: 7px 8px;
     font-size: 13px;
   }
 }
@@ -1450,12 +1460,6 @@ h4 {
   justify-content: center;
   align-items: center;
   gap: 8px 10px;
-  color: var(--gh-ivory);
-  font-weight: 700;
-}
-.footer-brand-row .footer-rating {
-  font-weight: 400;
-  color: var(--gh-muted);
 }
 
 .footer-links {
@@ -1476,7 +1480,6 @@ h4 {
 .footer-trademarks {
   margin: 4px 0 0;
   max-inline-size: 64ch;
-  color: #9e9482;
   font-size: 13px;
 }
 @media (min-width: 1500px) and (max-width: 2599px) {

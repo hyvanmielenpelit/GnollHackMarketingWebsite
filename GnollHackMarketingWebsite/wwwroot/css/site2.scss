@@ -246,6 +246,10 @@ body {
     justify-content: space-between;
     column-gap: 14px;
     row-gap: 8px;
+
+    @media (max-width: 379.98px) {
+        column-gap: 8px;
+    }
 }
 
 .site-brand {
@@ -365,6 +369,10 @@ body {
         order: 2;
         margin-inline-start: auto;
     }
+
+    @media (max-width: 379.98px) {
+        gap: 8px;
+    }
 }
 
 .nav-cta {
@@ -386,7 +394,7 @@ body {
     white-space: nowrap;
 
     @media (max-width: 379.98px) {
-        padding: 7px 12px;
+        padding: 7px 8px;
         font-size: 13px;
     }
 
@@ -1408,13 +1416,6 @@ h4 {
     justify-content: center;
     align-items: center;
     gap: 8px 10px;
-    color: var(--gh-ivory);
-    font-weight: 700;
-
-    .footer-rating {
-        font-weight: 400;
-        color: var(--gh-muted);
-    }
 }
 
 .footer-links {
@@ -1436,7 +1437,6 @@ h4 {
 .footer-trademarks {
     margin: 4px 0 0;
     max-inline-size: 64ch;
-    color: #9e9482;
     @include font-sizes(13px, 14px, 15px);
     line-height: 1.5;
     text-wrap: pretty;
