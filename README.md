@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.txt)
 [![Website](https://img.shields.io/badge/Website-gnollhack.com-8a6d3b)](https://gnollhack.com)
 
-![GnollHack logo and the slogan The Modern Way to Play NetHack, beside a hooded ranger in a misty cave](GnollHackMarketingWebsite/wwwroot/img/gnollhack-open-graph-v2.jpg)
+![GnollHack logo and the slogan “The Modern Way to Play NetHack,” beside a hooded ranger in a misty cave](GnollHackMarketingWebsite/wwwroot/img/gnollhack-open-graph-v2.jpg)
 
 The source code of [gnollhack.com](https://gnollhack.com), the official website of [GnollHack](https://github.com/hyvanmielenpelit/GnollHack), a free and open-source modernization of NetHack by the Finnish nonprofit [Sound Mind Games](https://soundmindgames.org/).
 
