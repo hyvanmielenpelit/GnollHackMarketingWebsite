@@ -104,7 +104,7 @@ Badge image assets in `wwwroot/img/` are borderless (`*-noborders.webp`); all bo
 | `google-play-badge-noborders.webp` | 556 &times; 160 px | **3.475** | `.google-play` | `2px solid #a6a6a6`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
 | `app-store-badge-h200-noborders.webp` | 617 &times; 200 px | **3.085** | `.apple-app-store` | `2px solid #b2b4b6`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
 | `steambadge-noborders.webp` | 556 &times; 160 px | **3.475** | `.steam` | `2px solid #a8a8a8`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
-| `GitHubDownloadBadge-NoBorders-h200.webp` | 622 &times; 200 px | **3.110** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
+| `GitHubDownloadBadge-NoBorders-h200-v2.webp` | 559 &times; 200 px | **2.795** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` | Uniform height, natural width | Uniform width, natural height |
 
 - **Badge Hover Effect**: `&:hover { box-shadow: 0px 0px 12px #ddf; }`
 - **Desktop (`>= 768px`)**: Badges share identical height (`height: min(max(view-width(6), 50px), 80px)`), with `width: auto; object-fit: contain` so widths naturally scale to maintain exact aspect ratios.

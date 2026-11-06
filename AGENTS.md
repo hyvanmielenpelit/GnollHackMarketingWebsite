@@ -39,7 +39,7 @@ Welcome to the **GnollHack Marketing Website** repository. When working on this 
 | `google-play-badge-noborders.webp` | 556 &times; 160 px | **3.475** | `.google-play` | `2px solid #a6a6a6`, `border-radius: 12px` |
 | `app-store-badge-h200-noborders.webp` | 617 &times; 200 px | **3.085** | `.apple-app-store` | `2px solid #b2b4b6`, `border-radius: 12px` |
 | `steambadge-noborders.webp` | 556 &times; 160 px | **3.475** | `.steam` | `2px solid #a8a8a8`, `border-radius: 12px` |
-| `GitHubDownloadBadge-NoBorders-h200.webp` | 622 &times; 200 px | **3.110** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` |
+| `GitHubDownloadBadge-NoBorders-h200-v2.webp` | 559 &times; 200 px | **2.795** | `.github-releases` | `2px solid #a6a6a6`, `border-radius: 12px` |
 
 - **Video Posters**: Served locally as `wwwroot/img/video-poster-<YouTube ID>.jpg` (1280 &times; 720 px, **16:9**), never from `img.youtube.com`. A new video in `Pages/Index.cshtml.cs` needs its own poster file there.
 - **Carousel Images**: Slide images keep `loading="lazy"` in the markup. `wwwroot/js/carousel.js` switches them to eager when the carousel nears the viewport, because hidden slides do not fetch lazy images and would otherwise be blank while sliding in.
